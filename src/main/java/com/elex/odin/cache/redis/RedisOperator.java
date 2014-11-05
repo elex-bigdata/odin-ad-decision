@@ -54,7 +54,7 @@ public class RedisOperator {
                 }
             }
             if(count > 0){
-                pipeline.sync();
+                pipeline.syncAndReturnAll();
             }
             return "success";
         } catch (Exception e) {
@@ -139,7 +139,7 @@ public class RedisOperator {
                 }
             }
             if(count > 0){
-                pipeline.sync();
+                pipeline.syncAndReturnAll();
             }
             return "success";
         } catch (Exception e) {
@@ -260,7 +260,7 @@ public class RedisOperator {
                 }
             }
             if(count>0){
-                pipeline.sync();
+                pipeline.syncAndReturnAll();
             }
             return "success";
         } catch (Exception e) {
@@ -386,7 +386,7 @@ public class RedisOperator {
                 }
             }
             if(count > 0){
-                pipeline.sync();
+                pipeline.syncAndReturnAll();
             }
             return "successful";
         } catch (Exception e) {
