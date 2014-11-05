@@ -69,17 +69,17 @@ public class Constant {
     }
 
     public static class USER_PROFILE_MODEL{
-        public static final String FILE_PATH = "D:/odin_testdata/testdata/profile.txt";
+        public static final String FILE_PATH = "/home/hadoop/odin/data/profile.txt";
         public static final String[] FIELD_NAME = {"uid","ft","fv","nation","pv","sv","impr","click"};
     }
 
     public static class USER_KEYWORD_MODEL {
-        public static final String FILE_PATH = "D:/odin_testdata/testdata/userkeyword.txt";
+        public static final String FILE_PATH = "/home/hadoop/odin/data/userkeyword.txt";
         public static final String[] FIELD_NAME = {"uid","ft","fv","nation","pv","sv","impr","click","wc","tf","idf","tfidf"};
     }
 
     public static class FEATURE_AD_MODEL{
-        public static final String FILE_PATH = "D:/odin_testdata/testdata/feature.txt";
+        public static final String FILE_PATH = "/home/hadoop/odin/data/feature.txt";
         public static final String[] FIELD_NAME = {"ft","fv","nation","adid","pv","sv","impr","click","pvctr","impctr","fillr"};
     }
 
