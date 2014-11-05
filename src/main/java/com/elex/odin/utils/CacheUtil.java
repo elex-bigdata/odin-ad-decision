@@ -22,7 +22,11 @@ public class CacheUtil {
     }
 
     public static synchronized void updateVersion() throws Exception {
-        long dbVersion = Long.parseLong(redisOperator.get(versionKey));
+        String strVersion = redisOperator.get(versionKey);
+        if(strVersion == null){
+            return;
+        }
+        long dbVersion = Long.parseLong(strVersion);
         if(dbVersion > version.get()){
             version.set(dbVersion);
         }else if(dbVersion < version.get()){
