@@ -4,5 +4,19 @@
            xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 		  http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
            version="3.0">
+    <servlet>
+        <servlet-name>admatch</servlet-name>
+        <servlet-class>com.elex.odin.servlet.ADMatchServlet</servlet-class>
+    </servlet>
 
+    <servlet-mapping>
+        <servlet-name>admatch</servlet-name>
+        <url-pattern>/ad/match</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>initServlet</servlet-name>
+        <servlet-class>com.elex.odin.servlet.InitServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
 </web-app>

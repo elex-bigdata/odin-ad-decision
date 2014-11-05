@@ -1,6 +1,5 @@
-package com.elex.odin.util;
+package com.elex.odin.utils;
 
-import com.google.gson.Gson;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,7 +14,17 @@ public class WebUtil {
     public static void writeJson(Object result, HttpServletResponse resp){
         try {
             PrintWriter pw = new PrintWriter(resp.getOutputStream());
-            pw.write(new Gson().toJson(result));
+            pw.write(Constant.gson.toJson(result));
+            pw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void writeStr(String message, HttpServletResponse resp){
+        try {
+            PrintWriter pw = new PrintWriter(resp.getOutputStream());
+            pw.write(message);
             pw.close();
         } catch (IOException e) {
             e.printStackTrace();

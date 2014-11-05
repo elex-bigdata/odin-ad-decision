@@ -1,4 +1,4 @@
-package com.elex.odin.model;
+package com.elex.odin.entity;
 
 /**
  * Author: liqiang
@@ -7,16 +7,25 @@ package com.elex.odin.model;
  */
 public class ADMatchMessage {
 
-    private int status;
+    private int status = 0 ;
     private String adid = "";
     private String msg = "";
     private long took;
+    private String tag = "default";
 
-    public ADMatchMessage(int status, String adid, String msg, long took) {
+    public ADMatchMessage(int status, String adid, String tag) {
         this.status = status;
         this.adid = adid;
+        this.tag = tag;
+    }
+
+    public ADMatchMessage(int status,  String msg) {
+        this.status = status;
         this.msg = msg;
-        this.took = took;
+    }
+
+    public ADMatchMessage(String tag) {
+        this.tag = tag;
     }
 
     public int getStatus() {
@@ -49,5 +58,18 @@ public class ADMatchMessage {
 
     public void setTook(long took) {
         this.took = took;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
     }
 }
