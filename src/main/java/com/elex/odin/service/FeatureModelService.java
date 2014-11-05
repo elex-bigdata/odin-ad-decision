@@ -59,7 +59,7 @@ public class FeatureModelService {
         long begin = System.currentTimeMillis();
         long currentVersion = CacheUtil.getVersion();
         String version = String.valueOf(currentVersion + 1);
-
+        LOGGER.debug("begin update model");
         try{
             //1. user_profile
             ModelUpdater updater = new UserProfileModelUpdater(version,Constant.USER_PROFILE_MODEL.FILE_PATH, Constant.USER_PROFILE_MODEL.FIELD_NAME );
