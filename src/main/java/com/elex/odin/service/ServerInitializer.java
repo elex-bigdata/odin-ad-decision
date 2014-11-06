@@ -79,7 +79,7 @@ public class ServerInitializer {
         scheduler.scheduleJob(cvJob, cvTrigger);
         scheduler.scheduleJob(aiJob, aiTrigger);
         scheduler.scheduleJob(dyJob, rdTrigger);
-        scheduler.scheduleJob(dmJob, dmTrigger);
+//        scheduler.scheduleJob(dmJob, dmTrigger);
 
         scheduler.start();
         scheduler.shutdown(true);

@@ -8,6 +8,7 @@ import com.elex.odin.data.UserProfileModelUpdater;
 import com.elex.odin.entity.UserFeatureInfo;
 import com.elex.odin.utils.CacheUtil;
 import com.elex.odin.utils.Constant;
+import com.elex.odin.utils.DateUtil;
 import org.apache.log4j.Logger;
 
 import java.util.*;
@@ -61,22 +62,28 @@ public class FeatureModelService {
         String version = String.valueOf(currentVersion + 1);
         LOGGER.debug("begin update model");
         try{
+
+            String yesterday = DateUtil.yesterday();
+
             //1. user_profile
-            ModelUpdater updater = new UserProfileModelUpdater(version,Constant.USER_PROFILE_MODEL.FILE_PATH, Constant.USER_PROFILE_MODEL.FIELD_NAME );
+            String path = Constant.USER_PROFILE_MODEL.FILE_PATH.replace("[day]",yesterday);
+            ModelUpdater updater = new UserProfileModelUpdater(version, path, Constant.USER_PROFILE_MODEL.FIELD_NAME );
             updater.update();
 
             long upend = System.currentTimeMillis();
             LOGGER.info("update user profile spend " + (upend - begin));
 
             //2. keyword
-            updater = new UserProfileModelUpdater(version, Constant.USER_KEYWORD_MODEL.FILE_PATH, Constant.USER_KEYWORD_MODEL.FIELD_NAME );
+            path = Constant.USER_KEYWORD_MODEL.FILE_PATH.replace("[day]",yesterday);
+            updater = new UserProfileModelUpdater(version, path, Constant.USER_KEYWORD_MODEL.FIELD_NAME );
             updater.update();
 
             long kwend = System.currentTimeMillis();
             LOGGER.info("update user key word profile spend " + (kwend - upend));
 
             //3. feature_ad
-            updater = new FeatureADModelUpdater(version,Constant.FEATURE_AD_MODEL.FILE_PATH, Constant.FEATURE_AD_MODEL.FIELD_NAME );
+            path = Constant.FEATURE_AD_MODEL.FILE_PATH.replace("[day]",yesterday);
+            updater = new FeatureADModelUpdater(version,path, Constant.FEATURE_AD_MODEL.FIELD_NAME );
             updater.update();
             LOGGER.info("update feature ad model spend " + (System.currentTimeMillis() - kwend));
 
