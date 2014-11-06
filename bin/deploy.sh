@@ -1,5 +1,9 @@
 #!/bin/bash
 git pull
+
+#clean the cache
+rm -rf web/WEB-INF/classes/*
+
 mvn clean package -DskipTests
 
 #cp war to tomcat
