@@ -65,7 +65,7 @@ public class ADMatchServlet extends HttpServlet {
                 inputFeature.setPid(pid);
                 inputFeature.setIp(ip);
                 inputFeature.setBrowser(browser);
-                inputFeature.setTime(sdf.format(new Date()), nation);
+                inputFeature.setTime(new Date(), nation);
 
                 int decisionPercent = defaultPercent + Constant.REQUEST_DISPATCH.get("decision");
                 if(randomNum < decisionPercent){
