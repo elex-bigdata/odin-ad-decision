@@ -15,7 +15,7 @@ public class StrategyMatcherTest {
 
     @Test
     public void testMatch() throws Exception {
-        ServerInitializer.init();
+        /*ServerInitializer.init();
 
         InputFeature inputFeature = new InputFeature();
         inputFeature.setBrowser("Chrome");
@@ -26,7 +26,7 @@ public class StrategyMatcherTest {
 
         StrategyMatcher sm = new StrategyMatcher();
         ADMatchMessage msg = sm.match(inputFeature);
-        System.out.println(msg);
+        System.out.println(msg);*/
     }
 
 }
