@@ -16,7 +16,7 @@ public class RedisOperatorTest {
 
     @Before
     public void init() throws Exception {
-        ServerInitializer.init();
+        //ServerInitializer.init();
     }
 
     @Test
@@ -31,7 +31,7 @@ public class RedisOperatorTest {
 
     @Test
     public void testKeys() throws CacheException {
-        Set<String> xx = RedisOperator.getInstance().keys("14.sa.us.*");
+        Set<String> xx = RedisOperator.getInstance().keys("1.*");
         System.out.println(xx);
     }
 }
