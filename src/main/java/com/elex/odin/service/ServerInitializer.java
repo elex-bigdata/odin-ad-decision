@@ -40,6 +40,7 @@ public class ServerInitializer {
             LOGGER.info("[Server Init] - start job ");
             startJob();
         }catch (Exception e){
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
 
