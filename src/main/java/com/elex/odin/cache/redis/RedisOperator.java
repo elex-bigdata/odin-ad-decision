@@ -48,14 +48,12 @@ public class RedisOperator {
             for(Map.Entry<String,Set<String>> feature : features.entrySet()){
                 pipeline.sadd(feature.getKey(), feature.getValue().toArray(new String[feature.getValue().size()]));
                 count ++;
-                if(count == 2000){
+                if(count == 500){
                     pipeline.sync();
                     count = 0;
                 }
             }
-            if(count > 0){
-                pipeline.syncAndReturnAll();
-            }
+            pipeline.syncAndReturnAll();
             return "success";
         } catch (Exception e) {
             successful = false;
@@ -133,14 +131,12 @@ public class RedisOperator {
             for(Map.Entry<String, Map<String,String>> kv : kvs.entrySet()){
                 pipeline.hmset(kv.getKey(), kv.getValue());
                 count ++;
-                if(count == 2000){
+                if(count == 500){
                     pipeline.sync();
                     count = 0;
                 }
             }
-            if(count > 0){
-                pipeline.syncAndReturnAll();
-            }
+            pipeline.syncAndReturnAll();
             return "success";
         } catch (Exception e) {
             successful = false;
@@ -254,14 +250,12 @@ public class RedisOperator {
             for(Map.Entry<String,Map<String,Double>> member : members.entrySet()){
                 pipeline.zadd(member.getKey(),member.getValue());
                 count ++;
-                if(count == 2000){
+                if(count == 500){
                     pipeline.sync();
                     count = 0;
                 }
             }
-            if(count>0){
-                pipeline.syncAndReturnAll();
-            }
+            pipeline.syncAndReturnAll();
             return "success";
         } catch (Exception e) {
             successful = false;
