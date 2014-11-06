@@ -20,7 +20,7 @@
     </properties>
 
     <build>
-        <finalName>ssp</finalName>
+        <finalName>thor</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
