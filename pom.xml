@@ -20,7 +20,7 @@
     </properties>
 
     <build>
-        <finalName>odin-ad-decision</finalName>
+        <finalName>ssp</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

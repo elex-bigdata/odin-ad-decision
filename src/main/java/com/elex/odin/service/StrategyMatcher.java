@@ -144,7 +144,7 @@ public class StrategyMatcher implements ADMatcher {
                 }
             }
         }
-        LOGGER.debug("calculatePerADScore " + " adid [" + adid + ","+ totalScore+"] for " + userProfile.getUid() + " spend " + (System.currentTimeMillis() - begin) + "ms");
+        //LOGGER.debug("calculatePerADScore " + " adid [" + adid + ","+ totalScore+"] for " + userProfile.getUid() + " spend " + (System.currentTimeMillis() - begin) + "ms");
 
         return totalScore.doubleValue();
     }

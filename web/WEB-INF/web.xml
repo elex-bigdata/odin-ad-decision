@@ -11,7 +11,7 @@
 
     <servlet-mapping>
         <servlet-name>admatch</servlet-name>
-        <url-pattern>/ad/match</url-pattern>
+        <url-pattern>/admatch</url-pattern>
     </servlet-mapping>
 
     <servlet>
