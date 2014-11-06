@@ -4,6 +4,7 @@ import com.elex.ssp.TimeUtils;
 import org.apache.commons.lang.StringUtils;
 
 import java.text.ParseException;
+import java.util.Date;
 
 /**
  * Author: liqiang
@@ -21,7 +22,7 @@ public class InputFeature {
     private String hour;
     private String ampm;
     private String workOrVacation;
-    private String time;
+    private Date time;
 
     public String getUid() {
         return uid;
@@ -92,14 +93,14 @@ public class InputFeature {
         this.workOrVacation = workOrVacation;
     }
 
-    public String getTime() {
+    public Date getTime() {
         return time;
     }
 
-    public void setTime(String time, String nation) throws ParseException {
+    public void setTime(Date time, String nation) throws ParseException {
         this.time = time;
         this.nation = nation;
-        String[] dayInfo = TimeUtils.getTimeDimension(new String[]{String.valueOf(time), nation});
+        String[] dayInfo = TimeUtils.getTimeDimension(time, nation);
         this.hour = dayInfo[0];
         this.ampm = dayInfo[1];
         this.workOrVacation = dayInfo[2];
