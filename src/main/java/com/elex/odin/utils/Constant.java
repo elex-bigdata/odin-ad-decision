@@ -23,15 +23,15 @@ public class Constant {
 
     //特征类型值
     public static class FEATURE_TYPE{
-        public static final String QUERY = "query";
-        public static final String QUERY_LENGTH = "q_len";
-        public static final String QUERY_WORD_COUNT = "q_wc";
+        public static final String QUERY = "q";
+        public static final String QUERY_LENGTH = "ql";
+        public static final String QUERY_WORD_COUNT = "qwc";
         public static final String KEYWORD = "kw";
-        public static final String TIME = "time";
+        public static final String TIME = "t";
         public static final String IP = "ip";
-        public static final String BROWSER = "brow";
-        public static final String UID = "uid";
-        public static final String PID = "pid";
+        public static final String BROWSER = "bw";
+        public static final String UID = "u";
+        public static final String PID = "p";
     }
 
     //数据模型里面的特征类型和redis库里面的特征类型的映射
@@ -56,6 +56,7 @@ public class Constant {
 
     public static final Gson gson = new Gson();
 
+    //配置路径
     public static final String FEATURE_RULE_PATH = "feature_match_attribute.xml";
     public static final String MYSQL_CONF_PATH = "mysql_config.properties";
     public static final String DYNAMIC_CONF_PATH = "dynamic_config.properties";

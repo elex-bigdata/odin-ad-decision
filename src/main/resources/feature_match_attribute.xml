@@ -1,20 +1,20 @@
 <features>
-    <feature type="pid" desc="project id" weight="1" defaultValue="0">
+    <feature type="p" desc="project id" weight="1" defaultValue="0">
         <sort field="impctr" />
         <filter range="10" />
         <score> <![CDATA[ pv > 10 and sv >20 ]]> </score>
     </feature>
-    <feature type="uid" weight="1" defaultValue="0">
+    <feature type="u" weight="1" defaultValue="0">
         <sort field="impctr" />
         <filter range="10" />
         <score><![CDATA[ pv > 10 and sv >20 ]]></score>
     </feature>
-    <feature type="time" desc="" weight="1" defaultValue="0">
+    <feature type="t" desc="" weight="1" defaultValue="0">
         <sort field="impctr" />
         <filter range="10" />
         <score><![CDATA[ pv > 10 and sv >20 ]]></score>
     </feature>
-    <feature type="brow" desc="browser" weight="1" defaultValue="0">
+    <feature type="bw" desc="browser" weight="1" defaultValue="0">
         <sort field="impctr" />
         <filter range="10" />
         <score> <![CDATA[ pv > 10 and sv >20 ]]> </score>
@@ -24,17 +24,17 @@
         <filter range="10" />
         <score><![CDATA[ pv > 10 and sv >20 ]]></score>
     </feature>
-    <feature type="query" desc="" weight="1" defaultValue="0">
+    <feature type="q" desc="" weight="1" defaultValue="0">
         <sort field="impctr" />
         <filter range="10" />
         <score> <![CDATA[ pv > 10 and sv >20 ]]> </score>
     </feature>
-    <feature type="q_len" desc="query length" weight="1" defaultValue="0">
+    <feature type="ql" desc="query length" weight="1" defaultValue="0">
         <sort field="impctr" />
         <filter range="10" />
         <score><![CDATA[ pv > 10 and sv >20 ]]></score>
     </feature>
-    <feature type="q_wc" desc="query word count" weight="1" defaultValue="0">
+    <feature type="qwc" desc="query word count" weight="1" defaultValue="0">
         <sort field="impctr" />
         <filter range="10" />
         <score><![CDATA[ pv > 10 and sv >20 ]]></score>
