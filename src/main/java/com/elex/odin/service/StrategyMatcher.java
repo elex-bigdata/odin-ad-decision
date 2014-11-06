@@ -140,7 +140,7 @@ public class StrategyMatcher implements ADMatcher {
                     Map<String,String> featureADInfo = featureModelService.getFeatureADInfo(userProfile.getNation(), featureType, featureValue, adid);
 
                     //rule
-                    totalScore.add(new BigDecimal(featureADInfo.get("impctr")).multiply(new BigDecimal(weight)));
+                    totalScore.add(new BigDecimal(featureADInfo.get("ictr")).multiply(new BigDecimal(weight)));
                 }
             }
         }
