@@ -86,11 +86,13 @@ public class UserProfileModelUpdater implements ModelUpdater {
 
         models.put(key, mapValue);
         if(models.size() > 1000){
+            System.out.println("batch profile model");
             redisOperator.hmsetBatch(models);
             models = new HashMap<String, Map<String, String>>();
         }
 
         if(upIndex.size() > 1000){
+            System.out.println("batch profile model index");
             redisOperator.saddBatch(upIndex);
             upIndex = new HashMap<String, Set<String>>();
         }
