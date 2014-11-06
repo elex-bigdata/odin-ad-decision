@@ -47,7 +47,6 @@ public class ServerInitializer {
     }
 
     public static void startJob() throws SchedulerException {
-        System.setProperty("", "true");
         SchedulerFactory schedFact = new StdSchedulerFactory();
         Scheduler scheduler = schedFact.getScheduler();
 
