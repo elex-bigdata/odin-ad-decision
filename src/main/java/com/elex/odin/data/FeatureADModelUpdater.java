@@ -91,12 +91,12 @@ public class FeatureADModelUpdater implements ModelUpdater {
             }
 
 
-            if(models.size() > 2000){
+            if(models.size() > 1000){
                 System.out.println("batch feature model");
                 redisOperator.hmsetBatch(models);
                 models =  new HashMap<String, Map<String, String>>();
             }
-            if(admember.size() > 2000){
+            if(admember.size() > 1000){
                 System.out.println("batch feature admember");
                 redisOperator.zaddBatch(admember);
                 admember = new HashMap<String,Map<String,Double>>();

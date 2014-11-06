@@ -48,7 +48,7 @@ public class RedisOperator {
             for(Map.Entry<String,Set<String>> feature : features.entrySet()){
                 pipeline.sadd(feature.getKey(), feature.getValue().toArray(new String[feature.getValue().size()]));
                 count ++;
-                if(count == 500){
+                if(count == 1000){
                     pipeline.sync();
                     count = 0;
                 }
@@ -131,7 +131,7 @@ public class RedisOperator {
             for(Map.Entry<String, Map<String,String>> kv : kvs.entrySet()){
                 pipeline.hmset(kv.getKey(), kv.getValue());
                 count ++;
-                if(count == 500){
+                if(count == 1000){
                     pipeline.sync();
                     count = 0;
                 }
