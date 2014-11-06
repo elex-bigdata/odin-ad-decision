@@ -36,11 +36,7 @@ public class StrategyMatcher implements ADMatcher {
         Map<String,Map<String,Set<String>>> validADs = featchValidADs(userProfile);
 
         //4. 决策
-        List<Pair> adScores =  new ArrayList<Pair>();
-        for(Map.Entry<String,Map<String,Set<String>>> adFeatureKV : validADs.entrySet()){
-            double score = calculatePerADScore(adFeatureKV.getKey(), userProfile, adFeatureKV.getValue());
-            adScores.add(new ImmutablePair(adFeatureKV.getKey(), score));
-        }
+        List<Pair> adScores = calAll(validADs, userProfile);
 
         String adID =  selectAD(adScores);
 
@@ -75,6 +71,16 @@ public class StrategyMatcher implements ADMatcher {
 
     }
 
+    private List<Pair> calAll(Map<String,Map<String,Set<String>>> validADs, UserProfile userProfile) throws CacheException {
+        long begin = System.currentTimeMillis();
+        List<Pair> adScores =  new ArrayList<Pair>();
+        for(Map.Entry<String,Map<String,Set<String>>> adFeatureKV : validADs.entrySet()){
+            double score = calculatePerADScore(adFeatureKV.getKey(), userProfile, adFeatureKV.getValue());
+            adScores.add(new ImmutablePair(adFeatureKV.getKey(), score));
+        }
+        LOGGER.debug("calAll for " + userProfile.getUid() + " spend " + (System.currentTimeMillis() - begin) + "ms");
+        return adScores;
+    }
 
     /**
      * 获取满足筛选条件的特征广告列表
@@ -126,7 +132,7 @@ public class StrategyMatcher implements ADMatcher {
      * @return
      */
     private double calculatePerADScore(String adid, UserProfile userProfile, Map<String,Set<String>> modelFeature) throws CacheException {
-        long begin = System.currentTimeMillis();
+
 
         BigDecimal totalScore = new BigDecimal(0);
         for(String featureType : userProfile.getFeatures().keySet()){
@@ -138,13 +144,14 @@ public class StrategyMatcher implements ADMatcher {
                 //matchRule
                 for(String featureValue : featureValues){
                     Map<String,String> featureADInfo = featureModelService.getFeatureADInfo(userProfile.getNation(), featureType, featureValue, adid);
+                    System.out.println(featureADInfo);
 
                     //rule
                     totalScore.add(new BigDecimal(featureADInfo.get("ictr")).multiply(new BigDecimal(weight)));
                 }
             }
         }
-        //LOGGER.debug("calculatePerADScore " + " adid [" + adid + ","+ totalScore+"] for " + userProfile.getUid() + " spend " + (System.currentTimeMillis() - begin) + "ms");
+
 
         return totalScore.doubleValue();
     }
