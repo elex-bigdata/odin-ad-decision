@@ -37,9 +37,7 @@ public class StrategyMatcher implements ADMatcher {
 
         //4. 决策
         List<Pair> adScores = calAll(validADs, userProfile);
-
         String adID =  selectAD(adScores);
-
 
         return new ADMatchMessage(0, adID, Constant.TAG.DECISION);
     }
@@ -132,32 +130,28 @@ public class StrategyMatcher implements ADMatcher {
      * @return
      */
     private double calculatePerADScore(String adid, UserProfile userProfile, Map<String,Set<String>> modelFeature) throws CacheException {
-
-
         BigDecimal totalScore = new BigDecimal(0);
         for(String featureType : userProfile.getFeatures().keySet()){
             Set<String> featureValues = modelFeature.get(featureType);
             if(modelFeature.get(featureType) == null){
                 totalScore.add(Constant.FEATURE_ATTRIBUTE.get(featureType).getDefaultValue());
             }else{
-                double weight = 0;
+                BigDecimal weight = Constant.FEATURE_ATTRIBUTE.get(featureType).getWeight();
                 //matchRule
                 for(String featureValue : featureValues){
                     Map<String,String> featureADInfo = featureModelService.getFeatureADInfo(userProfile.getNation(), featureType, featureValue, adid);
-                    System.out.println(featureADInfo);
 
                     //rule
-                    totalScore.add(new BigDecimal(featureADInfo.get("ictr")).multiply(new BigDecimal(weight)));
+                    totalScore.add(new BigDecimal(featureADInfo.get("ictr")).multiply(weight));
                 }
             }
         }
-
-
         return totalScore.doubleValue();
     }
 
     //筛选最后的广告
     private String selectAD(List<Pair> adScores){
+        long begin = System.currentTimeMillis();
         Collections.sort(adScores, new Comparator<Pair>() {
             @Override
             public int compare(Pair o1, Pair o2) {
@@ -178,7 +172,7 @@ public class StrategyMatcher implements ADMatcher {
         }
         Random random = new Random();
         int index = random.nextInt(ads.size());
-        LOGGER.info(" choosed " + adScores.get(index).getLeft() + " from " + adScores.toString());
+        LOGGER.info("Choosed " + adScores.get(index).getLeft() + " from " + adScores.toString() + " spend " + (System.currentTimeMillis() - begin) + "ms");
         return adScores.get(index).getLeft().toString();
     }
 

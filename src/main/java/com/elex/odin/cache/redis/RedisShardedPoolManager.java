@@ -33,6 +33,7 @@ public class RedisShardedPoolManager {
 
             int maxActive = config.getInt("max_active", 4096);
             int maxIdle = config.getInt("max_idle", 1024);
+            int minIdle = config.getInt("min_idle", 512);
             int timeout = config.getInt("timeout", 300000);
             int maxWait = config.getInt("max_wait", 600000);
 
@@ -61,6 +62,7 @@ public class RedisShardedPoolManager {
             poolConfig.setMaxTotal(maxActive);
             poolConfig.setMaxIdle(maxIdle);
             poolConfig.setMaxWaitMillis(maxWait);
+            poolConfig.setMinIdle(minIdle);
             poolConfig.setTestOnBorrow(true);
 
             pool = new ShardedJedisPool(poolConfig, shardList);
