@@ -164,9 +164,9 @@ public class StrategyMatcher implements ADMatcher {
 
         List<String> ads = new ArrayList<String>();
         ads.add(adScores.get(0).getLeft().toString());
-        if(adScores.size()>=2 && (Double)adScores.get(1).getRight()/(Double)adScores.get(1).getRight() > Constant.FINAL_SOCRE_DISTANCE.get("pair1")){
+        if(adScores.size()>=2 && (Double)adScores.get(1).getRight()/(Double)adScores.get(0).getRight() > Constant.FINAL_SOCRE_DISTANCE.get("pair1")){
             ads.add(adScores.get(1).getLeft().toString());
-            if(adScores.size()>=3 && (Double)adScores.get(2).getRight()/(Double)adScores.get(2).getRight() > Constant.FINAL_SOCRE_DISTANCE.get("pair2")){
+            if(adScores.size()>=3 && (Double)adScores.get(2).getRight()/(Double)adScores.get(1).getRight() > Constant.FINAL_SOCRE_DISTANCE.get("pair2")){
                 ads.add(adScores.get(2).getLeft().toString());
             }
         }
