@@ -12,6 +12,7 @@ public class ADMatchMessage {
     private String msg = "";
     private long took;
     private String tag = "default";
+    private String code = "";
 
     public ADMatchMessage(int status, String adid, String tag) {
         this.status = status;
@@ -66,6 +67,14 @@ public class ADMatchMessage {
 
     public void setTag(String tag) {
         this.tag = tag;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     @Override

@@ -7,8 +7,12 @@ package com.elex.odin.entity;
  */
 public class Advertise {
 
+    //ODIN对应的ID
     private int adid;
+    //网盟的ID
+    private int origAdid;
     private String category = "other";
+    private String code;
     private String media;
     private String name;
 
@@ -43,5 +47,21 @@ public class Advertise {
     public void setName(String name) {
         //TODO: split the name to category or media
         this.name = name;
+    }
+
+    public int getOrigAdid() {
+        return origAdid;
+    }
+
+    public void setOrigAdid(int origAdid) {
+        this.origAdid = origAdid;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }
