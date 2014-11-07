@@ -5,7 +5,7 @@ import com.google.gson.Gson;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.*;
 
 /**
  * Author: liqiang
@@ -20,6 +20,8 @@ public class Constant {
     public static ConcurrentHashMap<String,Integer> REQUEST_DISPATCH = new ConcurrentHashMap<String,Integer>();
     //广告得分计算完后，最后挑选广告的一个阀值
     public static ConcurrentHashMap<String,Double> FINAL_SOCRE_DISTANCE = new ConcurrentHashMap<String,Double>();
+
+    public static ExecutorService CAL_SERVICE = new ThreadPoolExecutor(1000,50000,60, TimeUnit.MILLISECONDS,new LinkedBlockingQueue<Runnable>());
 
     //特征类型值
     public static class FEATURE_TYPE{

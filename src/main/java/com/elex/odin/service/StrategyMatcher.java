@@ -3,12 +3,16 @@ package com.elex.odin.service;
 import com.elex.odin.cache.redis.CacheException;
 import com.elex.odin.entity.*;
 import com.elex.odin.utils.Constant;
+import com.sun.org.apache.regexp.internal.recompile;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 /**
  * Author: liqiang
@@ -69,16 +73,6 @@ public class StrategyMatcher implements ADMatcher {
 
     }
 
-    private List<Pair> calAll(Map<String,Map<String,Set<String>>> validADs, UserProfile userProfile) throws CacheException {
-        long begin = System.currentTimeMillis();
-        List<Pair> adScores =  new ArrayList<Pair>();
-        for(Map.Entry<String,Map<String,Set<String>>> adFeatureKV : validADs.entrySet()){
-            double score = calculatePerADScore(adFeatureKV.getKey(), userProfile, adFeatureKV.getValue());
-            adScores.add(new ImmutablePair(adFeatureKV.getKey(), score));
-        }
-        LOGGER.debug("calAll for " + userProfile.getUid() + " spend " + (System.currentTimeMillis() - begin) + "ms");
-        return adScores;
-    }
 
     /**
      * 获取满足筛选条件的特征广告列表
@@ -121,6 +115,45 @@ public class StrategyMatcher implements ADMatcher {
             features.put(fv, new UserFeatureInfo());
         }
         return features;
+    }
+
+
+
+    private List<Pair> calAll(Map<String,Map<String,Set<String>>> validADs, UserProfile userProfile) throws CacheException {
+        long begin = System.currentTimeMillis();
+
+//        featureModelService.getFeatureADInfo(userProfile.getNation(), featureType, featureValue, adid);
+
+        List<Pair> adScores =  new ArrayList<Pair>();
+
+        Map<String,Future<Double>> calResult = new LinkedHashMap<String, Future<Double>>();
+
+        for(Map.Entry<String,Map<String,Set<String>>> adFeatureKV : validADs.entrySet()){
+
+            calResult.put(adFeatureKV.getKey(),
+                    Constant.CAL_SERVICE.submit(new SingleADCaculator(adFeatureKV.getKey(), userProfile, adFeatureKV.getValue())));
+            /*double score = calculatePerADScore(adFeatureKV.getKey(), userProfile, adFeatureKV.getValue());
+            adScores.add(new ImmutablePair(adFeatureKV.getKey(), score));*/
+        }
+
+        for(Map.Entry<String,Future<Double>> result : calResult.entrySet()){
+            try {
+                double score = result.getValue().get();
+                adScores.add(new ImmutablePair(result.getKey(), score));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        if(adScores.size() != calResult.size()){
+            LOGGER.error("Cal ad failed ");
+        }
+
+        LOGGER.debug("calAll for " + userProfile.getUid() + " spend " + (System.currentTimeMillis() - begin) + "ms");
+        return adScores;
     }
 
     /**
@@ -176,4 +209,37 @@ public class StrategyMatcher implements ADMatcher {
         return adScores.get(index).getLeft().toString();
     }
 
+    class SingleADCaculator implements Callable<Double>{
+
+        private String adid;
+        private UserProfile userProfile;
+        private Map<String,Set<String>> modelFeature;
+
+        public SingleADCaculator(String adid, UserProfile userProfile, Map<String,Set<String>> modelFeature){
+            this.adid = adid;
+            this.userProfile = userProfile;
+            this.modelFeature = modelFeature;
+        }
+
+        @Override
+        public Double call() throws Exception {
+            BigDecimal totalScore = new BigDecimal(0);
+            for(String featureType : userProfile.getFeatures().keySet()){
+                Set<String> featureValues = modelFeature.get(featureType);
+                if(modelFeature.get(featureType) == null){
+                    totalScore = totalScore.add(Constant.FEATURE_ATTRIBUTE.get(featureType).getDefaultValue());
+                }else{
+                    BigDecimal weight = Constant.FEATURE_ATTRIBUTE.get(featureType).getWeight();
+                    //matchRule
+                    for(String featureValue : featureValues){
+                        Map<String,String> featureADInfo = featureModelService.getFeatureADInfo(userProfile.getNation(), featureType, featureValue, adid);
+
+                        //rule
+                        totalScore = totalScore.add(new BigDecimal(featureADInfo.get("ictr")).multiply(weight));
+                    }
+                }
+            }
+            return totalScore.doubleValue();
+        }
+    }
 }
