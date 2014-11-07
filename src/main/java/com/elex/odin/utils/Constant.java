@@ -21,7 +21,7 @@ public class Constant {
     //广告得分计算完后，最后挑选广告的一个阀值
     public static ConcurrentHashMap<String,Double> FINAL_SOCRE_DISTANCE = new ConcurrentHashMap<String,Double>();
 
-    public static ExecutorService CAL_SERVICE = new ThreadPoolExecutor(1000,50000,60, TimeUnit.MILLISECONDS,new LinkedBlockingQueue<Runnable>());
+//    public static ExecutorService CAL_SERVICE = new ThreadPoolExecutor(1000,50000,60, TimeUnit.MILLISECONDS,new LinkedBlockingQueue<Runnable>());
 
     //特征类型值
     public static class FEATURE_TYPE{

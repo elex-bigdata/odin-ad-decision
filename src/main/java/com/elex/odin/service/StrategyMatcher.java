@@ -122,21 +122,19 @@ public class StrategyMatcher implements ADMatcher {
     private List<Pair> calAll(Map<String,Map<String,Set<String>>> validADs, UserProfile userProfile) throws CacheException {
         long begin = System.currentTimeMillis();
 
-//        featureModelService.getFeatureADInfo(userProfile.getNation(), featureType, featureValue, adid);
-
         List<Pair> adScores =  new ArrayList<Pair>();
 
-        Map<String,Future<Double>> calResult = new LinkedHashMap<String, Future<Double>>();
+//        Map<String,Future<Double>> calResult = new LinkedHashMap<String, Future<Double>>();
 
         for(Map.Entry<String,Map<String,Set<String>>> adFeatureKV : validADs.entrySet()){
-
+/*
             calResult.put(adFeatureKV.getKey(),
-                    Constant.CAL_SERVICE.submit(new SingleADCaculator(adFeatureKV.getKey(), userProfile, adFeatureKV.getValue())));
-            /*double score = calculatePerADScore(adFeatureKV.getKey(), userProfile, adFeatureKV.getValue());
-            adScores.add(new ImmutablePair(adFeatureKV.getKey(), score));*/
+                    Constant.CAL_SERVICE.submit(new SingleADCaculator(adFeatureKV.getKey(), userProfile, adFeatureKV.getValue())));*/
+            double score = calculatePerADScore(adFeatureKV.getKey(), userProfile, adFeatureKV.getValue());
+            adScores.add(new ImmutablePair(adFeatureKV.getKey(), score));
         }
 
-        for(Map.Entry<String,Future<Double>> result : calResult.entrySet()){
+/*        for(Map.Entry<String,Future<Double>> result : calResult.entrySet()){
             try {
                 double score = result.getValue().get();
                 adScores.add(new ImmutablePair(result.getKey(), score));
@@ -150,7 +148,7 @@ public class StrategyMatcher implements ADMatcher {
 
         if(adScores.size() != calResult.size()){
             LOGGER.error("Cal ad failed ");
-        }
+        }*/
 
         LOGGER.debug("calAll for " + userProfile.getUid() + " spend " + (System.currentTimeMillis() - begin) + "ms");
         return adScores;
