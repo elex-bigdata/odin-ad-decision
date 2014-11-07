@@ -134,7 +134,7 @@ public class StrategyMatcher implements ADMatcher {
         for(String featureType : userProfile.getFeatures().keySet()){
             Set<String> featureValues = modelFeature.get(featureType);
             if(modelFeature.get(featureType) == null){
-                totalScore.add(Constant.FEATURE_ATTRIBUTE.get(featureType).getDefaultValue());
+                totalScore = totalScore.add(Constant.FEATURE_ATTRIBUTE.get(featureType).getDefaultValue());
             }else{
                 BigDecimal weight = Constant.FEATURE_ATTRIBUTE.get(featureType).getWeight();
                 //matchRule
@@ -142,7 +142,7 @@ public class StrategyMatcher implements ADMatcher {
                     Map<String,String> featureADInfo = featureModelService.getFeatureADInfo(userProfile.getNation(), featureType, featureValue, adid);
 
                     //rule
-                    totalScore.add(new BigDecimal(featureADInfo.get("ictr")).multiply(weight));
+                    totalScore = totalScore.add(new BigDecimal(featureADInfo.get("ictr")).multiply(weight));
                 }
             }
         }
