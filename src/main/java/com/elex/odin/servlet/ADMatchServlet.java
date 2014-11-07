@@ -83,7 +83,7 @@ public class ADMatchServlet extends HttpServlet {
         message.setTook(System.currentTimeMillis() - begin);
         String msg = Constant.gson.toJson(message);
 
-        LOGGER.info(msg+ " " + (System.currentTimeMillis() - begin));
+        //LOGGER.info(msg+ " " + (System.currentTimeMillis() - begin));
         WebUtil.writeStr(msg, resp);
     }
 }

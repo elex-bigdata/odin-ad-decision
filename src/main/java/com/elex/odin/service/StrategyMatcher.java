@@ -205,7 +205,7 @@ public class StrategyMatcher implements ADMatcher {
         }
         Random random = new Random();
         int index = random.nextInt(ads.size());
-        LOGGER.info("Choosed " + adScores.get(index).getLeft() + " from " + adScores.toString() + " spend " + (System.currentTimeMillis() - begin) + "ms");
+        //LOGGER.info("Choosed " + adScores.get(index).getLeft() + " from " + adScores.toString() + " spend " + (System.currentTimeMillis() - begin) + "ms");
         return adScores.get(index).getLeft().toString();
     }
 
