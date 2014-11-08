@@ -1,6 +1,7 @@
 package com.elex.odin.service;
 
 import com.elex.odin.entity.ADMatchMessage;
+import com.elex.odin.entity.Advertise;
 import com.elex.odin.entity.InputFeature;
 import com.elex.odin.utils.Constant;
 
@@ -22,6 +23,11 @@ public class ExploreMatcher implements ADMatcher {
         Random random = new Random();
         int adID  = AdvertiseManager.adIDs.get(random.nextInt(len));
 
-        return new ADMatchMessage(0, String.valueOf(adID), Constant.TAG.EXPLORE);
+        Advertise ad = AdvertiseManager.oldAdverties.get(adID);
+        if(ad == null){
+            ad = AdvertiseManager.advertise.get(adID);
+        }
+
+        return new ADMatchMessage(0, String.valueOf(adID), ad.getCode(), Constant.TAG.EXPLORE);
     }
 }
