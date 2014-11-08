@@ -26,6 +26,7 @@ public class AdvertiseManager {
         for(Advertise ad : ads){
             oldAdverties.put(ad.getAdid(), ad);
         }
+        LOGGER.info("load " + oldAdverties.size() + " ad ads");
     }
 
     public synchronized static void loadAdvertise(){
@@ -39,7 +40,7 @@ public class AdvertiseManager {
                 Set<Integer> catAds = catMap.get(ad.getFirstCategory());
                 if(catAds == null){
                     catAds = new HashSet<Integer>();
-                    catMap.put(ad.getFirstCategory(), catAds);
+                    catMap.put(ad.getCategory(), catAds);
                 }
                 catAds.add(ad.getAdid());
             }
