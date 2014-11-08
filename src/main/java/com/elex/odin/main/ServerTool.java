@@ -1,4 +1,5 @@
 package com.elex.odin.main;
+import com.elex.odin.service.ConfigurationManager;
 import com.elex.odin.service.FeatureModelService;
 
 /**
@@ -14,6 +15,7 @@ public class ServerTool {
             System.exit(-1);
         }
         String day = args[0];
+        ConfigurationManager.updateFeatureAttribute();
         new FeatureModelService().updateModel(day);
     }
 
