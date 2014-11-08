@@ -43,7 +43,18 @@ public class StrategyMatcher implements ADMatcher {
         List<Pair> adScores = calAll(validADs, userProfile);
         String adID =  selectAD(adScores);
 
-        return new ADMatchMessage(0, adID, Constant.TAG.DECISION);
+        Advertise ad = AdvertiseManager.oldAdverties.get(adID);
+        if(ad == null){
+            ad = AdvertiseManager.advertise.get(adID);
+        }
+
+        if(ad != null){
+            return new ADMatchMessage(0, adID, ad.getCode(), Constant.TAG.DECISION);
+        }else{
+            LOGGER.info("does not find the adid " + adID);
+            return new ADMatchMessage(-1,"not find the adid " + adID);
+        }
+
     }
 
     private void getUserProfile(UserProfile userProfile) throws CacheException {

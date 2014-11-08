@@ -40,4 +40,36 @@ public class OdinADDao {
             MySQLManager.getInstance().close(rs, stmt, conn);
         }
     }
+
+    public List<Advertise> getAdInfo() throws Exception {
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        try{
+            String sql = "select id, orig_id, name, code, network, first_cat, second_cat, media_type, size, time,position, from ad_info";
+            conn = MySQLManager.getInstance().getConnection();
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(sql);
+            List<Advertise> ads = new ArrayList<Advertise>();
+            while(rs.next()){
+                Advertise ad = new Advertise();
+                ad.setAdid(rs.getInt(1));
+                ad.setOrigAdid(rs.getInt(2));
+                ad.setName(rs.getString(2));
+                ad.setCode(rs.getString(3));
+                ad.setNetwork(rs.getString(4));
+                ad.setCategory(rs.getString(5), rs.getString(6));
+                ad.setMediaType(rs.getString(7));
+                ad.setSize(rs.getString(8));
+                ad.setTime(rs.getString(9));
+                ad.setPosition(rs.getString(10));
+                ads.add(ad);
+            }
+            return ads;
+        }catch (Exception e){
+            throw new Exception("Error when get the code (ad info) from mysql",e);
+        } finally {
+            MySQLManager.getInstance().close(rs, stmt, conn);
+        }
+    }
 }

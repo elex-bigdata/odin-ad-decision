@@ -16,21 +16,30 @@ public class AdvertiseManager {
 
     private static final Logger LOGGER = Logger.getLogger(AdvertiseManager.class);
     public static ConcurrentHashMap<Integer, Advertise> advertise = new ConcurrentHashMap<Integer, Advertise>();
+    public static ConcurrentHashMap<Integer, Advertise> oldAdverties = new ConcurrentHashMap<Integer, Advertise>();
     public static ConcurrentHashMap<String, Set<Integer>> categorys = new ConcurrentHashMap<String, Set<Integer>>();
     public static List<Integer> adIDs = new ArrayList<Integer>();
+
+    public static void loadOldAdvertise() throws Exception {
+        OdinADDao dao = new OdinADDao();
+        List<Advertise> ads = dao.getAdBySlot(10004);
+        for(Advertise ad : ads){
+            oldAdverties.put(ad.getAdid(), ad);
+        }
+    }
 
     public synchronized static void loadAdvertise(){
         OdinADDao dao = new OdinADDao();
         try {
-            List<Advertise> ads = dao.getAdBySlot(10004);
+            List<Advertise> ads = dao.getAdInfo();
             HashMap<Integer, Advertise> adMap = new HashMap<Integer, Advertise>();
             HashMap<String, Set<Integer>> catMap = new HashMap<String, Set<Integer>>();
             for(Advertise ad : ads){
                 adMap.put(ad.getAdid(), ad);
-                Set<Integer> catAds = catMap.get(ad.getCategory());
+                Set<Integer> catAds = catMap.get(ad.getFirstCategory());
                 if(catAds == null){
                     catAds = new HashSet<Integer>();
-                    catMap.put(ad.getCategory(), catAds);
+                    catMap.put(ad.getFirstCategory(), catAds);
                 }
                 catAds.add(ad.getAdid());
             }

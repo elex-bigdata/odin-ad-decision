@@ -28,6 +28,7 @@ public class ServerInitializer {
             ConfigurationManager.updateScoreDistanceConfig();
 
             LOGGER.info("[Server Init] - load ad info from odin");
+            AdvertiseManager.loadOldAdvertise();
             AdvertiseManager.loadAdvertise();
 
             LOGGER.info("[Server Init] - init redis version");

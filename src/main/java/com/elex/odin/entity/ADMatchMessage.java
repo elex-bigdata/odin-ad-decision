@@ -14,9 +14,10 @@ public class ADMatchMessage {
     private String tag = "default";
     private String code = "";
 
-    public ADMatchMessage(int status, String adid, String tag) {
+    public ADMatchMessage(int status, String adid, String code, String tag) {
         this.status = status;
         this.adid = adid;
+        this.code = code;
         this.tag = tag;
     }
 
