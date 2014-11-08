@@ -77,7 +77,7 @@ public class FeatureADModelUpdater implements ModelUpdater {
             for(int i=valueStart; i< fields.length; i++){
                 mapValue.put(fields[i],values[i]);
             }
-            models.put(key, mapValue);
+
             String sortScore = mapValue.get(Constant.FEATURE_ATTRIBUTE.get(featureType).getSortField());
 
             if(!"0".equals(sortScore)){
@@ -88,6 +88,8 @@ public class FeatureADModelUpdater implements ModelUpdater {
                     admember.put(sortKey, ads);
                 }
                 ads.put(values[3], Double.parseDouble(sortScore));
+
+                models.put(key, mapValue);
             }
 
 
