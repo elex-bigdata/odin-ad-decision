@@ -56,15 +56,17 @@ public class FeatureModelService {
         return redisOperator.hgetAll(key);
     }
 
+
     public synchronized void updateModel() throws Exception {
+        updateModel(DateUtil.yesterday());
+    }
+
+    public synchronized void updateModel(String yesterday) throws Exception {
         long begin = System.currentTimeMillis();
         long currentVersion = CacheUtil.getVersion();
         String version = String.valueOf(currentVersion + 1);
         LOGGER.debug("begin update model");
         try{
-
-            String yesterday = DateUtil.yesterday();
-
             //1. user_profile
             String path = Constant.USER_PROFILE_MODEL.FILE_PATH.replace("[day]",yesterday);
             ModelUpdater updater = new UserProfileModelUpdater(version, path, Constant.USER_PROFILE_MODEL.FIELD_NAME );
