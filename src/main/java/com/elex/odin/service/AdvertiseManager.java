@@ -26,7 +26,7 @@ public class AdvertiseManager {
         for(Advertise ad : ads){
             oldAdverties.put(ad.getAdid(), ad);
         }
-        LOGGER.info("load " + oldAdverties.size() + " ad ads");
+        LOGGER.info("load " + oldAdverties.size() + " old ads");
     }
 
     public synchronized static void loadAdvertise(){

@@ -78,8 +78,4 @@ public class ADMatchMessage {
         this.code = code;
     }
 
-    @Override
-    public String toString() {
-        return super.toString();
-    }
 }
