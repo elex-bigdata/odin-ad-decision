@@ -43,9 +43,9 @@ public class StrategyMatcher implements ADMatcher {
         List<Pair> adScores = calAll(validADs, userProfile);
         String adID =  selectAD(adScores);
 
-        Advertise ad = AdvertiseManager.oldAdverties.get(adID);
+        Advertise ad = AdvertiseManager.oldAdverties.get(Integer.parseInt(adID));
         if(ad == null){
-            ad = AdvertiseManager.advertise.get(adID);
+            ad = AdvertiseManager.advertise.get(Integer.parseInt(adID));
         }
 
         if(ad != null){
