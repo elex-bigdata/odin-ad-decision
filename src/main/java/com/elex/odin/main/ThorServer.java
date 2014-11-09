@@ -83,7 +83,7 @@ public class ThorServer {
                         String reqid = req.get("req_id");
                         String pid = req.get("pid");
                         String ip = req.get("ip");
-                        String nation = req.get("nation").toLowerCase();
+                        String nation = req.get("country").toLowerCase();
                         String browser = req.get("browser");
 
                         InputFeature inputFeature = new InputFeature();
