@@ -57,6 +57,7 @@ public class ThorServer {
 
         @Override
         public void run() {
+            System.out.println("run");
             BufferedReader in = null;
             PrintWriter out = null;
             try {
