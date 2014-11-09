@@ -65,8 +65,16 @@ public class ThorServer {
                 out = new PrintWriter(client.getOutputStream());
 
 
-                String input = in.readLine();
-                System.out.println(input);
+                String input = "";
+                while (true) {
+                    String msg = in.readLine();
+                    input += msg;
+                    System.out.println(msg);
+                    if (msg.equals("eof")) {
+                        break;
+                    }
+                }
+
                 Type paramType = new TypeToken<Map<String, String>>(){}.getType();
                 Map<String,String> req = Constant.gson.fromJson(input, paramType);
 
