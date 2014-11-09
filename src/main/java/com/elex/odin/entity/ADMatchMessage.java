@@ -12,6 +12,7 @@ public class ADMatchMessage {
     private String msg = "";
     private long took;
     private String tag = "default";
+    //广告代码
     private String code = "";
 
     public ADMatchMessage(int status, String adid, String code, String tag) {
