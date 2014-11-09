@@ -63,9 +63,10 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
                     <descriptorRefs>
-                        <descriptorRef>ThorServer</descriptorRef>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
                     <archive>
+                        <finalname>ThoreServer</finalname>
                         <manifest>
                             <mainClass>com.elex.odin.main.ThorServer</mainClass>
                         </manifest>
