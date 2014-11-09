@@ -112,7 +112,7 @@ public class ThorServer {
 
                 LOGGER.info(msg+ " " + message.getCode());
 
-                out.println(message);
+                out.write(msg);
                 out.flush();
 
             } catch(IOException ex) {
