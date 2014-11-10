@@ -19,6 +19,7 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
+import java.nio.charset.Charset;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
@@ -91,7 +92,7 @@ public class ThorServer {
                         case SelectionKey.OP_CONNECT :
                             break;
                         case SelectionKey.OP_READ :
-                            SERVICE.submit(new ProcessRequest2((SocketChannel)key.channel()));
+                            SERVICE.submit(new ProcessRequest2((SocketChannel) key.channel()));
                             break;
                         case SelectionKey.OP_WRITE :
                             break;
@@ -217,11 +218,18 @@ public class ThorServer {
         @Override
         public void run() {
             System.out.println("run");
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//            ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ByteBuffer buffer = ByteBuffer.allocate(1024);
             try {
-//                socketChannel = serverSocketChannel.accept();
-                byte[] bytes;
+
+                System.out.println("读入数据");
+                buffer.clear();
+                //将字节序列从此通道中读入给定的缓冲区r_bBuf
+                socketChannel.read(buffer);
+                buffer.flip();
+                String xxx = Charset.forName("UTF-8").decode(buffer).toString();
+
+/*                byte[] bytes;
                 int size = 0;
                 while ((size = socketChannel.read(buffer)) >= 0) {
                     buffer.flip();
@@ -229,8 +237,8 @@ public class ThorServer {
                     buffer.get(bytes);
                     baos.write(bytes);
                     buffer.clear();
-                }
-                System.out.println(baos.toString());
+                }*/
+                System.out.println(xxx);
 
 
                 String msg = "{\"status\":0,\"adid\":\"10028\",\"msg\":\"\",\"took\":128,\"tag\":\"dec\"}";
@@ -240,7 +248,7 @@ public class ThorServer {
                 e.printStackTrace();
             } finally {
                 try {
-                    baos.close();
+//                    baos.close();
                 } catch (Exception e) {}
                 try {
                     socketChannel.close();
