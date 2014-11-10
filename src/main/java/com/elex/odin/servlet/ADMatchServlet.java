@@ -38,11 +38,7 @@ public class ADMatchServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try{
-            dispatchRequest(req, resp);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        dispatchRequest(req, resp);
     }
 
     public void dispatchRequest(HttpServletRequest req,HttpServletResponse resp){
@@ -88,7 +84,7 @@ public class ADMatchServlet extends HttpServlet {
         String msg = Constant.gson.toJson(message);*/
 
         String msg = "{\"status\":0,\"adid\":\"10028\",\"msg\":\"\",\"took\":128,\"tag\":\"dec\"}";
-        LOGGER.info(msg+ " " + message.getCode());
+        LOGGER.info(msg);
         WebUtil.writeStr(msg, resp);
     }
 }
