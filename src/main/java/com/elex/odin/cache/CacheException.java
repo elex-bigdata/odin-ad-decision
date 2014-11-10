@@ -1,4 +1,4 @@
-package com.elex.odin.cache.redis;
+package com.elex.odin.cache;
 
 public class CacheException extends Exception {
   public CacheException() {
