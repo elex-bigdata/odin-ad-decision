@@ -1,5 +1,6 @@
 package com.elex.odin.cache.redis;
 
+import com.elex.odin.cache.CacheException;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.ShardedJedis;
 import redis.clients.jedis.ShardedJedisPipeline;

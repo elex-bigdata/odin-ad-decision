@@ -1,6 +1,6 @@
 package com.elex.odin.main;
 import com.elex.odin.service.ConfigurationManager;
-import com.elex.odin.service.FeatureModelService;
+import com.elex.odin.service.RedisFeatureModelService;
 
 /**
  * Author: liqiang
@@ -16,7 +16,7 @@ public class ServerTool {
         }
         String day = args[0];
         ConfigurationManager.updateFeatureAttribute();
-        new FeatureModelService().updateModel(day);
+        new RedisFeatureModelService().updateModel(day);
     }
 
 }

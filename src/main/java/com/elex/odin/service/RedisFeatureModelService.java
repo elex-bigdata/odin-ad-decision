@@ -1,6 +1,6 @@
 package com.elex.odin.service;
 
-import com.elex.odin.cache.redis.CacheException;
+import com.elex.odin.cache.CacheException;
 import com.elex.odin.cache.redis.RedisOperator;
 import com.elex.odin.data.FeatureADModelUpdater;
 import com.elex.odin.data.ModelUpdater;
@@ -18,9 +18,9 @@ import java.util.*;
  * Date: 14-10-27
  * Time: 下午2:50
  */
-public class FeatureModelService {
+public class RedisFeatureModelService implements FeatureModelServiceInterface{
 
-    private static final Logger LOGGER = Logger.getLogger(FeatureModelService.class);
+    private static final Logger LOGGER = Logger.getLogger(RedisFeatureModelService.class);
     private RedisOperator redisOperator = RedisOperator.getInstance();
 
     /**

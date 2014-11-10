@@ -1,6 +1,7 @@
 package com.elex.odin.data;
 
 import com.elex.odin.cache.CacheException;
+import com.elex.odin.cache.memory.MemoryCache;
 import com.elex.odin.cache.redis.RedisOperator;
 import com.elex.odin.utils.Constant;
 import org.apache.commons.lang.StringUtils;
@@ -8,36 +9,31 @@ import org.apache.commons.lang.StringUtils;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Author: liqiang
  * Date: 14-10-31
  * Time: 下午2:20
  */
-public class FeatureADModelUpdater implements ModelUpdater {
+public class MemoryFeatureADModelUpdater implements ModelUpdater {
 
-    private Map<String, Map<String,String>> models = null;
-    private Map<String,Map<String,Double>> admember = null;
+
     private int valueStart = 4;
-    private RedisOperator redisOperator = RedisOperator.getInstance();
-    private String version;
+    private Map<String, TreeMap<Double,Set<String>>> featureADIndex = new HashMap<String, TreeMap<Double,Set<String>>>();
+    private Map<String, Map<String,String>> featureAD = new HashMap<String, Map<String,String>>();
     private String filePath;
     private String[] fields;
 
-    public FeatureADModelUpdater(String version, String filePath, String[] fields){
-        this.version = version;
+    public MemoryFeatureADModelUpdater(String filePath, String[] fields){
         this.filePath = filePath;
         this.fields = fields;
     }
 
     @Override
     public void update() throws Exception {
-        models = new HashMap<String, Map<String, String>>();
-        admember = new HashMap<String,Map<String,Double>>();
+        featureADIndex = new HashMap<String, TreeMap<Double,Set<String>>>();
+        featureAD = new HashMap<String, Map<String,String>>();
         FileInputStream fis = null;
         BufferedReader reader = null;
         try {
@@ -69,9 +65,8 @@ public class FeatureADModelUpdater implements ModelUpdater {
         try{
 
             String[] values = StringUtils.split(line.trim(), ",");
-
             String featureType = Constant.MODEL_FEATURE_TYPE_MAPPING.get(values[0]);
-            String key = version + "."+ Constant.CACHE.FEATURE_AD_PREFIX + "." + values[2] + "." + featureType + "." + values[1] + "." + values[3];
+            String key = values[2] + "." + featureType + "." + values[1] + "." + values[3];
 
             Map<String,String> mapValue = new HashMap<String, String>();
             for(int i=valueStart; i< fields.length; i++){
@@ -81,27 +76,31 @@ public class FeatureADModelUpdater implements ModelUpdater {
             String sortScore = mapValue.get(Constant.FEATURE_ATTRIBUTE.get(featureType).getSortField());
 
             if(!"0".equals(sortScore)){
-                String sortKey = version + "."+ Constant.CACHE.SORT_AD_PREFIX +"." + values[2] + "." + featureType + "." + values[1];
-                Map<String,Double> ads = admember.get(sortKey);
-                if(ads == null){
-                    ads = new HashMap<String, Double>();
-                    admember.put(sortKey, ads);
+                String sortKey = values[2] + "." + featureType + "." + values[1];
+                TreeMap<Double,Set<String>> adScores = featureADIndex.get(sortKey);
+                if(adScores == null){
+                    adScores = new TreeMap<Double, Set<String>>(new Comparator<Double>() { //倒序
+                        @Override
+                        public int compare(Double o1, Double o2) {
+                            if(o1 == o2){
+                                return 0;
+                            }
+                            return o2 - o1 > 0 ? 1 : -1;
+                        }
+                    });
+
+                    featureADIndex.put(sortKey, adScores);
                 }
-                ads.put(values[3], Double.parseDouble(sortScore));
 
-                models.put(key, mapValue);
-            }
+                double score = Double.parseDouble(sortScore);
+                Set<String> adids = adScores.get(score);
+                if(adids == null){
+                    adids =new HashSet<String>();
+                    adScores.put(score, adids);
+                }
+                adids.add(values[3]);
 
-
-            if(models.size() == 1000){
-                System.out.println("batch feature model");
-                redisOperator.hmsetBatch(models);
-                models =  new HashMap<String, Map<String, String>>();
-            }
-            if(admember.size() == 1000){
-                System.out.println("batch feature admember");
-                redisOperator.zaddBatch(admember);
-                admember = new HashMap<String,Map<String,Double>>();
+                featureAD.put(key, mapValue);
             }
 
         }catch (Exception e){
@@ -110,12 +109,7 @@ public class FeatureADModelUpdater implements ModelUpdater {
     }
 
     private void sync() throws CacheException {
-        if(models.size() > 0){
-            redisOperator.hmsetBatch(models);
-        }
-
-        if(admember.size() > 0){
-            redisOperator.zaddBatch(admember);
-        }
+        MemoryCache.featureADTmp.putAll(this.featureAD);
+        MemoryCache.featureADIndexTmp.putAll(this.featureADIndex);
     }
 }

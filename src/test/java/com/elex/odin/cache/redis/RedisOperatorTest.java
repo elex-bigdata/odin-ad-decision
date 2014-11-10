@@ -1,6 +1,6 @@
 package com.elex.odin.cache.redis;
 
-import com.elex.odin.service.ServerInitializer;
+import com.elex.odin.cache.CacheException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

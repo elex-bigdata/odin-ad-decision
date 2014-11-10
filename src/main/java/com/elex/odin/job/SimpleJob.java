@@ -2,7 +2,7 @@ package com.elex.odin.job;
 
 import com.elex.odin.service.AdvertiseManager;
 import com.elex.odin.service.ConfigurationManager;
-import com.elex.odin.service.FeatureModelService;
+import com.elex.odin.service.RedisFeatureModelService;
 import com.elex.odin.utils.CacheUtil;
 import com.elex.odin.utils.Constant;
 import com.elex.odin.service.MailManager;
@@ -31,7 +31,7 @@ public class SimpleJob implements Job{
             }else if(Constant.JOB_TYPE.CACHE_VSERION.equals(type)){
                 CacheUtil.updateVersion();
             }else if(Constant.JOB_TYPE.DATA_MODEL.equals(type)){
-                new FeatureModelService().updateModel();
+                new RedisFeatureModelService().updateModel();
             }else if(Constant.JOB_TYPE.DYNAMIC_CONF.equals(type)){
                 ConfigurationManager.updateRequestDispatchConfig();
                 ConfigurationManager.updateScoreDistanceConfig();

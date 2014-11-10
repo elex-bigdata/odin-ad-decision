@@ -1,9 +1,8 @@
 package com.elex.odin.service;
 
-import com.elex.odin.cache.redis.CacheException;
+import com.elex.odin.cache.CacheException;
 import com.elex.odin.entity.*;
 import com.elex.odin.utils.Constant;
-import com.sun.org.apache.regexp.internal.recompile;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.log4j.Logger;
@@ -11,8 +10,6 @@ import org.apache.log4j.Logger;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
 /**
  * Author: liqiang
@@ -23,7 +20,7 @@ import java.util.concurrent.Future;
 public class StrategyMatcher implements ADMatcher {
 
     private static final Logger LOGGER = Logger.getLogger(StrategyMatcher.class);
-    private FeatureModelService featureModelService = new FeatureModelService();
+    private FeatureModelServiceInterface featureModelService = new MemFeatureModelService();
 
     @Override
     public ADMatchMessage match(InputFeature inputFeature) throws Exception {
