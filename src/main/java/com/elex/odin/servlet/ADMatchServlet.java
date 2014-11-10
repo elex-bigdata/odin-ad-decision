@@ -38,7 +38,11 @@ public class ADMatchServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        dispatchRequest(req, resp);
+        try{
+            dispatchRequest(req, resp);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void dispatchRequest(HttpServletRequest req,HttpServletResponse resp){
