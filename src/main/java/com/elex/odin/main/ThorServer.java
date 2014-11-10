@@ -80,10 +80,13 @@ public class ThorServer {
 
                 while(it.hasNext()) {
                     SelectionKey key = it.next();
-                    //key定义了四种不同形式的操作
+                    it.remove();
                     switch(key.readyOps()) {
                         case SelectionKey.OP_ACCEPT :
-                            dealwithAccept(key, selector);
+                            ServerSocketChannel server = (ServerSocketChannel)key.channel();
+                            SocketChannel sc = server.accept();
+                            sc.configureBlocking(false);
+                            sc.register(selector, SelectionKey.OP_READ);
                             break;
                         case SelectionKey.OP_CONNECT :
                             break;
@@ -93,8 +96,6 @@ public class ThorServer {
                         case SelectionKey.OP_WRITE :
                             break;
                     }
-                    //处理结束后移除当前事件，以免重复处理
-                    it.remove();
                 }
 
 /*                while (it.hasNext()) {
@@ -118,20 +119,6 @@ public class ThorServer {
             } catch(Exception ex) {}
         }
 
-    }
-
-    private static void dealwithAccept(SelectionKey key, Selector selector) {
-        try {
-            System.out.println("新的客户端请求连接...");
-            ServerSocketChannel server = (ServerSocketChannel)key.channel();
-            SocketChannel sc = server.accept();
-            sc.configureBlocking(false);
-            //注册读事件
-            sc.register(selector, SelectionKey.OP_READ);
-            System.out.println("客户端连接成功...");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
 
