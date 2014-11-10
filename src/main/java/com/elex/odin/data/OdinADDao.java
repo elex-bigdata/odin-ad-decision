@@ -21,7 +21,7 @@ public class OdinADDao {
         Statement stmt = null;
         ResultSet rs = null;
         try{
-            String sql = "select distinct code.id, code.name from code join rule on code.id = rule.code_id and rule.slot_id =" + slot;
+            String sql = "select distinct code.id, code.name, code.code from code join rule on code.id = rule.code_id and rule.slot_id =" + slot;
             conn = MySQLManager.getInstance().getConnection();
             stmt = conn.createStatement();
             System.out.println(sql);
@@ -31,6 +31,7 @@ public class OdinADDao {
                 Advertise ad = new Advertise();
                 ad.setAdid(rs.getInt(1));
                 ad.setName(rs.getString(2));
+                ad.setCode(rs.getString(3));
                 ads.add(ad);
             }
             return ads;
@@ -46,7 +47,7 @@ public class OdinADDao {
         Statement stmt = null;
         ResultSet rs = null;
         try{
-            String sql = "select id, orig_id, name, code, network, first_cat, second_cat, media_type, size, time, position from ad_info";
+            String sql = "select id, orig_id, name, code, network, first_cat, second_cat, media_type, size, time, position from ad_info where media_type = 'Banner' ";
             conn = MySQLManager.getInstance().getConnection();
             stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
