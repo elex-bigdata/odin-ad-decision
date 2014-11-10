@@ -43,14 +43,14 @@ public class ThorServer {
 
         ServerInitializer.init();
 
-/*        ServerSocket server = new ServerSocket(8081);
+        ServerSocket server = new ServerSocket(8081);
 
         while(true){
             Socket socket = server.accept();
             SERVICE.submit(new ProcessRequest(socket));
-        }*/
+        }
 
-        Selector selector = null;
+/*        Selector selector = null;
         ServerSocketChannel serverSocketChannel = null;
 
         try {
@@ -100,7 +100,7 @@ public class ThorServer {
                     it.remove();
                 }
 
-/*                while (it.hasNext()) {
+*//*                while (it.hasNext()) {
                     SelectionKey readyKey = it.next();
                     it.remove();
 
@@ -108,7 +108,7 @@ public class ThorServer {
                     // can retrieve the socket that's ready for I/O
     //                execute((ServerSocketChannel) readyKey.channel());
                     SERVICE.submit(new ProcessRequest2((ServerSocketChannel) readyKey.channel()));
-                }*/
+                }*//*
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -119,7 +119,7 @@ public class ThorServer {
             try {
                 serverSocketChannel.close();
             } catch(Exception ex) {}
-        }
+        }*/
 
     }
 
