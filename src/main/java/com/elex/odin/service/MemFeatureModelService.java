@@ -4,14 +4,10 @@ import com.elex.odin.cache.CacheException;
 import com.elex.odin.cache.memory.MemoryCache;
 import com.elex.odin.data.*;
 import com.elex.odin.entity.UserFeatureInfo;
-import com.elex.odin.utils.CacheUtil;
 import com.elex.odin.utils.Constant;
 import com.elex.odin.utils.DateUtil;
 import org.apache.log4j.Logger;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
 import java.util.*;
 
 /**
@@ -22,8 +18,6 @@ import java.util.*;
 public class MemFeatureModelService implements FeatureModelServiceInterface {
 
     //key : uid.nation.featureType, value: featureValue
-
-
     private static final Logger LOGGER = Logger.getLogger(RedisFeatureModelService.class);
 
     @Override
@@ -31,6 +25,9 @@ public class MemFeatureModelService implements FeatureModelServiceInterface {
         String key = uid + "." + nation + "." + featureType;
         Set<String> featureKeys = MemoryCache.userProfileFeatureIndex.get(key);
         Map<String,UserFeatureInfo> features = new HashMap<String, UserFeatureInfo>();
+
+        if(featureKeys == null) return features;
+
         //当前不需要value， 只用返回key就可以了, 暂时空着.
         for(String featureValue : featureKeys){
             features.put(featureValue, new UserFeatureInfo());
@@ -45,6 +42,9 @@ public class MemFeatureModelService implements FeatureModelServiceInterface {
 
         Set<String> adIDs = new HashSet<String>();
         TreeMap<Double,Set<String>> sortIDs =  MemoryCache.featureADIndex.get(key);
+
+        if(sortIDs == null) return adIDs;
+
         if(rules.length == 1 ){ //TOP N
             int count = (int)rules[0];
             for(Map.Entry<Double,Set<String>> scores : sortIDs.entrySet()){
