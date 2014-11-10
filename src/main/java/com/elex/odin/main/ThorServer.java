@@ -209,15 +209,14 @@ public class ThorServer {
 
     static class ProcessRequest2 implements Runnable{
 
-        SocketChannel serverSocketChannel;
-        public ProcessRequest2(SocketChannel serverSocketChannel){
-            this.serverSocketChannel = serverSocketChannel;
+        SocketChannel socketChannel;
+        public ProcessRequest2(SocketChannel socketChannel){
+            this.socketChannel = socketChannel;
         }
 
         @Override
         public void run() {
             System.out.println("run");
-            SocketChannel socketChannel = null;
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ByteBuffer buffer = ByteBuffer.allocate(1024);
             try {
