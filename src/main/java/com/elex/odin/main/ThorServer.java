@@ -9,14 +9,18 @@ import com.elex.odin.utils.Constant;
 import com.google.gson.reflect.TypeToken;
 import org.apache.log4j.Logger;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.lang.reflect.Type;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.ByteBuffer;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
+import java.nio.channels.ServerSocketChannel;
+import java.nio.channels.SocketChannel;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
@@ -38,11 +42,60 @@ public class ThorServer {
 
         ServerInitializer.init();
 
-        ServerSocket server = new ServerSocket(8081);
+/*        ServerSocket server = new ServerSocket(8081);
 
         while(true){
             Socket socket = server.accept();
             SERVICE.submit(new ProcessRequest(socket));
+        }*/
+
+        Selector selector = null;
+        ServerSocketChannel serverSocketChannel = null;
+
+        try {
+            selector = Selector.open();
+
+            // Create a new server socket and set to non blocking mode
+            serverSocketChannel = ServerSocketChannel.open();
+            serverSocketChannel.configureBlocking(false);
+
+            // Bind the server socket to the local host and port
+            serverSocketChannel.socket().setReuseAddress(true);
+            serverSocketChannel.socket().bind(new InetSocketAddress(8081));
+
+            // Register accepts on the server socket with the selector. This
+            // step tells the selector that the socket wants to be put on the
+            // ready list when accept operations occur, so allowing multiplexed
+            // non-blocking I/O to take place.
+            serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
+
+            // Here's where everything happens. The select method will
+            // return when any operations registered above have occurred, the
+            // thread has been interrupted, etc.
+            while (selector.select() > 0) {
+                // Someone is ready for I/O, get the ready keys
+                Iterator<SelectionKey> it = selector.selectedKeys().iterator();
+
+                // Walk through the ready keys collection and process date requests.
+                while (it.hasNext()) {
+                    SelectionKey readyKey = it.next();
+                    it.remove();
+
+                    // The key indexes into the selector so you
+                    // can retrieve the socket that's ready for I/O
+    //                execute((ServerSocketChannel) readyKey.channel());
+                    SERVICE.submit(new ProcessRequest2((ServerSocketChannel) readyKey.channel()));
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                selector.close();
+            } catch(Exception ex) {}
+            try {
+                serverSocketChannel.close();
+            } catch(Exception ex) {}
         }
 
     }
@@ -127,6 +180,50 @@ public class ThorServer {
                 } catch (Exception e) {}
                 try {
                     client.close();
+                } catch (Exception e) {}
+            }
+        }
+    }
+
+
+    static class ProcessRequest2 implements Runnable{
+
+        ServerSocketChannel serverSocketChannel;
+        public ProcessRequest2(ServerSocketChannel serverSocketChannel){
+            this.serverSocketChannel = serverSocketChannel;
+        }
+
+        @Override
+        public void run() {
+            System.out.println("run");
+            SocketChannel socketChannel = null;
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ByteBuffer buffer = ByteBuffer.allocate(1024);
+            try {
+                socketChannel = serverSocketChannel.accept();
+                byte[] bytes;
+                int size = 0;
+                while ((size = socketChannel.read(buffer)) >= 0) {
+                    buffer.flip();
+                    bytes = new byte[size];
+                    buffer.get(bytes);
+                    baos.write(bytes);
+                    buffer.clear();
+                }
+                System.out.println(baos.toString());
+
+
+                String msg = "{\"status\":0,\"adid\":\"10028\",\"msg\":\"\",\"took\":128,\"tag\":\"dec\"}";
+                socketChannel.write(ByteBuffer.wrap(msg.getBytes()));
+
+            } catch(IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    baos.close();
+                } catch (Exception e) {}
+                try {
+                    socketChannel.close();
                 } catch (Exception e) {}
             }
         }
