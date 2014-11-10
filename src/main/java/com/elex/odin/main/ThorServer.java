@@ -37,7 +37,7 @@ import java.util.concurrent.TimeUnit;
 public class ThorServer {
 
     private static final Logger LOGGER = Logger.getLogger(ThorServer.class);
-    public static ExecutorService SERVICE = new ThreadPoolExecutor(5000,50000,60, TimeUnit.MILLISECONDS,new LinkedBlockingQueue<Runnable>());
+    public static ExecutorService SERVICE = new ThreadPoolExecutor(10000,50000,60, TimeUnit.MILLISECONDS,new LinkedBlockingQueue<Runnable>());
 
     public static void main(String[] args) throws IOException {
 
