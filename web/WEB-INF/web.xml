@@ -15,6 +15,16 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>ToolServlet</servlet-name>
+        <servlet-class>com.elex.odin.servlet.ToolServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ToolServlet</servlet-name>
+        <url-pattern>/tool</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>initServlet</servlet-name>
         <servlet-class>com.elex.odin.servlet.InitServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
