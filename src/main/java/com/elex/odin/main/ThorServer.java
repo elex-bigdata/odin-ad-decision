@@ -77,7 +77,27 @@ public class ThorServer {
                 Iterator<SelectionKey> it = selector.selectedKeys().iterator();
 
                 // Walk through the ready keys collection and process date requests.
-                while (it.hasNext()) {
+
+                while(it.hasNext()) {
+                    SelectionKey key = it.next();
+                    //key定义了四种不同形式的操作
+                    switch(key.readyOps()) {
+                        case SelectionKey.OP_ACCEPT :
+                            dealwithAccept(key, selector);
+                            break;
+                        case SelectionKey.OP_CONNECT :
+                            break;
+                        case SelectionKey.OP_READ :
+                            SERVICE.submit(new ProcessRequest2((ServerSocketChannel) key.channel()));
+                            break;
+                        case SelectionKey.OP_WRITE :
+                            break;
+                    }
+                    //处理结束后移除当前事件，以免重复处理
+                    it.remove();
+                }
+
+/*                while (it.hasNext()) {
                     SelectionKey readyKey = it.next();
                     it.remove();
 
@@ -85,7 +105,7 @@ public class ThorServer {
                     // can retrieve the socket that's ready for I/O
     //                execute((ServerSocketChannel) readyKey.channel());
                     SERVICE.submit(new ProcessRequest2((ServerSocketChannel) readyKey.channel()));
-                }
+                }*/
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -98,6 +118,20 @@ public class ThorServer {
             } catch(Exception ex) {}
         }
 
+    }
+
+    private static void dealwithAccept(SelectionKey key, Selector selector) {
+        try {
+            System.out.println("新的客户端请求连接...");
+            ServerSocketChannel server = (ServerSocketChannel)key.channel();
+            SocketChannel sc = server.accept();
+            sc.configureBlocking(false);
+            //注册读事件
+            sc.register(selector, SelectionKey.OP_READ);
+            System.out.println("客户端连接成功...");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
