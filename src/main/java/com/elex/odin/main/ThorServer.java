@@ -62,11 +62,10 @@ public class ThorServer {
             PrintWriter out = null;
             try {
                 in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-                out = new PrintWriter(client.getOutputStream());
-
-
                 String input = "";
+                System.out.println("begin");
                 while (true) {
+                    System.out.println("read");
                     String msg = in.readLine();
                     input += msg;
                     System.out.println(msg);
@@ -121,11 +120,12 @@ public class ThorServer {
 
                 LOGGER.info(msg+ " " + message.getCode());
 
+                out = new PrintWriter(client.getOutputStream());
                 out.write(msg);
                 out.flush();
 
-            } catch(IOException ex) {
-                ex.printStackTrace();
+            } catch(IOException e) {
+                e.printStackTrace();
             } finally {
                 try {
                     in.close();
