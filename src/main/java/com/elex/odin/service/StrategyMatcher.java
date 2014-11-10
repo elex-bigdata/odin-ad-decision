@@ -20,7 +20,7 @@ import java.util.concurrent.Callable;
 public class StrategyMatcher implements ADMatcher {
 
     private static final Logger LOGGER = Logger.getLogger(StrategyMatcher.class);
-    private FeatureModelServiceInterface featureModelService = new MemFeatureModelService();
+    private FeatureModelServiceInterface featureModelService = new MemoryFeatureModelService();
 
     @Override
     public ADMatchMessage match(InputFeature inputFeature) throws Exception {
@@ -131,32 +131,10 @@ public class StrategyMatcher implements ADMatcher {
         long begin = System.currentTimeMillis();
 
         List<Pair> adScores =  new ArrayList<Pair>();
-
-//        Map<String,Future<Double>> calResult = new LinkedHashMap<String, Future<Double>>();
-
         for(Map.Entry<String,Map<String,Set<String>>> adFeatureKV : validADs.entrySet()){
-/*
-            calResult.put(adFeatureKV.getKey(),
-                    Constant.CAL_SERVICE.submit(new SingleADCaculator(adFeatureKV.getKey(), userProfile, adFeatureKV.getValue())));*/
             double score = calculatePerADScore(adFeatureKV.getKey(), userProfile, adFeatureKV.getValue());
             adScores.add(new ImmutablePair(adFeatureKV.getKey(), score));
         }
-
-/*        for(Map.Entry<String,Future<Double>> result : calResult.entrySet()){
-            try {
-                double score = result.getValue().get();
-                adScores.add(new ImmutablePair(result.getKey(), score));
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
-        }
-
-
-        if(adScores.size() != calResult.size()){
-            LOGGER.error("Cal ad failed ");
-        }*/
 
         LOGGER.debug("calAll for " + userProfile.getUid() + " spend " + (System.currentTimeMillis() - begin) + "ms");
         return adScores;
@@ -211,7 +189,7 @@ public class StrategyMatcher implements ADMatcher {
         }
         Random random = new Random();
         int index = random.nextInt(ads.size());
-        //LOGGER.info("Choosed " + adScores.get(index).getLeft() + " from " + adScores.toString() + " spend " + (System.currentTimeMillis() - begin) + "ms");
+        LOGGER.info("Choosed " + adScores.get(index).getLeft() + " from " + adScores.toString() + " spend " + (System.currentTimeMillis() - begin) + "ms");
         return adScores.get(index).getLeft().toString();
     }
 

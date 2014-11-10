@@ -59,9 +59,9 @@ public class Constant {
     public static final Gson gson = new Gson();
 
     //配置路径
-    public static final String FEATURE_RULE_PATH = "feature_match_attribute.xml";
+    public static final String FEATURE_RULE_PATH = "/home/elex/git_project_home/odin-ad-decision/src/main/resources/feature_match_attribute.xml";
     public static final String MYSQL_CONF_PATH = "mysql_config.properties";
-    public static final String DYNAMIC_CONF_PATH = "dynamic_config.properties";
+    public static final String DYNAMIC_CONF_PATH = "/home/elex/git_project_home/odin-ad-decision/src/main/resources/dynamic_config.properties";
 
     //redis里key的前缀，用于区分不同类型的数据
     public static class CACHE{

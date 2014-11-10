@@ -1,7 +1,6 @@
 package com.elex.odin.service;
 
 import com.elex.odin.job.SimpleJob;
-import com.elex.odin.utils.CacheUtil;
 import com.elex.odin.utils.Constant;
 import org.apache.log4j.Logger;
 import org.quartz.*;
@@ -39,7 +38,7 @@ public class ServerInitializer {
             }*/
 
             LOGGER.info("[Server Init] - init cache");
-            new MemFeatureModelService().updateModel();
+            new MemoryFeatureModelService().updateModel();
 
             LOGGER.info("[Server Init] - start job ");
             startJob();
