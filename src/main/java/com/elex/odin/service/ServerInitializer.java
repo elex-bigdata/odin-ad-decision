@@ -39,7 +39,7 @@ public class ServerInitializer {
             }*/
 
             LOGGER.info("[Server Init] - init cache");
-            new RedisFeatureModelService().updateModel();
+            new MemFeatureModelService().updateModel();
 
             LOGGER.info("[Server Init] - start job ");
             startJob();
