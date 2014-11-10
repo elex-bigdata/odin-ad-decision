@@ -92,7 +92,7 @@ public class ThorServer {
                         case SelectionKey.OP_CONNECT :
                             break;
                         case SelectionKey.OP_READ :
-                            SERVICE.submit(new ProcessRequest2((SocketChannel) key.channel()));
+                            readRequest((SocketChannel) key.channel());
                             break;
                         case SelectionKey.OP_WRITE :
                             break;
@@ -122,6 +122,46 @@ public class ThorServer {
         }
 
     }
+
+    public static void readRequest(SocketChannel socketChannel){
+        ByteBuffer buffer = ByteBuffer.allocate(1024);
+        try {
+
+            System.out.println("读入数据");
+            buffer.clear();
+            //将字节序列从此通道中读入给定的缓冲区r_bBuf
+            socketChannel.read(buffer);
+            buffer.flip();
+            String xxx = Charset.forName("UTF-8").decode(buffer).toString();
+
+/*                byte[] bytes;
+                int size = 0;
+                while ((size = socketChannel.read(buffer)) >= 0) {
+                    buffer.flip();
+                    bytes = new byte[size];
+                    buffer.get(bytes);
+                    baos.write(bytes);
+                    buffer.clear();
+                }*/
+            System.out.println(xxx);
+
+
+            String msg = "{\"status\":0,\"adid\":\"10028\",\"msg\":\"\",\"took\":128,\"tag\":\"dec\"}";
+            socketChannel.write(ByteBuffer.wrap(msg.getBytes()));
+
+        } catch(IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+//                    baos.close();
+            } catch (Exception e) {}
+            try {
+                socketChannel.close();
+            } catch (Exception e) {}
+        }
+    }
+
+
 
 
     static class ProcessRequest implements Runnable{
