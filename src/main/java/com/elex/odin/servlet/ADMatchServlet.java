@@ -46,7 +46,7 @@ public class ADMatchServlet extends HttpServlet {
 
         ADMatchMessage message = null;
         long begin = System.currentTimeMillis();
-        int defaultPercent = Constant.REQUEST_DISPATCH.get("default");
+        /*int defaultPercent = Constant.REQUEST_DISPATCH.get("default");
 
         if(randomNum < defaultPercent){
             message = new ADMatchMessage(Constant.TAG.DEFAULT);
@@ -81,8 +81,9 @@ public class ADMatchServlet extends HttpServlet {
         }
 
         message.setTook(System.currentTimeMillis() - begin);
-        String msg = Constant.gson.toJson(message);
+        String msg = Constant.gson.toJson(message);*/
 
+        String msg = "{\"status\":0,\"adid\":\"10028\",\"msg\":\"\",\"took\":128,\"tag\":\"dec\"}";
         LOGGER.info(msg+ " " + message.getCode());
         WebUtil.writeStr(msg, resp);
     }
