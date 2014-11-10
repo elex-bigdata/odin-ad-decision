@@ -56,7 +56,7 @@ public class MemoryFeatureModelService implements FeatureModelServiceInterface {
                 count --;
             }
         }else{ // Range : from to
-            SortedMap<Double,Set<String>> scores = sortIDs.subMap(rules[0],rules[1]);
+            SortedMap<Double,Set<String>> scores = sortIDs.subMap(rules[1], true, rules[0], true);
             for(Set<String> ad : scores.values()){
                 adIDs.addAll(ad);
             }

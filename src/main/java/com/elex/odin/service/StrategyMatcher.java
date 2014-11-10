@@ -9,7 +9,6 @@ import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.util.*;
-import java.util.concurrent.Callable;
 
 /**
  * Author: liqiang
@@ -126,7 +125,13 @@ public class StrategyMatcher implements ADMatcher {
     }
 
 
-
+    /**
+     * 分数计算
+     * @param validADs
+     * @param userProfile
+     * @return
+     * @throws CacheException
+     */
     private List<Pair> calAll(Map<String,Map<String,Set<String>>> validADs, UserProfile userProfile) throws CacheException {
         long begin = System.currentTimeMillis();
 
@@ -157,7 +162,6 @@ public class StrategyMatcher implements ADMatcher {
                 //matchRule
                 for(String featureValue : featureValues){
                     Map<String,String> featureADInfo = featureModelService.getFeatureADInfo(userProfile.getNation(), featureType, featureValue, adid);
-
                     //rule
                     totalScore = totalScore.add(new BigDecimal(featureADInfo.get("ictr")).multiply(weight));
                 }
@@ -193,37 +197,4 @@ public class StrategyMatcher implements ADMatcher {
         return adScores.get(index).getLeft().toString();
     }
 
-    class SingleADCaculator implements Callable<Double>{
-
-        private String adid;
-        private UserProfile userProfile;
-        private Map<String,Set<String>> modelFeature;
-
-        public SingleADCaculator(String adid, UserProfile userProfile, Map<String,Set<String>> modelFeature){
-            this.adid = adid;
-            this.userProfile = userProfile;
-            this.modelFeature = modelFeature;
-        }
-
-        @Override
-        public Double call() throws Exception {
-            BigDecimal totalScore = new BigDecimal(0);
-            for(String featureType : userProfile.getFeatures().keySet()){
-                Set<String> featureValues = modelFeature.get(featureType);
-                if(modelFeature.get(featureType) == null){
-                    totalScore = totalScore.add(Constant.FEATURE_ATTRIBUTE.get(featureType).getDefaultValue());
-                }else{
-                    BigDecimal weight = Constant.FEATURE_ATTRIBUTE.get(featureType).getWeight();
-                    //matchRule
-                    for(String featureValue : featureValues){
-                        Map<String,String> featureADInfo = featureModelService.getFeatureADInfo(userProfile.getNation(), featureType, featureValue, adid);
-
-                        //rule
-                        totalScore = totalScore.add(new BigDecimal(featureADInfo.get("ictr")).multiply(weight));
-                    }
-                }
-            }
-            return totalScore.doubleValue();
-        }
-    }
 }

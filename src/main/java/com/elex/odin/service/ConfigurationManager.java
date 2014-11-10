@@ -3,12 +3,12 @@ package com.elex.odin.service;
 import com.elex.odin.entity.FeatureAttribute;
 import com.elex.odin.utils.Constant;
 import org.apache.commons.configuration.*;
+import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 /**
  * Author: liqiang
@@ -16,6 +16,8 @@ import java.util.Properties;
  * Time: 下午6:56
  */
 public class ConfigurationManager {
+
+    private static final Logger LOGGER = Logger.getLogger(ConfigurationManager.class);
 
     //特征类型的配置，包括权重，排序字段 过滤的范围等
     public static Map<String,FeatureAttribute> parseFeatureAttribute() throws Exception {
@@ -51,6 +53,7 @@ public class ConfigurationManager {
 
     //更新流量分配的规则
     public static void updateRequestDispatchConfig() throws Exception {
+        LOGGER.debug("update request dispatch config");
         PropertiesConfiguration prop = new PropertiesConfiguration(Constant.DYNAMIC_CONF_PATH);
         int dec = Integer.parseInt(String.valueOf(prop.getProperty("request.dispatch.decision")));
         int exp = Integer.parseInt(String.valueOf(prop.getProperty("request.dispatch.explore")));
@@ -72,6 +75,7 @@ public class ConfigurationManager {
 
 
     public static void updateScoreDistanceConfig() throws Exception {
+        LOGGER.debug("update score distance config");
         PropertiesConfiguration prop = new PropertiesConfiguration(Constant.DYNAMIC_CONF_PATH);
         Double pair1 = Double.parseDouble(String.valueOf(prop.getProperty("score.distance.pair1")));
         Double pair2 = Double.parseDouble(String.valueOf(prop.getProperty("score.distance.pair2")));
@@ -82,6 +86,7 @@ public class ConfigurationManager {
 
     public static void updateFeatureAttribute(){
         try {
+            LOGGER.debug("update feature attribute");
             Map<String,FeatureAttribute> fa = ConfigurationManager.parseFeatureAttribute();
             synchronized (Constant.FEATURE_ATTRIBUTE){
                 Constant.FEATURE_ATTRIBUTE.clear();

@@ -5,7 +5,6 @@ import com.elex.odin.entity.Advertise;
 import org.apache.log4j.Logger;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Author: liqiang
@@ -15,9 +14,9 @@ import java.util.concurrent.ConcurrentHashMap;
 public class AdvertiseManager {
 
     private static final Logger LOGGER = Logger.getLogger(AdvertiseManager.class);
-    public static ConcurrentHashMap<Integer, Advertise> advertise = new ConcurrentHashMap<Integer, Advertise>();
-    public static ConcurrentHashMap<Integer, Advertise> oldAdverties = new ConcurrentHashMap<Integer, Advertise>();
-    public static ConcurrentHashMap<String, Set<Integer>> categorys = new ConcurrentHashMap<String, Set<Integer>>();
+    public static Map<Integer, Advertise> advertise = new HashMap<Integer, Advertise>();
+    public static Map<Integer, Advertise> oldAdverties = new HashMap<Integer, Advertise>();
+    public static Map<String, Set<Integer>> categorys = new HashMap<String, Set<Integer>>();
     public static List<Integer> adIDs = new ArrayList<Integer>();
 
     public static void loadOldAdvertise() throws Exception {
@@ -44,19 +43,13 @@ public class AdvertiseManager {
                 }
                 catAds.add(ad.getAdid());
             }
+            List<Integer> ids = new ArrayList<Integer>();
+            ids.addAll(advertise.keySet());
 
-            synchronized (categorys){
-                categorys.clear();
-                categorys.putAll(catMap);
-            }
-            synchronized (advertise){
-                advertise.clear();
-                advertise.putAll(adMap);
-            }
-            synchronized (adIDs){
-                adIDs = new ArrayList<Integer>();
-                adIDs.addAll(advertise.keySet());
-            }
+            categorys = catMap;
+            advertise = adMap;
+            adIDs = ids;
+
             LOGGER.info("load " + advertise.size() + " ads, " + categorys.size() + " categorys ");
         } catch (Exception e) {
             throw new RuntimeException("Error when update advertise", e);

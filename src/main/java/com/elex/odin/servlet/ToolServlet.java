@@ -1,6 +1,11 @@
 package com.elex.odin.servlet;
 
+import com.elex.odin.service.AdvertiseManager;
+import com.elex.odin.service.ConfigurationManager;
 import com.elex.odin.service.MemoryFeatureModelService;
+import com.elex.odin.service.RedisFeatureModelService;
+import com.elex.odin.utils.CacheUtil;
+import com.elex.odin.utils.Constant;
 import com.elex.odin.utils.WebUtil;
 import org.apache.log4j.Logger;
 
@@ -26,10 +31,19 @@ public class ToolServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String action = req.getParameter("updatememmodel");
+        String action = req.getParameter("action");
         boolean success = false;
         try {
-            new MemoryFeatureModelService().updateModel();
+            if(Constant.JOB_TYPE.FEATURE_ATTRIBUTE_CONF.equals(action)){
+                ConfigurationManager.updateFeatureAttribute();
+            }else if(Constant.JOB_TYPE.AD_INFO.equals(action)){
+                AdvertiseManager.loadAdvertise();
+            }else if(Constant.JOB_TYPE.DATA_MODEL.equals(action)){
+                new MemoryFeatureModelService().updateModel();
+            }else if(Constant.JOB_TYPE.DYNAMIC_CONF.equals(action)){
+                ConfigurationManager.updateRequestDispatchConfig();
+                ConfigurationManager.updateScoreDistanceConfig();
+            }
             success = true;
         } catch (Exception e) {
             e.printStackTrace();

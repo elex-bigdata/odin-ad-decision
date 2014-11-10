@@ -23,6 +23,8 @@ public class ExploreMatcher implements ADMatcher {
         Random random = new Random();
         int adID  = AdvertiseManager.adIDs.get(random.nextInt(len));
 
+        //TODO: GET ALL_ALL AD
+
         Advertise ad = AdvertiseManager.oldAdverties.get(adID);
         if(ad == null){
             ad = AdvertiseManager.advertise.get(adID);
