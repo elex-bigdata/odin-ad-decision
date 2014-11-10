@@ -65,7 +65,7 @@ public class ThorServer {
                 String input = in.readLine();
                 System.out.println(input);
 
-                Type paramType = new TypeToken<Map<String, String>>(){}.getType();
+                /*Type paramType = new TypeToken<Map<String, String>>(){}.getType();
                 Map<String,String> req = Constant.gson.fromJson(input, paramType);
 
                 int randomNum = new Random().nextInt(100);
@@ -109,8 +109,9 @@ public class ThorServer {
                 message.setTook(System.currentTimeMillis() - begin);
                 String msg = Constant.gson.toJson(message);
 
-                LOGGER.info(msg+ " " + message.getCode());
+                LOGGER.info(msg+ " " + message.getCode());*/
 
+                String msg = "{\"status\":0,\"adid\":\"10028\",\"msg\":\"\",\"took\":128,\"tag\":\"dec\"}";
                 out = new PrintWriter(client.getOutputStream());
                 out.write(msg);
                 out.flush();
