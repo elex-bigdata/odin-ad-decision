@@ -1,11 +1,6 @@
 package com.elex.odin.servlet;
 
-import com.elex.odin.entity.ADMatchMessage;
-import com.elex.odin.entity.InputFeature;
-import com.elex.odin.service.ExploreMatcher;
-import com.elex.odin.service.MemFeatureModelService;
-import com.elex.odin.service.StrategyMatcher;
-import com.elex.odin.utils.Constant;
+import com.elex.odin.service.MemoryFeatureModelService;
 import com.elex.odin.utils.WebUtil;
 import org.apache.log4j.Logger;
 
@@ -14,9 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Random;
 
 /**
  * Author: liqiang
@@ -37,7 +29,7 @@ public class ToolServlet extends HttpServlet {
         String action = req.getParameter("updatememmodel");
         boolean success = false;
         try {
-            new MemFeatureModelService().updateModel();
+            new MemoryFeatureModelService().updateModel();
             success = true;
         } catch (Exception e) {
             e.printStackTrace();
