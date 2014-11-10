@@ -91,7 +91,7 @@ public class ThorServer {
                         case SelectionKey.OP_CONNECT :
                             break;
                         case SelectionKey.OP_READ :
-                            SERVICE.submit(new ProcessRequest2((ServerSocketChannel) key.channel()));
+                            SERVICE.submit(new ProcessRequest2((SocketChannel)key.channel()));
                             break;
                         case SelectionKey.OP_WRITE :
                             break;
@@ -209,8 +209,8 @@ public class ThorServer {
 
     static class ProcessRequest2 implements Runnable{
 
-        ServerSocketChannel serverSocketChannel;
-        public ProcessRequest2(ServerSocketChannel serverSocketChannel){
+        SocketChannel serverSocketChannel;
+        public ProcessRequest2(SocketChannel serverSocketChannel){
             this.serverSocketChannel = serverSocketChannel;
         }
 
@@ -221,7 +221,7 @@ public class ThorServer {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ByteBuffer buffer = ByteBuffer.allocate(1024);
             try {
-                socketChannel = serverSocketChannel.accept();
+//                socketChannel = serverSocketChannel.accept();
                 byte[] bytes;
                 int size = 0;
                 while ((size = socketChannel.read(buffer)) >= 0) {
