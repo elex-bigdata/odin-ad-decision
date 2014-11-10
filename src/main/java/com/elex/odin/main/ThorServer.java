@@ -81,7 +81,7 @@ public class ThorServer {
 
                 while(it.hasNext()) {
                     SelectionKey key = it.next();
-                    it.remove();
+
                     switch(key.readyOps()) {
                         case SelectionKey.OP_ACCEPT :
                             ServerSocketChannel server = (ServerSocketChannel)key.channel();
@@ -97,6 +97,7 @@ public class ThorServer {
                         case SelectionKey.OP_WRITE :
                             break;
                     }
+                    it.remove();
                 }
 
 /*                while (it.hasNext()) {
