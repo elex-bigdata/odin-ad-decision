@@ -3,6 +3,7 @@ git pull
 
 #clean the cache
 rm -rf web/WEB-INF/classes/*
+rm -rf /home/elex/webserver/apache-tomcat-7.0.56-thor/work/*
 
 mvn clean package -DskipTests
 
