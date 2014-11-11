@@ -11,7 +11,7 @@ public class Advertise {
     private int adid;
     //网盟的ID
     private int origAdid;
-    private String category = "all_all";
+    private String category;
     private String firstCategory;
     private String secondCategory;
     private String position;

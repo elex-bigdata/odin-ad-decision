@@ -40,7 +40,7 @@ public class AdvertiseManager {
             }
             List<Integer> ids = new ArrayList<Integer>();
             ids.addAll(advertise.keySet());
-
+            System.out.println(catMap.keySet());
             synchronized(AdvertiseManager.class){
                 categorys = catMap;
                 advertise = adMap;

@@ -40,9 +40,9 @@ public class ExploreMatcher implements ADMatcher {
             }
         }
 
-        if(ad == null){ //如果找不到，ALL_ALL_ALL
+        if(ad == null){ //如果找不到，ALL_ALL_Banner
             tag = "exp_random";
-            ad = AdvertiseManager.getADByCategory("all_all_all");
+            ad = AdvertiseManager.getADByCategory("all_all_banner");
         }
 
         ADMatchMessage message = null;
