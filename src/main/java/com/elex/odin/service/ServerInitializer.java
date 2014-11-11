@@ -23,6 +23,9 @@ public class ServerInitializer {
             LOGGER.info("[Server Init] - load request dispatch rule");
             ConfigurationManager.updateRequestDispatchConfig();
 
+            LOGGER.info("[Server Init] - load explore rule");
+            ConfigurationManager.updateExploreRule();
+
             LOGGER.info("[Server Init] - load final score rule");
             ConfigurationManager.updateScoreDistanceConfig();
 
@@ -56,36 +59,35 @@ public class ServerInitializer {
         JobDetail faJob = JobBuilder.newJob(SimpleJob.class).withIdentity("fa",
                 "group1").usingJobData("type", Constant.JOB_TYPE.FEATURE_ATTRIBUTE_CONF).build();
         CronTrigger faTrigger = TriggerBuilder.newTrigger().withIdentity(
-                "fa", "group1").withSchedule(CronScheduleBuilder.cronSchedule("0 0/30 * * * ?")).build();
+                "fa", "group1").withSchedule(CronScheduleBuilder.cronSchedule("0 0,30 * * * ?")).build();
 
         JobDetail cvJob = JobBuilder.newJob(SimpleJob.class).withIdentity("cv",
                 "group1").usingJobData("type",Constant.JOB_TYPE.CACHE_VSERION).build();
         CronTrigger cvTrigger = TriggerBuilder.newTrigger().withIdentity(
-                "cv", "group1").withSchedule(CronScheduleBuilder.cronSchedule("0 0/30 * * * ?")).build();
+                "cv", "group1").withSchedule(CronScheduleBuilder.cronSchedule("0 0,30 * * * ?")).build();
 
         JobDetail aiJob = JobBuilder.newJob(SimpleJob.class).withIdentity("ai",
                 "group1").usingJobData("type",Constant.JOB_TYPE.AD_INFO).build();
         CronTrigger aiTrigger = TriggerBuilder.newTrigger().withIdentity(
-                "ai", "group1").withSchedule(CronScheduleBuilder.cronSchedule("0 0/30 * * * ?")).build();
+                "ai", "group1").withSchedule(CronScheduleBuilder.cronSchedule("0 0,30 * * * ?")).build();
 
-        JobDetail dyJob = JobBuilder.newJob(SimpleJob.class).withIdentity("dy",
+        JobDetail dcJob = JobBuilder.newJob(SimpleJob.class).withIdentity("dc",
                 "group1").usingJobData("type",Constant.JOB_TYPE.DYNAMIC_CONF).build();
-        CronTrigger rdTrigger = TriggerBuilder.newTrigger().withIdentity(
-                "dy", "group1").withSchedule(CronScheduleBuilder.cronSchedule("0 0/30 * * * ?")).build();
+        CronTrigger dcTrigger = TriggerBuilder.newTrigger().withIdentity(
+                "dc", "group1").withSchedule(CronScheduleBuilder.cronSchedule("0 0,30 * * * ?")).build();
 
-        JobDetail dmJob = JobBuilder.newJob(SimpleJob.class).withIdentity("dm",
-                "group2").usingJobData("type",Constant.JOB_TYPE.DATA_MODEL).build();
-        CronTrigger dmTrigger = TriggerBuilder.newTrigger().withIdentity(
-                "dm", "group2").withSchedule(CronScheduleBuilder.cronSchedule("0 30 21 * * ?")).build();
+        JobDetail erJob = JobBuilder.newJob(SimpleJob.class).withIdentity("er",
+                "group1").usingJobData("type",Constant.JOB_TYPE.EXP_RULE).build();
+        CronTrigger erTrigger = TriggerBuilder.newTrigger().withIdentity(
+                "er", "group1").withSchedule(CronScheduleBuilder.cronSchedule("0 0,30 * * * ?")).build();
 
         scheduler.scheduleJob(faJob, faTrigger);
 //        scheduler.scheduleJob(cvJob, cvTrigger);
         scheduler.scheduleJob(aiJob, aiTrigger);
-        scheduler.scheduleJob(dyJob, rdTrigger);
-//        scheduler.scheduleJob(dmJob, dmTrigger);
+        scheduler.scheduleJob(dcJob, dcTrigger);
+        scheduler.scheduleJob(erJob, erTrigger);
 
         scheduler.start();
-        scheduler.shutdown(true);
     }
 
 

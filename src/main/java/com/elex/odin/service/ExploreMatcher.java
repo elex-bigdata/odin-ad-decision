@@ -4,7 +4,9 @@ import com.elex.odin.entity.ADMatchMessage;
 import com.elex.odin.entity.Advertise;
 import com.elex.odin.entity.InputFeature;
 import com.elex.odin.utils.Constant;
+import org.apache.log4j.Logger;
 
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -15,21 +17,45 @@ import java.util.Random;
  */
 public class ExploreMatcher implements ADMatcher {
 
+    private static final Logger LOGGER = Logger.getLogger(ExploreMatcher.class);
+
     @Override
     public ADMatchMessage match(InputFeature inputFeature) throws Exception {
-
-        int len = AdvertiseManager.adIDs.size();
+        long begin = System.currentTimeMillis();
 
         Random random = new Random();
-        int adID  = AdvertiseManager.adIDs.get(random.nextInt(len));
-
-        //TODO: GET ALL_ALL AD
-
-        Advertise ad = AdvertiseManager.oldAdverties.get(adID);
-        if(ad == null){
-            ad = AdvertiseManager.advertise.get(adID);
+        Advertise ad =  null;
+        String tag = Constant.exploreRule.getTag();
+        if(Constant.exploreRule.getRules().size() > 0){
+            int rate = random.nextInt(100);
+            int currentRate = 0;
+            for(Map.Entry<String,Integer> rule : Constant.exploreRule.getRules().entrySet()){
+                if(rate < (currentRate + rule.getValue())){
+                    ad = AdvertiseManager.getADByCategory(rule.getKey());
+                    break;
+                }
+                currentRate += rule.getValue();
+            }
         }
 
-        return new ADMatchMessage(0, String.valueOf(adID), ad.getCode(), Constant.TAG.EXPLORE);
+        if(ad == null){ //如果找不到，ALL_ALL_ALL
+            tag = "exp_random";
+            ad = AdvertiseManager.getADByCategory("all_all_all");
+        }
+
+        ADMatchMessage message = null;
+        if(ad != null){
+            message = new ADMatchMessage(0, String.valueOf(ad.getAdid()), ad.getCode(), tag);
+        }else{
+            LOGGER.info("explore failed");
+            message = new ADMatchMessage(-1,"explore failed");
+        }
+
+        String msg = "{\"reqid\":\""+ inputFeature.getReqid()+",\"\"status\":" +message.getStatus()+ ",\"adid\":\""+message.getAdid()+"\"," +
+                "\"msg\":\"" + message.getMsg() +"\",\"took\":"+(System.currentTimeMillis() - begin)+",\"tag\":\""+message.getTag()+"\"}";
+
+        LOGGER.debug(msg);
+
+        return message;
     }
 }

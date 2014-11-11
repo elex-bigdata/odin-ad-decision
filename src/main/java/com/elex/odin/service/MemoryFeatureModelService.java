@@ -123,10 +123,11 @@ public class MemoryFeatureModelService implements FeatureModelServiceInterface {
             boolean success = true;
             for(Future<Boolean> future : updaters){
                 try{
-                    if(!future.get()){
+                    if(!future.get(10, TimeUnit.MINUTES)){ //十分钟未更新完一个模型，说明系统出现问题
                         success = false;
                     }
                 }catch(Exception e){
+                    e.printStackTrace();
                     success = false;
                 }
             }

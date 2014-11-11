@@ -1,11 +1,8 @@
 package com.elex.odin.job;
 
-import com.elex.odin.service.AdvertiseManager;
-import com.elex.odin.service.ConfigurationManager;
-import com.elex.odin.service.RedisFeatureModelService;
+import com.elex.odin.service.*;
 import com.elex.odin.utils.CacheUtil;
 import com.elex.odin.utils.Constant;
-import com.elex.odin.service.MailManager;
 import org.apache.log4j.Logger;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -31,10 +28,12 @@ public class SimpleJob implements Job{
             }else if(Constant.JOB_TYPE.CACHE_VSERION.equals(type)){
                 CacheUtil.updateVersion();
             }else if(Constant.JOB_TYPE.DATA_MODEL.equals(type)){
-                new RedisFeatureModelService().updateModel();
+                new MemoryFeatureModelService().updateModel();
             }else if(Constant.JOB_TYPE.DYNAMIC_CONF.equals(type)){
                 ConfigurationManager.updateRequestDispatchConfig();
                 ConfigurationManager.updateScoreDistanceConfig();
+            }else if(Constant.JOB_TYPE.EXP_RULE.equals(type)){
+                ConfigurationManager.updateExploreRule();
             }
         }catch (Exception e){
             e.printStackTrace();

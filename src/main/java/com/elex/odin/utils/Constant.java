@@ -1,5 +1,6 @@
 package com.elex.odin.utils;
 
+import com.elex.odin.entity.ExploreRule;
 import com.elex.odin.entity.FeatureAttribute;
 import com.google.gson.Gson;
 
@@ -20,8 +21,6 @@ public class Constant {
     public static ConcurrentHashMap<String,Integer> REQUEST_DISPATCH = new ConcurrentHashMap<String,Integer>();
     //广告得分计算完后，最后挑选广告的一个阀值
     public static ConcurrentHashMap<String,Double> FINAL_SOCRE_DISTANCE = new ConcurrentHashMap<String,Double>();
-
-//    public static ExecutorService CAL_SERVICE = new ThreadPoolExecutor(1000,50000,60, TimeUnit.MILLISECONDS,new LinkedBlockingQueue<Runnable>());
 
     //特征类型值
     public static class FEATURE_TYPE{
@@ -56,10 +55,12 @@ public class Constant {
         public static final String DECISION = "dec";
     }
 
+    public static ExploreRule exploreRule = new ExploreRule();
     public static final Gson gson = new Gson();
 
     //配置路径
-    public static final String FEATURE_RULE_PATH = "/home/elex/git_project_home/odin-ad-decision/src/main/resources/feature_match_attribute.xml";
+    public static final String FEATURE_ATTR_PATH = "/home/elex/git_project_home/odin-ad-decision/src/main/resources/feature_match_attribute.xml";
+    public static final String EXPLORE_RULE_PATH = "explore_rule.xml";
     public static final String MYSQL_CONF_PATH = "mysql_config.properties";
     public static final String DYNAMIC_CONF_PATH = "/home/elex/git_project_home/odin-ad-decision/src/main/resources/dynamic_config.properties";
 
@@ -93,6 +94,7 @@ public class Constant {
         public static final String CACHE_VSERION = "version";
         public static final String DATA_MODEL = "model";
         public static final String DYNAMIC_CONF = "dy_conf";
+        public static final String EXP_RULE = "exp_rule";
     }
 
 }

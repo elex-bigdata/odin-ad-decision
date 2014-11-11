@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +23,7 @@ public class ConfigurationManager {
     //特征类型的配置，包括权重，排序字段 过滤的范围等
     public static Map<String,FeatureAttribute> parseFeatureAttribute() throws Exception {
         XMLConfiguration xml = new XMLConfiguration();
-        xml.load(Constant.FEATURE_RULE_PATH);
+        xml.load(Constant.FEATURE_ATTR_PATH);
         List<HierarchicalConfiguration> features = xml.configurationsAt("feature");
 
         Map<String,FeatureAttribute> featureAttributes = new HashMap<String, FeatureAttribute>();
@@ -38,6 +39,42 @@ public class ConfigurationManager {
             featureAttributes.put(featureType, attr);
         }
         return featureAttributes;
+    }
+
+    public static void updateExploreRule() {
+        try{
+            XMLConfiguration xml = new XMLConfiguration();
+            xml.load(Constant.EXPLORE_RULE_PATH);
+            String tag = String.valueOf(xml.getProperty("tag")).trim();
+
+            if(tag.length() == 0){
+                throw new Exception("Explore tag name should not be empty");
+            }
+
+            List<HierarchicalConfiguration> adRules = xml.configurationsAt("ad");
+            Map<String,Integer> rules = new LinkedHashMap<String, Integer>();
+            int totalRate  = 0;
+            for(HierarchicalConfiguration rule : adRules){
+                Integer rate = Integer.parseInt(rule.getString("rate"));
+                totalRate += rate;
+                String firstCat =  rule.getString("first_cat").trim();
+                String secondCat =  rule.getString("second_cat").trim();
+                String mediaType =  rule.getString("media_type").trim();
+                String key = firstCat + "_" + secondCat + "_" + mediaType;
+                rules.put(key.toLowerCase(), rate);
+            }
+
+            if(totalRate != 100){
+                throw new Exception("The explore total rate should equals 100");
+            }
+
+            synchronized (Constant.exploreRule){
+                Constant.exploreRule.setTag(tag);
+                Constant.exploreRule.setRules(rules);
+            }
+        }catch (Exception e){
+            throw new RuntimeException("Failed update explore rule", e);
+        }
     }
 
     //获取MYSQL的配置

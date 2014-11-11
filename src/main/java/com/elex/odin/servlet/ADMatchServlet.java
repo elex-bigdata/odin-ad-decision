@@ -42,18 +42,17 @@ public class ADMatchServlet extends HttpServlet {
     }
 
     public void dispatchRequest(HttpServletRequest req,HttpServletResponse resp){
+        long begin = System.currentTimeMillis();
         int randomNum = random.nextInt(100);
 
         ADMatchMessage message = null;
-        long begin = System.currentTimeMillis();
         int defaultPercent = Constant.REQUEST_DISPATCH.get("default");
-
+        String reqid = req.getParameter("reqid");
         if(randomNum < defaultPercent){
             message = new ADMatchMessage(Constant.TAG.DEFAULT);
         }else{
             try{
                 String uid = req.getParameter("uid");
-                String reqid = req.getParameter("reqid");
                 String pid = req.getParameter("pid");
                 String ip = req.getParameter("ip");
                 String nation = req.getParameter("nation").toLowerCase();
@@ -81,10 +80,7 @@ public class ADMatchServlet extends HttpServlet {
         }
 
         message.setTook(System.currentTimeMillis() - begin);
-        String msg = Constant.gson.toJson(message);
 
-//        String msg = "{\"status\":0,\"adid\":\"10028\",\"msg\":\"\",\"took\":128,\"tag\":\"dec\"}";
-        LOGGER.info(msg);
-        WebUtil.writeStr(msg, resp);
+        WebUtil.writeJson(message, resp);
     }
 }

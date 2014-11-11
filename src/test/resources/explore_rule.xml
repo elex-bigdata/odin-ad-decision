@@ -1,0 +1,15 @@
+<explore>
+    <tag>exp</tag>
+    <ad>
+        <rate>50</rate>
+        <first_cat>All</first_cat>
+        <second_cat>All</second_cat>
+        <media_type>Banner</media_type>
+    </ad>
+    <ad>
+    <rate>50</rate>
+        <first_cat>All</first_cat>
+        <second_cat>Hotels</second_cat>
+        <media_type>Banner</media_type>
+    </ad>
+</explore>

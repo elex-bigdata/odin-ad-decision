@@ -23,6 +23,7 @@ public class StrategyMatcher implements ADMatcher {
 
     @Override
     public ADMatchMessage match(InputFeature inputFeature) throws Exception {
+        long begin = System.currentTimeMillis();
 
         UserProfile userProfile = new UserProfile(inputFeature.getUid(), inputFeature.getNation(), inputFeature.getReqid());
 
@@ -37,20 +38,25 @@ public class StrategyMatcher implements ADMatcher {
 
         //4. 决策
         List<Pair> adScores = calAll(validADs, userProfile);
-        String adID =  selectAD(adScores);
+        String adID =  selectAD(userProfile, adScores);
 
-        Advertise ad = AdvertiseManager.oldAdverties.get(Integer.parseInt(adID));
-        if(ad == null){
-            ad = AdvertiseManager.advertise.get(Integer.parseInt(adID));
-        }
+        Advertise ad = AdvertiseManager.getADByID(Integer.parseInt(adID));
 
+        ADMatchMessage message = null;
         if(ad != null){
-            return new ADMatchMessage(0, adID, ad.getCode(), Constant.TAG.DECISION);
+            message = new ADMatchMessage(0, adID, ad.getCode(), Constant.TAG.DECISION);
         }else{
             LOGGER.info("does not find the adid " + adID);
-            return new ADMatchMessage(-1,"not find the adid " + adID);
+            message = new ADMatchMessage(-1,"not find the adid " + adID);
         }
 
+        //不打印code，太长了
+        String msg = "{\"reqid\":\""+userProfile.getReqid()+",\"\"status\":" +message.getStatus()+ ",\"adid\":\""+message.getAdid()+"\"," +
+                "\"msg\":\"" + message.getMsg() +"\",\"took\":"+(System.currentTimeMillis() - begin)+",\"tag\":\""+message.getTag()+"\"}";
+
+        LOGGER.debug(msg);
+
+        return message;
     }
 
     private void getUserProfile(UserProfile userProfile) throws CacheException {
@@ -65,7 +71,7 @@ public class StrategyMatcher implements ADMatcher {
                 userProfile.addFeature(featureType, featureValue);
             }
         }
-        LOGGER.debug("getUserProfile for " + userProfile.getUid() + " spend " + (System.currentTimeMillis() - begin) + "ms");
+        LOGGER.debug(userProfile.getReqid() + " get user profile spend " + (System.currentTimeMillis() - begin) + "ms");
     }
 
     //输入的特征与模型里面的特征进行合并
@@ -111,7 +117,7 @@ public class StrategyMatcher implements ADMatcher {
                 }
             }
         }
-        LOGGER.debug("featchValidADs " + adFeatureMap.size() + " ads for "+ userProfile.getUid() + " spend " + (System.currentTimeMillis() - begin) + "ms"  );
+        LOGGER.debug(userProfile.getReqid() + " get " + adFeatureMap.size() + " ads spend " + (System.currentTimeMillis() - begin) + "ms"  );
         return adFeatureMap;
     }
 
@@ -141,7 +147,7 @@ public class StrategyMatcher implements ADMatcher {
             adScores.add(new ImmutablePair(adFeatureKV.getKey(), score));
         }
 
-        LOGGER.debug("calAll for " + userProfile.getUid() + " spend " + (System.currentTimeMillis() - begin) + "ms");
+        LOGGER.debug(userProfile.getReqid() + " calculate score spend " + (System.currentTimeMillis() - begin) + "ms");
         return adScores;
     }
 
@@ -171,7 +177,7 @@ public class StrategyMatcher implements ADMatcher {
     }
 
     //筛选最后的广告
-    private String selectAD(List<Pair> adScores){
+    private String selectAD(UserProfile userProfile, List<Pair> adScores){
         long begin = System.currentTimeMillis();
         Collections.sort(adScores, new Comparator<Pair>() {
             @Override
@@ -193,7 +199,7 @@ public class StrategyMatcher implements ADMatcher {
         }
         Random random = new Random();
         int index = random.nextInt(ads.size());
-        LOGGER.info("Choosed " + adScores.get(index).getLeft() + " from " + adScores.toString() + " spend " + (System.currentTimeMillis() - begin) + "ms");
+        LOGGER.info(userProfile.getReqid() + " select " + adScores.get(index).getLeft() + " from " + adScores.toString() + " spend " + (System.currentTimeMillis() - begin) + "ms");
         return adScores.get(index).getLeft().toString();
     }
 

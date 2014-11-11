@@ -15,8 +15,8 @@ public class AdvertiseManager {
 
     private static final Logger LOGGER = Logger.getLogger(AdvertiseManager.class);
     public static Map<Integer, Advertise> advertise = new HashMap<Integer, Advertise>();
-    public static Map<Integer, Advertise> oldAdverties = new HashMap<Integer, Advertise>();
-    public static Map<String, Set<Integer>> categorys = new HashMap<String, Set<Integer>>();
+    private static Map<Integer, Advertise> oldAdverties = new HashMap<Integer, Advertise>();
+    private static Map<String, Integer> categorys = new HashMap<String, Integer>();
     public static List<Integer> adIDs = new ArrayList<Integer>();
 
     public static void loadOldAdvertise() throws Exception {
@@ -28,27 +28,25 @@ public class AdvertiseManager {
         LOGGER.info("load " + oldAdverties.size() + " old ads");
     }
 
-    public synchronized static void loadAdvertise(){
+    public static void loadAdvertise(){
         OdinADDao dao = new OdinADDao();
         try {
             List<Advertise> ads = dao.getAdInfo();
             HashMap<Integer, Advertise> adMap = new HashMap<Integer, Advertise>();
-            HashMap<String, Set<Integer>> catMap = new HashMap<String, Set<Integer>>();
+            HashMap<String, Integer> catMap = new HashMap<String, Integer>();
             for(Advertise ad : ads){
                 adMap.put(ad.getAdid(), ad);
-                Set<Integer> catAds = catMap.get(ad.getFirstCategory());
-                if(catAds == null){
-                    catAds = new HashSet<Integer>();
-                    catMap.put(ad.getCategory(), catAds);
-                }
-                catAds.add(ad.getAdid());
+                String key = ad.getFirstCategory() + "_" + ad.getSecondCategory() + "_" + ad.getMediaType();
+                catMap.put(key.toLowerCase(), ad.getAdid());
             }
             List<Integer> ids = new ArrayList<Integer>();
             ids.addAll(advertise.keySet());
 
-            categorys = catMap;
-            advertise = adMap;
-            adIDs = ids;
+            synchronized(AdvertiseManager.class){
+                categorys = catMap;
+                advertise = adMap;
+                adIDs = ids;
+            }
 
             LOGGER.info("load " + advertise.size() + " ads, " + categorys.size() + " categorys ");
         } catch (Exception e) {
@@ -57,10 +55,18 @@ public class AdvertiseManager {
     }
 
     public static Advertise getADByID(Integer adid){
+        Advertise ad = AdvertiseManager.oldAdverties.get(adid);
+        if(ad == null){
+            ad = AdvertiseManager.advertise.get(adid);
+        }
         return advertise.get(adid);
     }
 
-    public static Set<Integer> getADIDByCategory(String category){
-        return categorys.get(category);
+    public static Advertise getADByCategory(String category){
+        Integer adId = categorys.get(category.toLowerCase());
+        if(adId != null){
+            return advertise.get(adId);
+        }
+        return null;
     }
 }
