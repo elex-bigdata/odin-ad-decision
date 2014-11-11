@@ -33,7 +33,6 @@ public class MemoryFeatureModelService implements FeatureModelServiceInterface {
                 features.put(featureValue, new UserFeatureInfo());
             }
         }
-        LOGGER.debug("getUserProfileFeature : " + key + " " + features.size());
         return features;
     }
 
@@ -47,7 +46,6 @@ public class MemoryFeatureModelService implements FeatureModelServiceInterface {
 
         if(sortIDs == null) return adIDs;
 
-        System.out.println(sortIDs);
         if(rules.length == 1 ){ //TOP N
             int count = (int)rules[0];
             for(Map.Entry<Double,Set<String>> scores : sortIDs.entrySet()){
@@ -61,7 +59,6 @@ public class MemoryFeatureModelService implements FeatureModelServiceInterface {
                 adIDs.addAll(ad);
             }
         }
-        System.out.println(adIDs);
         return adIDs;
     }
 
