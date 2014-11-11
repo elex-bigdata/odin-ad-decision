@@ -73,7 +73,7 @@ public class MemoryFeatureADModelUpdater implements ModelUpdater {
                 mapValue.put(fields[i],values[i]);
             }
 
-            String sortScore = mapValue.get(Constant.FEATURE_ATTRIBUTE.get(featureType).getSortField());
+            String sortScore = mapValue.get(Constant.DECISION_RULE.getFeatureAttributes().get(featureType).getSortField());
 
             if(!"0".equals(sortScore)){
                 String sortKey = values[2] + "." + featureType + "." + values[1];
