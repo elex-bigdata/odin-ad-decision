@@ -47,7 +47,7 @@ public class StrategyMatcher implements ADMatcher {
             message = new ADMatchMessage(0, adID, ad.getCode(), Constant.TAG.DECISION);
         }else{
             LOGGER.info("does not find the adid " + adID);
-            message = new ADMatchMessage(-1,"not find the adid " + adID);
+            message = new ADMatchMessage(-1,"does not find the adid " + adID);
         }
 
         //不打印code，太长了

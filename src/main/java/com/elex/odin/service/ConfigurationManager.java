@@ -43,6 +43,7 @@ public class ConfigurationManager {
 
     public static void updateExploreRule() {
         try{
+            LOGGER.debug("begin update explore rule");
             XMLConfiguration xml = new XMLConfiguration();
             xml.load(Constant.EXPLORE_RULE_PATH);
             String tag = String.valueOf(xml.getProperty("tag")).trim();

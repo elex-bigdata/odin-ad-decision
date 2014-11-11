@@ -60,7 +60,7 @@ public class Constant {
 
     //配置路径
     public static final String FEATURE_ATTR_PATH = "/home/elex/git_project_home/odin-ad-decision/src/main/resources/feature_match_attribute.xml";
-    public static final String EXPLORE_RULE_PATH = "explore_rule.xml";
+    public static final String EXPLORE_RULE_PATH = "/home/elex/git_project_home/odin-ad-decision/src/main/resources/explore_rule.xml";
     public static final String MYSQL_CONF_PATH = "mysql_config.properties";
     public static final String DYNAMIC_CONF_PATH = "/home/elex/git_project_home/odin-ad-decision/src/main/resources/dynamic_config.properties";
 
