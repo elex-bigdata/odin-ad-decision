@@ -10,13 +10,7 @@ import com.elex.odin.service.RedisFeatureModelService;
 public class ServerTool {
 
     public static void main(String[] args) throws Exception {
-        if(args.length == 0){
-            System.out.println("day");
-            System.exit(-1);
-        }
-        String day = args[0];
-        ConfigurationManager.updateFeatureAttribute();
-        new RedisFeatureModelService().updateModel(day);
+
     }
 
 }

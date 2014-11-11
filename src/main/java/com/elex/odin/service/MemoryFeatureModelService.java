@@ -19,7 +19,7 @@ import java.util.concurrent.*;
 public class MemoryFeatureModelService implements FeatureModelServiceInterface {
 
     //key : uid.nation.featureType, value: featureValue
-    private static final Logger LOGGER = Logger.getLogger(RedisFeatureModelService.class);
+    private static final Logger LOGGER = Logger.getLogger(MemoryFeatureModelService.class);
 
     @Override
     public Map<String, UserFeatureInfo> getUserProfileFeature(String uid, String nation, String featureType) throws CacheException {

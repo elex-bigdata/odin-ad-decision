@@ -3,8 +3,6 @@ package com.elex.odin.servlet;
 import com.elex.odin.service.AdvertiseManager;
 import com.elex.odin.service.ConfigurationManager;
 import com.elex.odin.service.MemoryFeatureModelService;
-import com.elex.odin.service.RedisFeatureModelService;
-import com.elex.odin.utils.CacheUtil;
 import com.elex.odin.utils.Constant;
 import com.elex.odin.utils.WebUtil;
 import org.apache.log4j.Logger;
