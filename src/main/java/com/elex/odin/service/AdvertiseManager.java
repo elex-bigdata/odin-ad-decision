@@ -59,7 +59,7 @@ public class AdvertiseManager {
         if(ad == null){
             ad = AdvertiseManager.advertise.get(adid);
         }
-        return advertise.get(adid);
+        return ad;
     }
 
     public static Advertise getADByCategory(String category){
