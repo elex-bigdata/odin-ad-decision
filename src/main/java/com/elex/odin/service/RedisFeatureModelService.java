@@ -43,7 +43,7 @@ public class RedisFeatureModelService implements FeatureModelServiceInterface{
 
     public Set<String> getValidADByFeature(String nation, String featureType, String featureValue) throws CacheException {
         String key = CacheUtil.keyWithVersion(Constant.CACHE.SORT_AD_PREFIX + "." + nation + "." + featureType + "." + featureValue);
-        double[] rules = Constant.FEATURE_ATTRIBUTE.get(featureType).getFilterRange();
+        double[] rules = Constant.DECISION_RULE.getFeatureAttributes().get(featureType).getFilterRange();
         if(rules.length == 1 ){
             return redisOperator.zrevrange(key, 0, (int) rules[0]);
         }else{

@@ -1,47 +1,57 @@
 <features>
+    <tag>dec</tag>
     <feature type="p" desc="project id" weight="1" defaultValue="0">
         <sort field="ictr" />
         <filter range="15" />
+        <cal_field>ictr</cal_field>
         <score> <![CDATA[ pv > 10 and sv >20 ]]> </score>
     </feature>
     <feature type="u" weight="1" defaultValue="0">
         <sort field="ictr" />
         <filter range="15" />
+        <cal_field>ictr</cal_field>
         <score><![CDATA[ pv > 10 and sv >20 ]]></score>
     </feature>
     <feature type="t" desc="" weight="1" defaultValue="0">
         <sort field="ictr" />
         <filter range="15" />
+        <cal_field>ictr</cal_field>
         <score><![CDATA[ pv > 10 and sv >20 ]]></score>
     </feature>
     <feature type="bw" desc="browser" weight="1" defaultValue="0">
         <sort field="ictr" />
         <filter range="15" />
+        <cal_field>ictr</cal_field>
         <score> <![CDATA[ pv > 10 and sv >20 ]]> </score>
     </feature>
     <feature type="ip" desc="" weight="1" defaultValue="0">
         <sort field="ictr" />
         <filter range="15" />
+        <cal_field>ictr</cal_field>
         <score><![CDATA[ pv > 10 and sv >20 ]]></score>
     </feature>
-    <feature type="q" desc="" weight="1" defaultValue="0">
+    <feature type="q" desc="query" weight="1" defaultValue="0">
         <sort field="ictr" />
         <filter range="15" />
+        <cal_field>ictr</cal_field>
         <score> <![CDATA[ pv > 10 and sv >20 ]]> </score>
     </feature>
     <feature type="ql" desc="query length" weight="1" defaultValue="0">
         <sort field="ictr" />
         <filter range="15" />
+        <cal_field>ictr</cal_field>
         <score><![CDATA[ pv > 10 and sv >20 ]]></score>
     </feature>
     <feature type="qwc" desc="query word count" weight="1" defaultValue="0">
         <sort field="ictr" />
         <filter range="15" />
+        <cal_field>ictr</cal_field>
         <score><![CDATA[ pv > 10 and sv >20 ]]></score>
     </feature>
     <feature type="kw" desc="keyword" weight="1" defaultValue="0">
         <sort field="ictr" />
         <filter range="15" />
+        <cal_field>ictr</cal_field>
         <score><![CDATA[ pv > 10 and sv >20 ]]></score>
     </feature>
 </features>

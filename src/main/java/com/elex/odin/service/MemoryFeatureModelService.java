@@ -39,7 +39,7 @@ public class MemoryFeatureModelService implements FeatureModelServiceInterface {
     @Override
     public Set<String> getValidADByFeature(String nation, String featureType, String featureValue) throws CacheException {
         String key = nation + "." + featureType + "." + featureValue;
-        double[] rules = Constant.FEATURE_ATTRIBUTE.get(featureType).getFilterRange();
+        double[] rules = Constant.DECISION_RULE.getFeatureAttributes().get(featureType).getFilterRange();
 
         Set<String> adIDs = new HashSet<String>();
         TreeMap<Double,Set<String>> sortIDs =  MemoryCache.featureADIndex.get(key);
