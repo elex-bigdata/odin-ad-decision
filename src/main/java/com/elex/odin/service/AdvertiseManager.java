@@ -40,13 +40,12 @@ public class AdvertiseManager {
             }
             List<Integer> ids = new ArrayList<Integer>();
             ids.addAll(advertise.keySet());
-            System.out.println(catMap.keySet());
             synchronized(AdvertiseManager.class){
                 categorys = catMap;
                 advertise = adMap;
                 adIDs = ids;
             }
-
+            System.out.println(advertise.keySet());
             LOGGER.info("load " + advertise.size() + " ads, " + categorys.size() + " categorys ");
         } catch (Exception e) {
             throw new RuntimeException("Error when update advertise", e);
@@ -63,6 +62,7 @@ public class AdvertiseManager {
 
     public static Advertise getADByCategory(String category){
         Integer adId = categorys.get(category.toLowerCase());
+        System.out.println(category.toLowerCase() + ":" + adId);
         if(adId != null){
             return advertise.get(adId);
         }
