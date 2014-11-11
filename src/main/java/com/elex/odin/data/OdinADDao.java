@@ -56,13 +56,13 @@ public class OdinADDao {
                 Advertise ad = new Advertise();
                 ad.setAdid(rs.getInt(1));
                 ad.setOrigAdid(rs.getInt(2));
-                ad.setName(rs.getString(2));
-                ad.setCode(rs.getString(3));
-                ad.setNetwork(rs.getString(4));
-                ad.setCategory(rs.getString(5), rs.getString(6) , rs.getString(7));
-                ad.setSize(rs.getString(8));
-                ad.setTime(rs.getString(9));
-                ad.setPosition(rs.getString(10));
+                ad.setName(rs.getString(3));
+                ad.setCode(rs.getString(4));
+                ad.setNetwork(rs.getString(5));
+                ad.setCategory(rs.getString(6), rs.getString(7) , rs.getString(8));
+                ad.setSize(rs.getString(9));
+                ad.setTime(rs.getString(10));
+                ad.setPosition(rs.getString(11));
                 ads.add(ad);
             }
             return ads;
