@@ -30,7 +30,7 @@ public class ToolServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
-        boolean success = false;
+        String msg = "";
         try {
             if(Constant.JOB_TYPE.FEATURE_ATTRIBUTE_CONF.equals(action)){
                 ConfigurationManager.updateFeatureAttribute();
@@ -44,12 +44,13 @@ public class ToolServlet extends HttpServlet {
             }else if(Constant.JOB_TYPE.EXP_RULE.equals(action)){
                 ConfigurationManager.updateExploreRule();
             }
-            success = true;
+            msg = "success";
         } catch (Exception e) {
             e.printStackTrace();
+            msg = "failed " + e.getMessage();
             LOGGER.error("Action " + action + "failed", e);
         }
-        WebUtil.writeStr(String.valueOf(success), resp);
+        WebUtil.writeStr(msg, resp);
     }
 
 }

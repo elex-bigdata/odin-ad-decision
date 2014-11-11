@@ -90,10 +90,11 @@ public class Advertise {
         return category;
     }
 
-    public void setCategory(String firstCategory, String secondCategory) {
+    public void setCategory(String firstCategory, String secondCategory, String mediaType) {
         this.firstCategory =  firstCategory;
         this.secondCategory = secondCategory;
-        this.category = firstCategory + "_" + secondCategory;
+        this.mediaType = mediaType;
+        this.category = firstCategory + "_" + secondCategory + "_" + mediaType;
     }
 
     public String getSize() {

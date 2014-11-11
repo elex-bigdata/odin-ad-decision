@@ -20,27 +20,6 @@ public class ConfigurationManager {
 
     private static final Logger LOGGER = Logger.getLogger(ConfigurationManager.class);
 
-    //特征类型的配置，包括权重，排序字段 过滤的范围等
-    public static Map<String,FeatureAttribute> parseFeatureAttribute() throws Exception {
-        XMLConfiguration xml = new XMLConfiguration();
-        xml.load(Constant.FEATURE_ATTR_PATH);
-        List<HierarchicalConfiguration> features = xml.configurationsAt("feature");
-
-        Map<String,FeatureAttribute> featureAttributes = new HashMap<String, FeatureAttribute>();
-        for(HierarchicalConfiguration feature : features){
-            FeatureAttribute attr = new FeatureAttribute();
-            String featureType = feature.getString("[@type]");
-            attr.setType(featureType);
-            attr.setWeight(new BigDecimal(feature.getString("[@weight]")));
-            attr.setDefaultValue(new BigDecimal(feature.getString("[@defaultValue]")));
-            attr.setSortField(feature.getString("sort[@field]"));
-            attr.setFilterRange(feature.getString("filter[@range]"));
-            attr.setScoreRule(feature.getString("score"));
-            featureAttributes.put(featureType, attr);
-        }
-        return featureAttributes;
-    }
-
     public static void updateExploreRule() {
         try{
             LOGGER.debug("begin update explore rule");
@@ -69,9 +48,9 @@ public class ConfigurationManager {
                 throw new Exception("The explore total rate should equals 100");
             }
 
-            synchronized (Constant.exploreRule){
-                Constant.exploreRule.setTag(tag);
-                Constant.exploreRule.setRules(rules);
+            synchronized (Constant.EXPLORE_RULE){
+                Constant.EXPLORE_RULE.setTag(tag);
+                Constant.EXPLORE_RULE.setRules(rules);
             }
         }catch (Exception e){
             throw new RuntimeException("Failed update explore rule", e);
@@ -122,13 +101,43 @@ public class ConfigurationManager {
         Constant.FINAL_SOCRE_DISTANCE.put("pair2", pair2);
     }
 
+    //特征类型的配置，包括权重，排序字段 过滤的范围等
     public static void updateFeatureAttribute(){
         try {
             LOGGER.debug("update feature attribute");
-            Map<String,FeatureAttribute> fa = ConfigurationManager.parseFeatureAttribute();
-            synchronized (Constant.FEATURE_ATTRIBUTE){
-                Constant.FEATURE_ATTRIBUTE.clear();
-                Constant.FEATURE_ATTRIBUTE.putAll(fa);
+            XMLConfiguration xml = new XMLConfiguration();
+            xml.load(Constant.FEATURE_ATTR_PATH);
+
+            String tag = String.valueOf(xml.getProperty("tag")).trim();
+
+            List<HierarchicalConfiguration> features = xml.configurationsAt("feature");
+
+            Map<String,FeatureAttribute> featureAttributes = new HashMap<String, FeatureAttribute>();
+            for(HierarchicalConfiguration feature : features){
+                FeatureAttribute attr = new FeatureAttribute();
+                String featureType = feature.getString("[@type]");
+                attr.setType(featureType);
+                attr.setWeight(new BigDecimal(feature.getString("[@weight]")));
+                attr.setDefaultValue(new BigDecimal(feature.getString("[@defaultValue]")));
+                String sortField = feature.getString("sort[@field]");
+                if(Constant.FA_NUMBER_FIELDS.get(sortField) == null){
+                    throw new Exception("Invalid sort field for "+ featureType + sortField);
+                }
+                attr.setSortField(feature.getString("sort[@field]"));
+                attr.setFilterRange(feature.getString("filter[@range]"));
+                attr.setScoreRule(feature.getString("score"));
+
+                String calField = feature.getString("cal_field");
+                if(Constant.FA_NUMBER_FIELDS.get(calField) == null){
+                    throw new Exception("Invalid cal_field for "+ featureType + calField);
+                }
+                attr.setCalField(feature.getString("cal_field"));
+                featureAttributes.put(featureType, attr);
+            }
+
+            synchronized (Constant.DECISION_RULE){
+                Constant.DECISION_RULE.setTag(tag);
+                Constant.DECISION_RULE.setFeatureAttributes(featureAttributes);
             }
         } catch (Exception e) {
             throw new RuntimeException("Error while parse the feature attribute", e);

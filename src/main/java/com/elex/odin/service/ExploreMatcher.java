@@ -17,7 +17,7 @@ import java.util.Random;
  */
 public class ExploreMatcher implements ADMatcher {
 
-    private static final Logger LOGGER = Logger.getLogger(ExploreMatcher.class);
+    private static final Logger LOGGER = Logger.getLogger("exp");
 
     @Override
     public ADMatchMessage match(InputFeature inputFeature) throws Exception {
@@ -25,12 +25,14 @@ public class ExploreMatcher implements ADMatcher {
 
         Random random = new Random();
         Advertise ad =  null;
-        String tag = Constant.exploreRule.getTag();
-        if(Constant.exploreRule.getRules().size() > 0){
+
+        String tag = Constant.EXPLORE_RULE.getTag();
+        if(Constant.EXPLORE_RULE.getRules().size() > 0){
             int rate = random.nextInt(100);
             int currentRate = 0;
-            for(Map.Entry<String,Integer> rule : Constant.exploreRule.getRules().entrySet()){
+            for(Map.Entry<String,Integer> rule : Constant.EXPLORE_RULE.getRules().entrySet()){
                 if(rate < (currentRate + rule.getValue())){
+                    LOGGER.debug("selected key " + rule.getKey());
                     ad = AdvertiseManager.getADByCategory(rule.getKey());
                     break;
                 }

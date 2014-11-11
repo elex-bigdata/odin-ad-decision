@@ -1,7 +1,7 @@
 package com.elex.odin.utils;
 
+import com.elex.odin.entity.DecisionRule;
 import com.elex.odin.entity.ExploreRule;
-import com.elex.odin.entity.FeatureAttribute;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
@@ -15,8 +15,8 @@ import java.util.concurrent.*;
  */
 public class Constant {
 
-    //每个特征类型的一些属性配置，包括权重、排序字段等，每30分钟重新从配置文件加载一次
-    public static ConcurrentHashMap<String,FeatureAttribute> FEATURE_ATTRIBUTE = new ConcurrentHashMap<String,FeatureAttribute>();
+    //特征类型的一些属性配置，包括权重、排序字段等，每30分钟重新从配置文件加载一次
+    public static DecisionRule DECISION_RULE = new DecisionRule();
     //流量分配策略，每种请求的流量配比
     public static ConcurrentHashMap<String,Integer> REQUEST_DISPATCH = new ConcurrentHashMap<String,Integer>();
     //广告得分计算完后，最后挑选广告的一个阀值
@@ -55,7 +55,7 @@ public class Constant {
         public static final String DECISION = "dec";
     }
 
-    public static ExploreRule exploreRule = new ExploreRule();
+    public static ExploreRule EXPLORE_RULE = new ExploreRule();
     public static final Gson gson = new Gson();
 
     //配置路径
@@ -85,6 +85,28 @@ public class Constant {
     public static class FEATURE_AD_MODEL{
         public static final String FILE_PATH = "/data/odin_model/[day]/feature.txt";
         public static final String[] FIELD_NAME = {"ft","fv","nation","adid","pv","sv","ir","ck","pctr","ictr","fr"};
+    }
+
+    //合法的用于计算最后得分的字段（数值型）
+    public static Map<String, Integer> FA_NUMBER_FIELDS = new HashMap<String, Integer>();
+    static {
+        FA_NUMBER_FIELDS.put("pv",1);
+        FA_NUMBER_FIELDS.put("sv",1);
+        FA_NUMBER_FIELDS.put("ir",1);
+        FA_NUMBER_FIELDS.put("ck",1);
+        FA_NUMBER_FIELDS.put("pctr",1);
+        FA_NUMBER_FIELDS.put("ictr",1);
+        FA_NUMBER_FIELDS.put("fr",1);
+    }
+
+    public static Map<String, Integer> UP_NUMBER_FIELDS = new HashMap<String, Integer>();
+    static {
+        UP_NUMBER_FIELDS.put("pv",1);
+        UP_NUMBER_FIELDS.put("sv",1);
+        UP_NUMBER_FIELDS.put("ir",1);
+        UP_NUMBER_FIELDS.put("fr",1);
+        UP_NUMBER_FIELDS.put("wc",1);
+        UP_NUMBER_FIELDS.put("tfidf",1);
     }
 
     //每天的定时任务类型

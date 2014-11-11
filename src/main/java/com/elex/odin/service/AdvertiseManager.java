@@ -36,8 +36,7 @@ public class AdvertiseManager {
             HashMap<String, Integer> catMap = new HashMap<String, Integer>();
             for(Advertise ad : ads){
                 adMap.put(ad.getAdid(), ad);
-                String key = ad.getFirstCategory() + "_" + ad.getSecondCategory() + "_" + ad.getMediaType();
-                catMap.put(key.toLowerCase(), ad.getAdid());
+                catMap.put(ad.getCategory().toLowerCase(), ad.getAdid());
             }
             List<Integer> ids = new ArrayList<Integer>();
             ids.addAll(advertise.keySet());

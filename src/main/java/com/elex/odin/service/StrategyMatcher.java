@@ -18,7 +18,7 @@ import java.util.*;
  */
 public class StrategyMatcher implements ADMatcher {
 
-    private static final Logger LOGGER = Logger.getLogger(StrategyMatcher.class);
+    private static final Logger LOGGER = Logger.getLogger("dec");
     private FeatureModelServiceInterface featureModelService = new MemoryFeatureModelService();
 
     @Override
@@ -44,7 +44,7 @@ public class StrategyMatcher implements ADMatcher {
 
         ADMatchMessage message = null;
         if(ad != null){
-            message = new ADMatchMessage(0, adID, ad.getCode(), Constant.TAG.DECISION);
+            message = new ADMatchMessage(0, adID, ad.getCode(), Constant.DECISION_RULE.getTag());
         }else{
             LOGGER.info("does not find the adid " + adID);
             message = new ADMatchMessage(-1,"does not find the adid " + adID);
@@ -159,17 +159,20 @@ public class StrategyMatcher implements ADMatcher {
      */
     private double calculatePerADScore(String adid, UserProfile userProfile, Map<String,Set<String>> modelFeature) throws CacheException {
         BigDecimal totalScore = new BigDecimal(0);
+        Map<String,FeatureAttribute> featureAttributes = Constant.DECISION_RULE.getFeatureAttributes();
         for(String featureType : userProfile.getFeatures().keySet()){
             Set<String> featureValues = modelFeature.get(featureType);
             if(modelFeature.get(featureType) == null){
-                totalScore = totalScore.add(Constant.FEATURE_ATTRIBUTE.get(featureType).getDefaultValue());
+                totalScore = totalScore.add(featureAttributes.get(featureType).getDefaultValue());
             }else{
-                BigDecimal weight = Constant.FEATURE_ATTRIBUTE.get(featureType).getWeight();
+                BigDecimal weight = featureAttributes.get(featureType).getWeight();
+                String calField = featureAttributes.get(featureType).getCalField();
                 //matchRule
                 for(String featureValue : featureValues){
                     Map<String,String> featureADInfo = featureModelService.getFeatureADInfo(userProfile.getNation(), featureType, featureValue, adid);
                     //rule
-                    totalScore = totalScore.add(new BigDecimal(featureADInfo.get("ictr")).multiply(weight));
+
+                    totalScore = totalScore.add(new BigDecimal(featureADInfo.get(calField)).multiply(weight));
                 }
             }
         }

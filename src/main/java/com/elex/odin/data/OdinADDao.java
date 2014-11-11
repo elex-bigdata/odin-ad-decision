@@ -47,7 +47,7 @@ public class OdinADDao {
         Statement stmt = null;
         ResultSet rs = null;
         try{
-            String sql = "select id, orig_id, name, code, network, first_cat, second_cat, media_type, size, time, position from ad_info where media_type = 'Banner' ";
+            String sql = "select id, orig_id, name, code, network, first_cat, second_cat, media_type, size, time, position from ad_info ";
             conn = MySQLManager.getInstance().getConnection();
             stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
@@ -59,8 +59,7 @@ public class OdinADDao {
                 ad.setName(rs.getString(2));
                 ad.setCode(rs.getString(3));
                 ad.setNetwork(rs.getString(4));
-                ad.setCategory(rs.getString(5), rs.getString(6));
-                ad.setMediaType(rs.getString(7));
+                ad.setCategory(rs.getString(5), rs.getString(6) , rs.getString(7));
                 ad.setSize(rs.getString(8));
                 ad.setTime(rs.getString(9));
                 ad.setPosition(rs.getString(10));

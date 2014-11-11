@@ -1,5 +1,7 @@
 package com.elex.odin.entity;
 
+import com.elex.odin.utils.Constant;
+
 import java.math.BigDecimal;
 
 /**
@@ -15,6 +17,7 @@ public class FeatureAttribute {
     private String sortField;
     private double[] filterRange;
     private String scoreRule;
+    private String calField;
 
     public String getType() {
         return type;
@@ -72,5 +75,13 @@ public class FeatureAttribute {
 
     public void setDefaultValue(BigDecimal defaultValue) {
         this.defaultValue = defaultValue;
+    }
+
+    public String getCalField() {
+        return calField;
+    }
+
+    public void setCalField(String calField) {
+        this.calField = calField;
     }
 }
