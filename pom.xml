@@ -44,7 +44,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>com.elex.odin.main.ThorServer</mainClass>
+                            <mainClass>com.elex.odin.main.ZeroMQServer</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -137,6 +137,13 @@
             <artifactId>FEComm</artifactId>
             <version>1.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.zeromq</groupId>
+            <artifactId>jeromq</artifactId>
+            <version>0.3.4</version>
+        </dependency>
+
 
     </dependencies>
 
