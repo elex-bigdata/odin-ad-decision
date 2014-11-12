@@ -47,7 +47,7 @@ public class OdinADDao {
         Statement stmt = null;
         ResultSet rs = null;
         try{
-            String sql = "select id, orig_id, name, code, network, first_cat, second_cat, media_type, size, time, position from ad_info ";
+            String sql = "select id, orig_id, name, code, network, first_cat, second_cat, media_type, size, time, position from ad_info where media_type = 'Banner' ";
             conn = MySQLManager.getInstance().getConnection();
             stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
