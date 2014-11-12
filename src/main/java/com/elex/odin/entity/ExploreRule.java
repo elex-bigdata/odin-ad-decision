@@ -1,8 +1,5 @@
 package com.elex.odin.entity;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 /**
  * Author: liqiang
  * Date: 14-11-11
@@ -11,7 +8,7 @@ import java.util.Map;
 public class ExploreRule {
 
     private String tag = "exp";
-    private Map<String, Integer> rules = new LinkedHashMap<String, Integer>();
+    private String category = "";
 
     public String getTag() {
         return tag;
@@ -21,11 +18,11 @@ public class ExploreRule {
         this.tag = tag;
     }
 
-    public Map<String, Integer> getRules() {
-        return rules;
+    public String getCategory() {
+        return category;
     }
 
-    public void setRules(Map<String, Integer> rules) {
-        this.rules = rules;
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

@@ -55,6 +55,11 @@ public class Constant {
         public static final String DECISION = "dec";
     }
 
+    public static class AD_CATEGORY_TYPE {
+        public static final String FIRST_CAT = "first_cat";
+        public static final String SECOND_CAT = "second_cat";
+    }
+
     public static ExploreRule EXPLORE_RULE = new ExploreRule();
     public static final Gson gson = new Gson();
 

@@ -7,7 +7,6 @@ import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,31 +25,20 @@ public class ConfigurationManager {
             XMLConfiguration xml = new XMLConfiguration();
             xml.load(Constant.EXPLORE_RULE_PATH);
             String tag = String.valueOf(xml.getProperty("tag")).trim();
+            String category = String.valueOf(xml.getProperty("category")).trim();
 
             if(tag.length() == 0){
                 throw new Exception("Explore tag name should not be empty");
             }
 
-            List<HierarchicalConfiguration> adRules = xml.configurationsAt("ad");
-            Map<String,Integer> rules = new LinkedHashMap<String, Integer>();
-            int totalRate  = 0;
-            for(HierarchicalConfiguration rule : adRules){
-                Integer rate = Integer.parseInt(rule.getString("rate"));
-                totalRate += rate;
-                String firstCat =  rule.getString("first_cat").trim();
-                String secondCat =  rule.getString("second_cat").trim();
-                String mediaType =  rule.getString("media_type").trim();
-                String key = firstCat + "_" + secondCat + "_" + mediaType;
-                rules.put(key.toLowerCase(), rate);
-            }
-
-            if(totalRate != 100){
-                throw new Exception("The explore total rate should equals 100");
+            if(category.length() == 0 || !Constant.AD_CATEGORY_TYPE.FIRST_CAT.equals(category)
+                    || !Constant.AD_CATEGORY_TYPE.SECOND_CAT.equals(category)){
+                throw new Exception("Explore category is invalid ("+Constant.AD_CATEGORY_TYPE.FIRST_CAT+"|"+Constant.AD_CATEGORY_TYPE.SECOND_CAT+")");
             }
 
             synchronized (Constant.EXPLORE_RULE){
                 Constant.EXPLORE_RULE.setTag(tag);
-                Constant.EXPLORE_RULE.setRules(rules);
+                Constant.EXPLORE_RULE.setCategory(category);
             }
         }catch (Exception e){
             throw new RuntimeException("Failed update explore rule", e);
