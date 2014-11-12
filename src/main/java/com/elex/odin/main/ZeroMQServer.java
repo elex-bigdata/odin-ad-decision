@@ -112,7 +112,7 @@ public class ZeroMQServer {
         Socket workers = context.socket(ZMQ.DEALER);
         workers.bind ("inproc://workers");
 
-        for(int thread_nbr = 0; thread_nbr < 1000; thread_nbr++) {
+        for(int thread_nbr = 0; thread_nbr < 3000; thread_nbr++) {
             Thread worker = new Worker (context);
             worker.start();
         }
