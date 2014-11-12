@@ -26,10 +26,12 @@ public class MemoryCache {
     }
 
     public static void syncCache(){
-        if(userProfileFeatureIndexTmp.size() > 0 && featureADIndexTmp.size()>0 && featureADTmp.size() >0){
-            userProfileFeatureIndex = userProfileFeatureIndexTmp;
-            featureADIndex = featureADIndexTmp;
-            featureAD = featureADTmp;
+        synchronized (MemoryCache.class){
+            if(userProfileFeatureIndexTmp.size() > 0 && featureADIndexTmp.size()>0 && featureADTmp.size() >0){
+                userProfileFeatureIndex = userProfileFeatureIndexTmp;
+                featureADIndex = featureADIndexTmp;
+                featureAD = featureADTmp;
+            }
         }
     }
 }
