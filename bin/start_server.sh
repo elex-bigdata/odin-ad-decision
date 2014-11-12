@@ -1,0 +1,1 @@
+java -Xmx24000m -Xmn8000m -XX:+UseG1GC -jar target/thor-jar-with-dependencies.jar
