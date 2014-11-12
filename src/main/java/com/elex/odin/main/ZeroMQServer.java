@@ -104,7 +104,7 @@ public class ZeroMQServer {
 
         ServerInitializer.init();
 
-        Context context = ZMQ.context(1);
+        Context context = ZMQ.context(5);
 
         Socket clients = context.socket(ZMQ.ROUTER);
         clients.bind ("tcp://*:8080");
