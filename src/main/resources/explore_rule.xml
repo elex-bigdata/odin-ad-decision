@@ -1,9 +1,4 @@
 <explore>
-    <tag>exp_all</tag>
-    <ad>
-        <rate>100</rate>
-        <first_cat>All</first_cat>
-        <second_cat>All</second_cat>
-        <media_type>Banner</media_type>
-    </ad>
+    <tag>exp_big</tag>
+    <category>first_cat</category>
 </explore>
