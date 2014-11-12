@@ -68,9 +68,11 @@ public class AdvertiseManager {
     }
 
     public static Advertise getADByCategoryAndUID(String catType, String uid){
+        System.out.println(categorys.keySet() + " --- " + catType + uid);
         List<Integer> adIds = categorys.get(catType);
         if(adIds != null ){
             int index = Math.abs(uid.hashCode()) % adIds.size();
+            System.out.println("index" + index);
             return advertise.get(adIds.get(index));
         }
         return null;
