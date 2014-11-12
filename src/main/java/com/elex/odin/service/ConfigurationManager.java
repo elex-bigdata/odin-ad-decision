@@ -31,8 +31,8 @@ public class ConfigurationManager {
                 throw new Exception("Explore tag name should not be empty");
             }
 
-            if(category.length() == 0 || !Constant.AD_CATEGORY_TYPE.FIRST_CAT.equals(category)
-                    || !Constant.AD_CATEGORY_TYPE.SECOND_CAT.equals(category)){
+            if(category.length() == 0 || (!Constant.AD_CATEGORY_TYPE.FIRST_CAT.equals(category)
+                    && !Constant.AD_CATEGORY_TYPE.SECOND_CAT.equals(category))){
                 throw new Exception("Explore category is invalid ("+Constant.AD_CATEGORY_TYPE.FIRST_CAT+"|"+Constant.AD_CATEGORY_TYPE.SECOND_CAT+")");
             }
 
