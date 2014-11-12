@@ -45,7 +45,6 @@ public class AdvertiseManager {
                 advertise = adMap;
                 adIDs = ids;
             }
-            System.out.println(advertise.keySet());
             LOGGER.info("load " + advertise.size() + " ads, " + categorys.size() + " categorys ");
         } catch (Exception e) {
             throw new RuntimeException("Error when update advertise", e);
