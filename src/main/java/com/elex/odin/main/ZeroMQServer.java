@@ -51,11 +51,7 @@ public class ZeroMQServer {
         }
 
         public String processRequest(String input){
-            Type paramType = new TypeToken<Map<String, String>>(){}.getType();
-            Map<String,String> req = Constant.gson.fromJson(input, paramType);
-
             int randomNum = new Random().nextInt(100);
-
             ADMatchMessage message = null;
             long begin = System.currentTimeMillis();
             int defaultPercent = Constant.REQUEST_DISPATCH.get("default");
@@ -64,6 +60,8 @@ public class ZeroMQServer {
                 message = new ADMatchMessage(Constant.TAG.DEFAULT);
             }else{
                 try{
+                    Type paramType = new TypeToken<Map<String, String>>(){}.getType();
+                    Map<String,String> req = Constant.gson.fromJson(input, paramType);
                     String uid = req.get("uid");
                     String reqid = req.get("req_id");
                     String pid = req.get("pid");
@@ -114,7 +112,7 @@ public class ZeroMQServer {
         Socket workers = context.socket(ZMQ.DEALER);
         workers.bind ("inproc://workers");
 
-        for(int thread_nbr = 0; thread_nbr < 5; thread_nbr++) {
+        for(int thread_nbr = 0; thread_nbr < 5000; thread_nbr++) {
             Thread worker = new Worker (context);
             worker.start();
         }
