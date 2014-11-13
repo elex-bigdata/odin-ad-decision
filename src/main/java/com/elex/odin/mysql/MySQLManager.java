@@ -7,40 +7,32 @@ import java.sql.*;
 import java.util.Map;
 
 public final class MySQLManager {
-	private String url = "";
-	private String username = "root";
-	private String password = "123456";
+	private static String url = "";
+	private static String username = "root";
+	private static String password = "123456";
 
 	private static MySQLManager instance = new MySQLManager();
 
-	private MySQLManager() {
+    static {
         try {
             Map<String,String> mysqlConf = ConfigurationManager.parseMysqlConfig();
-            this.url = mysqlConf.get("url");
-            this.username = mysqlConf.get("username");
-            this.password = mysqlConf.get("password");
+            url = mysqlConf.get("url");
+            username = mysqlConf.get("username");
+            password = mysqlConf.get("password");
+
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new ExceptionInInitializerError(e);
         } catch (ConfigurationException e) {
             throw new RuntimeException("Error when parse the mysql configuration", e);
         }
     }
 
-	public synchronized static MySQLManager getInstance() {
-		return instance;
+	public static Connection getConnection() throws Exception {
+		return DriverManager.getConnection(url, username, password);
 	}
 
-	static {
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-		} catch (ClassNotFoundException e) {
-			throw new ExceptionInInitializerError(e);
-		}
-	}
-
-	public Connection getConnection() throws Exception {
-		return DriverManager.getConnection(this.url, this.username, this.password);
-	}
-
-	public void close(ResultSet rs, Statement st, Connection conn) {
+	public static void close(ResultSet rs, Statement st, Connection conn) {
 		try {
 			if (rs != null)
 				rs.close();

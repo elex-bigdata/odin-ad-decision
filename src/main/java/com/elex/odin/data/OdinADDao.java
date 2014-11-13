@@ -22,7 +22,7 @@ public class OdinADDao {
         ResultSet rs = null;
         try{
             String sql = "select distinct code.id, code.name, code.code from code join rule on code.id = rule.code_id and rule.slot_id =" + slot;
-            conn = MySQLManager.getInstance().getConnection();
+            conn = MySQLManager.getConnection();
             stmt = conn.createStatement();
             System.out.println(sql);
             rs = stmt.executeQuery(sql);
@@ -36,9 +36,9 @@ public class OdinADDao {
             }
             return ads;
         }catch (Exception e){
-            throw new Exception("Error when get the code (ad info) from mysql",e);
+            throw new Exception("Error when get the old code from mysql",e);
         } finally {
-            MySQLManager.getInstance().close(rs, stmt, conn);
+            MySQLManager.close(rs, stmt, conn);
         }
     }
 
@@ -48,7 +48,7 @@ public class OdinADDao {
         ResultSet rs = null;
         try{
             String sql = "select id, orig_id, name, code, network, first_cat, second_cat, media_type, size, time, position from ad_info where media_type = 'Banner' ";
-            conn = MySQLManager.getInstance().getConnection();
+            conn = MySQLManager.getConnection();
             stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
             List<Advertise> ads = new ArrayList<Advertise>();
@@ -69,7 +69,7 @@ public class OdinADDao {
         }catch (Exception e){
             throw new Exception("Error when get the code (ad info) from mysql",e);
         } finally {
-            MySQLManager.getInstance().close(rs, stmt, conn);
+            MySQLManager.close(rs, stmt, conn);
         }
     }
 }
