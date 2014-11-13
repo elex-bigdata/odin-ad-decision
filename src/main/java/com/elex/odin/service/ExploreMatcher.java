@@ -35,7 +35,7 @@ public class ExploreMatcher implements ADMatcher {
         }
 
         //不打印code，太长
-        String msg = "{\"reqid\":\""+ inputFeature.getReqid()+",\"\"status\":" +message.getStatus()+ ",\"adid\":\""+message.getAdid()+"\"," +
+        String msg = "{\"reqid\":\""+ inputFeature.getReqid()+",\"status\":" +message.getStatus()+ ",\"adid\":\""+message.getAdid()+"\"," +
                 "\"msg\":\"" + message.getMsg() +"\",\"took\":"+(System.currentTimeMillis() - begin)+",\"tag\":\""+message.getTag()+"\"}";
 
         LOGGER.debug(msg);
