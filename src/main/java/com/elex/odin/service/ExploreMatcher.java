@@ -28,7 +28,7 @@ public class ExploreMatcher implements ADMatcher {
 
         ADMatchMessage message = null;
         if(ad != null){
-            message = new ADMatchMessage(0, String.valueOf(ad.getAdid()), ad.getCode(), tag);
+            message = new ADMatchMessage(0, String.valueOf(ad.getOrigAdid()), ad.getCode(), tag);
         }else{
             LOGGER.info("explore failed");
             message = new ADMatchMessage(-1,"explore failed");
