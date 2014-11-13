@@ -1,6 +1,7 @@
 #! /bin/sh
 
-day=`date -d "1 days ago" +%Y%m%d`
+#day=`date -d "1 days ago" +%Y%m%d`
+day=`date +%Y%m%d`
 
 model_file=/data/odin_model/${day}.gz2
 if [ -f $model_file ]; then
