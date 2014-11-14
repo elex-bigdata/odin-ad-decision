@@ -35,10 +35,20 @@ public class ExploreMatcher implements ADMatcher {
         }
 
         //不打印code，太长
-        String msg = "{\"reqid\":\""+ inputFeature.getReqid()+",\"status\":" +message.getStatus()+ ",\"adid\":\""+message.getAdid()+"\"," +
-                "\"msg\":\"" + message.getMsg() +"\",\"took\":"+(System.currentTimeMillis() - begin)+",\"tag\":\""+message.getTag()+"\"}";
+        //String msg = "{\"reqid\":\""+ inputFeature.getReqid()+",\"status\":" +message.getStatus()+ ",\"adid\":\""+message.getAdid()+"\"," +
+        //        "\"msg\":\"" + message.getMsg() +"\",\"took\":"+(System.currentTimeMillis() - begin)+",\"tag\":\""+message.getTag()+"\"}";
 
-        LOGGER.debug(msg);
+        //reqid + uid + pid + nation + status + adid + tag  + spendtime
+        StringBuilder sb = new StringBuilder(inputFeature.getReqid())
+                .append("\t").append(inputFeature.getUid())
+                .append("\t").append(inputFeature.getPid())
+                .append("\t").append(inputFeature.getNation())
+                .append("\t").append(message.getStatus())
+                .append("\t").append(message.getAdid())
+                .append("\t").append(message.getTag())
+                .append("\t").append((System.currentTimeMillis() - begin));
+
+        LOGGER.debug(sb.toString());
 
         return message;
     }
