@@ -45,7 +45,7 @@ public class OdinADDao {
 
 
     public List<Advertise> getExploreAdInfo() throws Exception {
-        return getAdInfo(Constant.EXPLORE_RULE.getWhere());
+        return getAdInfo("media_type = 'Banner' and first_cat in ('Gambling','Games','OnlineCommunities','Others') and second_cat <> 'All'");
     }
 
     public List<Advertise> getAdInfo() throws Exception {
