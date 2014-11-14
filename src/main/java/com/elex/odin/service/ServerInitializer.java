@@ -83,7 +83,7 @@ public class ServerInitializer {
 
         scheduler.scheduleJob(faJob, faTrigger);
 //        scheduler.scheduleJob(cvJob, cvTrigger);
-        scheduler.scheduleJob(aiJob, aiTrigger);
+//        scheduler.scheduleJob(aiJob, aiTrigger);
         scheduler.scheduleJob(dcJob, dcTrigger);
         scheduler.scheduleJob(erJob, erTrigger);
 
