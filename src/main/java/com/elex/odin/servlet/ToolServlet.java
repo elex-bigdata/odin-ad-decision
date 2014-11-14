@@ -35,14 +35,13 @@ public class ToolServlet extends HttpServlet {
             if(Constant.JOB_TYPE.FEATURE_ATTRIBUTE_CONF.equals(action)){
                 ConfigurationManager.updateFeatureAttribute();
             }else if(Constant.JOB_TYPE.AD_INFO.equals(action)){
+                ConfigurationManager.updateExploreRule();
                 AdvertiseManager.loadAdvertise();
             }else if(Constant.JOB_TYPE.DATA_MODEL.equals(action)){
                 new MemoryFeatureModelService().updateModel();
             }else if(Constant.JOB_TYPE.DYNAMIC_CONF.equals(action)){
                 ConfigurationManager.updateRequestDispatchConfig();
                 ConfigurationManager.updateScoreDistanceConfig();
-            }else if(Constant.JOB_TYPE.EXP_RULE.equals(action)){
-                ConfigurationManager.updateExploreRule();
             }
             msg = "success";
         } catch (Exception e) {
