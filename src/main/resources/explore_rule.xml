@@ -1,4 +1,4 @@
 <explore>
     <tag>exp_big</tag>
-    <where><![CDATA[media_type = 'Banner' and first_cat <> 'All' and second_cat <> 'All' ]]></where>
+    <where><![CDATA[media_type = 'Banner' and first_cat <> 'All' and second_cat == 'All' ]]></where>
 </explore>
