@@ -1,4 +1,4 @@
 <explore>
     <tag>exp_big</tag>
-    <category>first_cat</category>
+    <where><![CDATA[media_type = 'Banner' ]]></where>
 </explore>

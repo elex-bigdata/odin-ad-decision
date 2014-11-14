@@ -18,7 +18,7 @@ public class AdvertiseManager {
     public static Map<Integer, Advertise> advertise = new HashMap<Integer, Advertise>();
     private static Map<Integer, Advertise> oldAdverties = new HashMap<Integer, Advertise>();
     private static Map<String,List<Integer>> categorys = new HashMap<String,List<Integer>>();
-    public static List<Integer> adIDs = new ArrayList<Integer>();
+    private static List<Integer> expAdIds = new ArrayList<Integer>();
 
     public static void loadOldAdvertise() throws Exception {
         OdinADDao dao = new OdinADDao();
@@ -34,24 +34,21 @@ public class AdvertiseManager {
         try {
             List<Advertise> ads = dao.getAdInfo();
             HashMap<Integer, Advertise> adMap = new HashMap<Integer, Advertise>();
-            List<Integer> firstCatAD = new ArrayList<Integer>(); //大类
-            List<Integer> secondCatAD = new ArrayList<Integer>(); //小类
             for(Advertise ad : ads){
-                if(!"All".equals(ad.getFirstCategory()) && "All".equals(ad.getSecondCategory())){
-                    firstCatAD.add(ad.getAdid());
-                }else if(!"All".equals(ad.getFirstCategory()) && !"All".equals(ad.getSecondCategory())){
-                    secondCatAD.add(ad.getAdid());
-                }
                 adMap.put(ad.getAdid(), ad);
+            }
+
+            List<Advertise> exploreADs = dao.getExploreAdInfo();
+            List<Integer> exploreIDs = new ArrayList<Integer>();
+            for(Advertise ad : exploreADs){
+                exploreIDs.add(ad.getAdid());
             }
 
             List<Integer> ids = new ArrayList<Integer>();
             ids.addAll(advertise.keySet());
             synchronized(AdvertiseManager.class){
-                categorys.put(Constant.AD_CATEGORY_TYPE.FIRST_CAT, firstCatAD);
-                categorys.put(Constant.AD_CATEGORY_TYPE.SECOND_CAT, secondCatAD);
                 advertise = adMap;
-                adIDs = ids;
+                expAdIds = exploreIDs;
             }
             LOGGER.info("load " + advertise.size() + " ads ");
         } catch (Exception e) {
@@ -67,12 +64,8 @@ public class AdvertiseManager {
         return ad;
     }
 
-    public static Advertise getADByCategoryAndUID(String catType, String uid){
-        List<Integer> adIds = categorys.get(catType);
-        if(adIds != null ){
-            int index = Math.abs(uid.hashCode()) % adIds.size();
-            return advertise.get(adIds.get(index));
-        }
-        return null;
+    public static Advertise getExploreADByUID(String uid){
+        int index = Math.abs(uid.hashCode()) % expAdIds.size();
+        return advertise.get(expAdIds.get(index));
     }
 }

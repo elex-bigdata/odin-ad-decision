@@ -2,6 +2,7 @@ package com.elex.odin.data;
 
 import com.elex.odin.entity.Advertise;
 import com.elex.odin.mysql.MySQLManager;
+import com.elex.odin.utils.Constant;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -42,14 +43,24 @@ public class OdinADDao {
         }
     }
 
+
+    public List<Advertise> getExploreAdInfo() throws Exception {
+        return getAdInfo(Constant.EXPLORE_RULE.getWhere());
+    }
+
     public List<Advertise> getAdInfo() throws Exception {
+        return getAdInfo(" 1=1 ");
+    }
+
+    public List<Advertise> getAdInfo(String where) throws Exception {
         Connection conn = null;
         Statement stmt = null;
         ResultSet rs = null;
         try{
-            String sql = "select id, orig_id, name, code, network, first_cat, second_cat, media_type, size, time, position from ad_info where media_type = 'Banner' ";
             conn = MySQLManager.getConnection();
             stmt = conn.createStatement();
+            String sql = "select id, orig_id, name, code, network, first_cat, second_cat, media_type, " +
+                    "size, time, position from ad_info where " + where;
             rs = stmt.executeQuery(sql);
             List<Advertise> ads = new ArrayList<Advertise>();
             while(rs.next()){
@@ -59,7 +70,7 @@ public class OdinADDao {
                 ad.setName(rs.getString(3));
                 ad.setCode(rs.getString(4));
                 ad.setNetwork(rs.getString(5));
-                ad.setCategory(rs.getString(6), rs.getString(7) , rs.getString(8));
+                ad.setCategory(rs.getString(6), rs.getString(7), rs.getString(8));
                 ad.setSize(rs.getString(9));
                 ad.setTime(rs.getString(10));
                 ad.setPosition(rs.getString(11));

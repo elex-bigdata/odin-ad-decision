@@ -8,7 +8,7 @@ package com.elex.odin.entity;
 public class ExploreRule {
 
     private String tag = "exp";
-    private String category = "";
+    private String where = "";
 
     public String getTag() {
         return tag;
@@ -18,11 +18,11 @@ public class ExploreRule {
         this.tag = tag;
     }
 
-    public String getCategory() {
-        return category;
+    public String getWhere() {
+        return where;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setWhere(String where) {
+        this.where = where;
     }
 }

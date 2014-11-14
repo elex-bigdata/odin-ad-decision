@@ -25,20 +25,15 @@ public class ConfigurationManager {
             XMLConfiguration xml = new XMLConfiguration();
             xml.load(Constant.EXPLORE_RULE_PATH);
             String tag = String.valueOf(xml.getProperty("tag")).trim();
-            String category = String.valueOf(xml.getProperty("category")).trim();
+            String where = String.valueOf(xml.getProperty("where")).trim();
 
             if(tag.length() == 0){
                 throw new Exception("Explore tag name should not be empty");
             }
 
-            if(category.length() == 0 || (!Constant.AD_CATEGORY_TYPE.FIRST_CAT.equals(category)
-                    && !Constant.AD_CATEGORY_TYPE.SECOND_CAT.equals(category))){
-                throw new Exception("Explore category is invalid ("+Constant.AD_CATEGORY_TYPE.FIRST_CAT+"|"+Constant.AD_CATEGORY_TYPE.SECOND_CAT+")");
-            }
-
             synchronized (Constant.EXPLORE_RULE){
                 Constant.EXPLORE_RULE.setTag(tag);
-                Constant.EXPLORE_RULE.setCategory(category);
+                Constant.EXPLORE_RULE.setWhere(where);
             }
         }catch (Exception e){
             throw new RuntimeException("Failed update explore rule", e);

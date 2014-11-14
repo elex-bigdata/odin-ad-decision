@@ -24,7 +24,7 @@ public class ExploreMatcher implements ADMatcher {
         long begin = System.currentTimeMillis();
 
         String tag = Constant.EXPLORE_RULE.getTag();
-        Advertise ad = AdvertiseManager.getADByCategoryAndUID(Constant.EXPLORE_RULE.getCategory(), inputFeature.getUid());
+        Advertise ad = AdvertiseManager.getExploreADByUID(inputFeature.getUid());
 
         ADMatchMessage message = null;
         if(ad != null){
