@@ -43,6 +43,7 @@ public class AdvertiseManager {
             for(Advertise ad : exploreADs){
                 exploreIDs.add(ad.getAdid());
             }
+            LOGGER.info("load " + exploreIDs.size() + " exploreIDs ");
 
             List<Integer> ids = new ArrayList<Integer>();
             ids.addAll(advertise.keySet());
