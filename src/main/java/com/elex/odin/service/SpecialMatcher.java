@@ -3,6 +3,7 @@ package com.elex.odin.service;
 import com.elex.odin.entity.ADMatchMessage;
 import com.elex.odin.entity.Advertise;
 import com.elex.odin.entity.InputFeature;
+import org.apache.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -17,6 +18,8 @@ import java.util.Map;
  * Time: 下午4:50
  */
 public class SpecialMatcher implements ADMatcher {
+
+    private static final Logger LOGGER = Logger.getLogger("dec");
 
     private static Map<String,Integer> gameUIDs =  new HashMap<String,Integer>();
     static{
@@ -50,11 +53,17 @@ public class SpecialMatcher implements ADMatcher {
 
     @Override
     public ADMatchMessage match(InputFeature userFeature) throws Exception {
+        long begin = System.currentTimeMillis();
         if(gameUIDs.get(userFeature.getUid()) != null){
-            //3860142 game_all
+            //3860142 game_all (game的用户固定投game all)
             Advertise ad = AdvertiseManager.getADByID(3860142);
-            if(ad != null)
-                return new ADMatchMessage(0, "3860142", ad.getCode(), "dec_gm");
+            if(ad != null){
+                ADMatchMessage message = new ADMatchMessage(0, "3860142", ad.getCode(), "dec_gm");
+                String msg = "{\"reqid\":\""+userFeature.getReqid()+",\"\"status\":" +message.getStatus()+ ",\"adid\":\""+message.getAdid()+"\"," +
+                        "\"msg\":\"" + message.getMsg() +"\",\"took\":"+(System.currentTimeMillis() - begin)+",\"tag\":\""+message.getTag()+"\"}";
+                LOGGER.debug(msg);
+                return message;
+            }
         }
 
         return null;
