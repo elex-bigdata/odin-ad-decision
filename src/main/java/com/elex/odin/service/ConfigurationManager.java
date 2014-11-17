@@ -23,9 +23,10 @@ public class ConfigurationManager {
         try{
             LOGGER.debug("begin update explore rule");
             XMLConfiguration xml = new XMLConfiguration();
+            xml.setListDelimiter((char) 0);
             xml.load(Constant.EXPLORE_RULE_PATH);
-            String tag = String.valueOf(xml.getProperty("tag")).trim();
-            String where = String.valueOf(xml.getProperty("where")).trim();
+            String tag = xml.getString("tag").trim();
+            String where = xml.getString("where").trim();
 
             if(tag.length() == 0){
                 throw new Exception("Explore tag name should not be empty");
@@ -89,9 +90,10 @@ public class ConfigurationManager {
         try {
             LOGGER.debug("update feature attribute");
             XMLConfiguration xml = new XMLConfiguration();
+            xml.setListDelimiter((char) 0);
             xml.load(Constant.FEATURE_ATTR_PATH);
 
-            String tag = String.valueOf(xml.getProperty("tag")).trim();
+            String tag = xml.getString("tag").trim();
 
             List<HierarchicalConfiguration> features = xml.configurationsAt("feature");
 
