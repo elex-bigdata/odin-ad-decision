@@ -58,11 +58,7 @@ public class AdvertiseManager {
     }
 
     public static Advertise getADByID(Integer adid){
-        Advertise ad = AdvertiseManager.oldAdverties.get(adid);
-        if(ad == null){
-            ad = AdvertiseManager.advertise.get(adid);
-        }
-        return ad;
+        return AdvertiseManager.advertise.get(adid);
     }
 
     public static Advertise getExploreADByUID(String uid){
