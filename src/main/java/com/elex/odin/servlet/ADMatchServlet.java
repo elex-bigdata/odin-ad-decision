@@ -3,6 +3,7 @@ package com.elex.odin.servlet;
 import com.elex.odin.entity.ADMatchMessage;
 import com.elex.odin.entity.InputFeature;
 import com.elex.odin.service.ExploreMatcher;
+import com.elex.odin.service.SpecialMatcher;
 import com.elex.odin.service.StrategyMatcher;
 import com.elex.odin.utils.Constant;
 import com.elex.odin.utils.WebUtil;
@@ -66,11 +67,15 @@ public class ADMatchServlet extends HttpServlet {
                 inputFeature.setBrowser(browser);
                 inputFeature.setTime(new Date(), nation);
 
-                int decisionPercent = defaultPercent + Constant.REQUEST_DISPATCH.get("decision");
-                if(randomNum < decisionPercent){
-                    message = strategeMatcher.match(inputFeature);
-                }else{
-                    message = exploreMatcher.match(inputFeature);
+                message = new SpecialMatcher().match(inputFeature); //特殊的尝试
+
+                if(message == null){
+                    int decisionPercent = defaultPercent + Constant.REQUEST_DISPATCH.get("decision");
+                    if(randomNum < decisionPercent){
+                        message = strategeMatcher.match(inputFeature);
+                    }else{
+                        message = exploreMatcher.match(inputFeature);
+                    }
                 }
             }catch(Exception e){
                 LOGGER.error(e);
