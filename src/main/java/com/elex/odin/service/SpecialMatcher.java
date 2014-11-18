@@ -35,6 +35,7 @@ public class SpecialMatcher implements ADMatcher {
                 line = line.trim();
                 gameUIDs.put(line,1);
             }
+            System.out.println("Get " + gameUIDs.size() + " gameuid " );
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
