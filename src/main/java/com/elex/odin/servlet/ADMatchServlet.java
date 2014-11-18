@@ -67,7 +67,7 @@ public class ADMatchServlet extends HttpServlet {
                 inputFeature.setBrowser(browser);
                 inputFeature.setTime(new Date(), nation);
 
-                message = new SpecialMatcher().match(inputFeature); //特殊的尝试
+                //message = new SpecialMatcher().match(inputFeature); //特殊的尝试
 
                 if(message == null){
                     int decisionPercent = defaultPercent + Constant.REQUEST_DISPATCH.get("decision");
