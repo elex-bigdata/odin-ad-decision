@@ -15,6 +15,7 @@ public interface FeatureModelServiceInterface {
     public Map<String,UserFeatureInfo> getUserProfileFeature(String uid, String nation, String featureType)  throws CacheException;
     public Set<String> getValidADByFeature(String nation, String featureType, String featureValue)  throws CacheException;
     public Map<String,String> getFeatureADInfo(String nation, String featureType, String featureValue, String adID) throws CacheException;
+    public String[] getFeatureADInfoArray(String nation, String featureType, String featureValue, String adID) throws CacheException;
     public void updateModel(String yesterday) throws Exception;
     public void updateModel() throws Exception;
 }

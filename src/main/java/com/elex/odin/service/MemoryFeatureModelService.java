@@ -64,6 +64,11 @@ public class MemoryFeatureModelService implements FeatureModelServiceInterface {
 
     @Override
     public Map<String, String> getFeatureADInfo(String nation, String featureType, String featureValue, String adID) throws CacheException {
+        return null;
+    }
+
+    @Override
+    public String[] getFeatureADInfoArray(String nation, String featureType, String featureValue, String adID) throws CacheException {
         String key =  nation + "." + featureType + "." + featureValue + "." + adID;
         return MemoryCache.featureAD.get(key);
     }

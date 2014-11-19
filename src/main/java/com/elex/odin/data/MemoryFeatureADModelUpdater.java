@@ -21,7 +21,7 @@ public class MemoryFeatureADModelUpdater implements ModelUpdater {
 
     private int valueStart = 4;
     private Map<String, TreeMap<Double,Set<String>>> featureADIndex = new HashMap<String, TreeMap<Double,Set<String>>>();
-    private Map<String, Map<String,String>> featureAD = new HashMap<String, Map<String,String>>();
+    private Map<String, String[]> featureAD = new HashMap<String, String[]>();
     private String filePath;
     private String[] fields;
 
@@ -33,7 +33,7 @@ public class MemoryFeatureADModelUpdater implements ModelUpdater {
     @Override
     public void update() throws Exception {
         featureADIndex = new HashMap<String, TreeMap<Double,Set<String>>>();
-        featureAD = new HashMap<String, Map<String,String>>();
+        featureAD = new HashMap<String, String[]>();
         FileInputStream fis = null;
         BufferedReader reader = null;
         try {
@@ -63,17 +63,17 @@ public class MemoryFeatureADModelUpdater implements ModelUpdater {
         //ft fv nation adid pv sv impr click pvctr impctr fillr
         //key : version nation ft fv adid
         try{
-
             String[] values = StringUtils.split(line.trim(), ",");
             String featureType = Constant.MODEL_FEATURE_TYPE_MAPPING.get(values[0]);
             String key = values[2] + "." + featureType + "." + values[1] + "." + values[3];
 
-            Map<String,String> mapValue = new HashMap<String, String>();
-            for(int i=valueStart; i< fields.length; i++){
-                mapValue.put(fields[i],values[i]);
+            String[] mapValue = Arrays.copyOfRange(values, valueStart, values.length);
+            if(mapValue.length < Constant.FEATURE_AD_INFO_INDEX.size()){
+                throw new CacheException("The feature ad info data length is less than the constant index map");
             }
 
-            String sortScore = mapValue.get(Constant.DECISION_RULE.getFeatureAttributes().get(featureType).getSortField());
+            int sortFieldIndex = Constant.FEATURE_AD_INFO_INDEX.get(Constant.DECISION_RULE.getFeatureAttributes().get(featureType).getSortField());
+            String sortScore = mapValue[sortFieldIndex];
 
             if(!"0".equals(sortScore)){
                 String sortKey = values[2] + "." + featureType + "." + values[1];

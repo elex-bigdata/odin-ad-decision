@@ -13,16 +13,16 @@ import java.util.TreeMap;
 public class MemoryCache {
     public static Map<String, Set<String>> userProfileFeatureIndex =  new HashMap<String, Set<String>>();
     public static Map<String, TreeMap<Double,Set<String>>> featureADIndex = new HashMap<String, TreeMap<Double,Set<String>>>();
-    public static Map<String, Map<String,String>> featureAD = new HashMap<String, Map<String,String>>();
+    public static Map<String, String[]> featureAD = new HashMap<String, String[]>();
 
     public static Map<String, Set<String>> userProfileFeatureIndexTmp =  new HashMap<String, Set<String>>();
     public static Map<String, TreeMap<Double,Set<String>>> featureADIndexTmp = new HashMap<String, TreeMap<Double,Set<String>>>();
-    public static Map<String, Map<String,String>> featureADTmp = new HashMap<String, Map<String,String>>();
+    public static Map<String, String[]> featureADTmp = new HashMap<String, String[]>();
 
     public static void resetTmp(){
         userProfileFeatureIndexTmp = new HashMap<String, Set<String>>();
         featureADIndexTmp = new HashMap<String, TreeMap<Double,Set<String>>>();
-        featureADTmp = new HashMap<String, Map<String,String>>();
+        featureADTmp = new HashMap<String, String[]>();
     }
 
     public static void syncCache(){

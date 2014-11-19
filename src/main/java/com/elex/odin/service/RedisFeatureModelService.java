@@ -56,6 +56,11 @@ public class RedisFeatureModelService implements FeatureModelServiceInterface{
         return redisOperator.hgetAll(key);
     }
 
+    @Override
+    public String[] getFeatureADInfoArray(String nation, String featureType, String featureValue, String adID) throws CacheException {
+        return new String[0];
+    }
+
 
     public synchronized void updateModel() throws Exception {
         updateModel(DateUtil.yesterday());

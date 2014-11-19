@@ -166,13 +166,12 @@ public class StrategyMatcher implements ADMatcher {
                 totalScore = totalScore.add(featureAttributes.get(featureType).getDefaultValue());
             }else{
                 BigDecimal weight = featureAttributes.get(featureType).getWeight();
-                String calField = featureAttributes.get(featureType).getCalField();
+                Integer calFieldIndex = Constant.FEATURE_AD_INFO_INDEX.get(featureAttributes.get(featureType).getCalField());
                 //matchRule
                 for(String featureValue : featureValues){
-                    Map<String,String> featureADInfo = featureModelService.getFeatureADInfo(userProfile.getNation(), featureType, featureValue, adid);
+                    String[] featureADInfo = featureModelService.getFeatureADInfoArray(userProfile.getNation(), featureType, featureValue, adid);
                     //rule
-
-                    totalScore = totalScore.add(new BigDecimal(featureADInfo.get(calField)).multiply(weight));
+                    totalScore = totalScore.add(new BigDecimal(featureADInfo[calFieldIndex]).multiply(weight));
                 }
             }
         }

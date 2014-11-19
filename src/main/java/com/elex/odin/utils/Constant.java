@@ -92,6 +92,18 @@ public class Constant {
         public static final String[] FIELD_NAME = {"ft","fv","nation","adid","pv","sv","ir","ck","pctr","ictr","fr"};
     }
 
+    //节省内存，采用数组存储各个字段，此map为字段名和数组里位置的映射
+    public static Map<String,Integer> FEATURE_AD_INFO_INDEX = new HashMap<String, Integer>();
+    static{
+        FEATURE_AD_INFO_INDEX.put("pv",0);
+        FEATURE_AD_INFO_INDEX.put("sv",1);
+        FEATURE_AD_INFO_INDEX.put("ir",2);
+        FEATURE_AD_INFO_INDEX.put("ck",3);
+        FEATURE_AD_INFO_INDEX.put("pctr",4);
+        FEATURE_AD_INFO_INDEX.put("ictr",5);
+        FEATURE_AD_INFO_INDEX.put("fr",6);
+    }
+
     //合法的用于计算最后得分的字段（数值型）
     public static Map<String, Integer> FA_NUMBER_FIELDS = new HashMap<String, Integer>();
     static {
