@@ -233,7 +233,11 @@ public class StrategyMatcher implements ADMatcher {
             }
 
         }
-        return fvs.substring(0,fvs.length()-1);
+
+        if(fvs.length() > 0){
+            return fvs.substring(0,fvs.length()-1);
+        }
+        return fvs;
     }
 
 }
