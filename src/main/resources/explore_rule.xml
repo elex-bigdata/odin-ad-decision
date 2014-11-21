@@ -1,4 +1,4 @@
 <explore>
     <tag>exp_mc</tag>
-    <where><![CDATA[ network = 'Mat' or (network = 'Apn' and second_cat='Cc') ]]></where>
+    <where><![CDATA[ network = 'Mat' or (network = 'Apn' and second_cat='Cc') or (first_cat='All' and second_cat='All' and media_type = 'Banner') ]]></where>
 </explore>
