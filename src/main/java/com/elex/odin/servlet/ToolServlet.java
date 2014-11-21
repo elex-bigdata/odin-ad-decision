@@ -38,7 +38,8 @@ public class ToolServlet extends HttpServlet {
                 ConfigurationManager.updateExploreRule();
                 AdvertiseManager.loadAdvertise();
             }else if(Constant.JOB_TYPE.DATA_MODEL.equals(action)){
-                new MemoryFeatureModelService().updateModel();
+                String day =  req.getParameter("day");
+                new MemoryFeatureModelService().updateModel(day);
             }else if(Constant.JOB_TYPE.DYNAMIC_CONF.equals(action)){
                 ConfigurationManager.updateRequestDispatchConfig();
                 ConfigurationManager.updateScoreDistanceConfig();
