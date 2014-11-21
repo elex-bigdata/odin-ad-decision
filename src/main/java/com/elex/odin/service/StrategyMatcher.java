@@ -125,7 +125,7 @@ public class StrategyMatcher implements ADMatcher {
                 }
             }
         }
-        LOGGER.debug(userProfile.getReqid() + " get " + adFeatureMap.size() + " ads spend " + (System.currentTimeMillis() - begin) + "ms"  );
+//        LOGGER.debug(userProfile.getReqid() + " get " + adFeatureMap.size() + " ads spend " + (System.currentTimeMillis() - begin) + "ms"  );
         return adFeatureMap;
     }
 
