@@ -42,7 +42,7 @@ public class AdvertiseManager {
             List<Advertise> exploreADs = dao.getExploreAdInfo();
             List<Integer> exploreIDs = new ArrayList<Integer>();
             for(Advertise ad : exploreADs){
-                exploreIDs.add(ad.getAdid());
+                exploreIDs.add(ad.getOrigAdid());
             }
             LOGGER.info("load " + exploreIDs.size() + " exploreIDs ");
 
