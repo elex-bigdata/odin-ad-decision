@@ -46,9 +46,14 @@ public class ConfigurationManager {
         PropertiesConfiguration prop = new PropertiesConfiguration(Constant.MYSQL_CONF_PATH);
         Map<String,String> mysqlConf = new HashMap<String, String>();
 
-        mysqlConf.put("url", String.valueOf(prop.getProperty("url")));
-        mysqlConf.put("username", String.valueOf(prop.getProperty("username")));
-        mysqlConf.put("password", String.valueOf(prop.getProperty("password")));
+        mysqlConf.put("thor.url", prop.getString("thor.url"));
+        mysqlConf.put("thor.username", prop.getString("thor.username"));
+        mysqlConf.put("thor.password", prop.getString("thor.password"));
+
+        mysqlConf.put("odin.url", prop.getString("odin.url"));
+        mysqlConf.put("odin.username", prop.getString("odin.username"));
+        mysqlConf.put("odin.password", prop.getString("odin.password"));
+
         return mysqlConf;
     }
 
