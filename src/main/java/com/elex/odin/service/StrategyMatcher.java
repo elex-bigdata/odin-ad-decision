@@ -213,10 +213,22 @@ public class StrategyMatcher implements ADMatcher {
 
         String adScore = "";
         for(int i=0;i<ads.size();i++){
-            adScore += ads.get(i);
+            adScore += adScores.get(i);
         }
         LOGGER.info(userProfile.getReqid() + " select " + adScores.get(index).getLeft() + " from " + adScore + " spend " + (System.currentTimeMillis() - begin) + "ms");
         */
+        String adScore = "";
+        if(adScores.size() >=1){
+            adScore += adScores.get(0);
+        }
+        if(adScores.size() >=2){
+            adScore += adScores.get(1);
+        }
+        if(adScores.size() >=3){
+            adScore += adScores.get(2);
+        }
+        LOGGER.info("Top score : " + adScore);
+
         //先选择最高的一个
         return adScores.get(0).getLeft().toString();
     }
