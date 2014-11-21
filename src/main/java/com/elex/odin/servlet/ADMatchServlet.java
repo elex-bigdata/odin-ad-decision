@@ -46,10 +46,12 @@ public class ADMatchServlet extends HttpServlet {
         long begin = System.currentTimeMillis();
         int randomNum = random.nextInt(100);
 
+        String matchType = req.getParameter("mtype");
+
         ADMatchMessage message = null;
         int defaultPercent = Constant.REQUEST_DISPATCH.get("default");
         String reqid = req.getParameter("reqid");
-        if(randomNum < defaultPercent){
+        if(matchType == null && randomNum < defaultPercent){
             message = new ADMatchMessage(Constant.TAG.DEFAULT);
         }else{
             try{
@@ -71,7 +73,7 @@ public class ADMatchServlet extends HttpServlet {
 
                 if(message == null){
                     int decisionPercent = defaultPercent + Constant.REQUEST_DISPATCH.get("decision");
-                    if(randomNum < decisionPercent){
+                    if("dec".equals(matchType) || (!"exp".equals(matchType) && randomNum < decisionPercent)){
                         message = strategeMatcher.match(inputFeature);
                     }else{
                         message = exploreMatcher.match(inputFeature);
