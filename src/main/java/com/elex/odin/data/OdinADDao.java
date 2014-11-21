@@ -4,11 +4,14 @@ import com.elex.odin.entity.Advertise;
 import com.elex.odin.mysql.MySQLManager;
 import com.elex.odin.utils.Constant;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Author: liqiang
@@ -23,7 +26,7 @@ public class OdinADDao {
         ResultSet rs = null;
         try{
             String sql = "select distinct code.id, code.name, code.code from code join rule on code.id = rule.code_id and rule.slot_id =" + slot;
-            conn = MySQLManager.getConnection();
+            conn = MySQLManager.getConnection("odin");
             stmt = conn.createStatement();
             System.out.println(sql);
             rs = stmt.executeQuery(sql);
@@ -44,6 +47,30 @@ public class OdinADDao {
     }
 
 
+    public Map<Integer, BigDecimal> getADCpc()throws Exception {
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        Map<Integer, BigDecimal> adCpc = new HashMap<Integer, BigDecimal>();
+        try{
+            String sql = "select ai.orig_id, sum(ad.network_revenue)/sum(ad.clicks) from ad_info ai join ads_data ad on ai.orig_id = ad.placement_id where ai.network = 'Apn' and second_cat='Cc' group by ai.orig_id";
+            conn = MySQLManager.getConnection("thor");
+            stmt = conn.createStatement();
+            System.out.println(sql);
+            rs = stmt.executeQuery(sql);
+            while(rs.next()){
+                int adid = rs.getInt(1);
+                BigDecimal bd = new BigDecimal(rs.getString(2));
+                adCpc.put(adid, bd.setScale(5,BigDecimal.ROUND_HALF_UP));
+            }
+            return adCpc;
+        }catch (Exception e){
+            throw new Exception("Error when get the old code from mysql",e);
+        } finally {
+            MySQLManager.close(rs, stmt, conn);
+        }
+    }
+
     public List<Advertise> getExploreAdInfo() throws Exception {
         return getAdInfo(Constant.EXPLORE_RULE.getWhere());
     }
@@ -57,7 +84,7 @@ public class OdinADDao {
         Statement stmt = null;
         ResultSet rs = null;
         try{
-            conn = MySQLManager.getConnection();
+            conn = MySQLManager.getConnection("odin");
             stmt = conn.createStatement();
             String sql = "select id, orig_id, name, code, network, first_cat, second_cat, media_type, " +
                     "size, time, position from ad_info where " + where;
@@ -83,4 +110,6 @@ public class OdinADDao {
             MySQLManager.close(rs, stmt, conn);
         }
     }
+
+
 }
