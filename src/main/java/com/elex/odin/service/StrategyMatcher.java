@@ -52,7 +52,8 @@ public class StrategyMatcher implements ADMatcher {
             message = new ADMatchMessage(-1,"does not find the adid " + adID);
         }
 
-        StringBuilder sb = new StringBuilder(inputFeature.getReqid())
+        StringBuilder sb = new StringBuilder("MSG")
+                .append("\t").append(inputFeature.getReqid())
                 .append("\t").append(inputFeature.getPid())
                 .append("\t").append(inputFeature.getNation())
                 .append("\t").append(message.getStatus())
