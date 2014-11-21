@@ -18,7 +18,7 @@
         <cal_field>ictr</cal_field>
         <score><![CDATA[ pv > 10 and sv >20 ]]></score>
     </feature>
-    <feature type="bw" desc="browser" weight="1" defaultValue="0">
+    <feature type="bw" desc="browser" weight="0.8" defaultValue="0">
         <sort field="ictr" />
         <filter range="50%" />
         <cal_field>ictr</cal_field>
