@@ -7,19 +7,11 @@ import java.sql.*;
 import java.util.Map;
 
 public final class MySQLManager {
-	private static String url = "";
-	private static String username = "root";
-	private static String password = "123456";
-
-	private static MySQLManager instance = new MySQLManager();
+    private static Map<String,String> mysqlConf ;
 
     static {
         try {
-            Map<String,String> mysqlConf = ConfigurationManager.parseMysqlConfig();
-            url = mysqlConf.get("url");
-            username = mysqlConf.get("username");
-            password = mysqlConf.get("password");
-
+            mysqlConf = ConfigurationManager.parseMysqlConfig();
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             throw new ExceptionInInitializerError(e);
@@ -28,9 +20,11 @@ public final class MySQLManager {
         }
     }
 
-	public static Connection getConnection() throws Exception {
-		return DriverManager.getConnection(url, username, password);
+	public static Connection getConnection(String type) throws Exception {
+		return DriverManager.getConnection(mysqlConf.get(type + ".url"),
+                mysqlConf.get(type + ".username"), mysqlConf.get(type + ".password"));
 	}
+
 
 	public static void close(ResultSet rs, Statement st, Connection conn) {
 		try {
