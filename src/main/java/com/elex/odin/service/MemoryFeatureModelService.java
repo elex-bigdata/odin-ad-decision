@@ -85,7 +85,7 @@ public class MemoryFeatureModelService implements FeatureModelServiceInterface {
     }
 
     @Override
-    public void updateModel(String yesterday) throws Exception {
+    public void updateModel(String day) throws Exception {
         long begin = System.currentTimeMillis();
         LOGGER.debug("begin update model");
         try{
@@ -116,17 +116,17 @@ public class MemoryFeatureModelService implements FeatureModelServiceInterface {
             LOGGER.info("update feature ad model spend " + (System.currentTimeMillis() - kwend));*/
 
             List<Future<Boolean>> updaters = new ArrayList<Future<Boolean>>();
-            String path = Constant.USER_PROFILE_MODEL.FILE_PATH.replace("[day]",yesterday);
+            String path = Constant.USER_PROFILE_MODEL.FILE_PATH.replace("[day]",day);
             ModelUpdater updater = new MemoryUserProfileModelUpdater(path, Constant.USER_PROFILE_MODEL.FIELD_NAME );
             updaters.add(SERVICE.submit(new CacheExecutor("user profile", updater)));
 
             //2. keyword
-            path = Constant.USER_KEYWORD_MODEL.FILE_PATH.replace("[day]",yesterday);
+            path = Constant.USER_KEYWORD_MODEL.FILE_PATH.replace("[day]",day);
             updater = new MemoryUserProfileModelUpdater(path, Constant.USER_KEYWORD_MODEL.FIELD_NAME );
             updaters.add(SERVICE.submit(new CacheExecutor("user key word", updater)));
 
             //3. feature_ad
-            path = Constant.FEATURE_AD_MODEL.FILE_PATH.replace("[day]",yesterday);
+            path = Constant.FEATURE_AD_MODEL.FILE_PATH.replace("[day]",day);
             updater = new MemoryFeatureADModelUpdater(path, Constant.FEATURE_AD_MODEL.FIELD_NAME );
             updaters.add(SERVICE.submit(new CacheExecutor("feature ad", updater)));
 
