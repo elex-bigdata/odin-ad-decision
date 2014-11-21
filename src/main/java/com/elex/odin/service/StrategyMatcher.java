@@ -217,21 +217,14 @@ public class StrategyMatcher implements ADMatcher {
     //构建每个广告所对应的特征类型和值列表，用于打印分析匹配的结果
     private String getADFeatureValues(Map<String,Map<String,Set<String>>> validADs, String adid){
         String fvs = "";
-        for(Map.Entry<String,Map<String,Set<String>>> features : validADs.entrySet()){
-            String vs = "";
-            for(Map.Entry<String,Set<String>> featureValueAds : features.getValue().entrySet()){
+        validADs.get(adid);
 
-                for(String ad : featureValueAds.getValue()){
-                    if(ad.equals(adid)){
-                        vs += featureValueAds.getKey() + "_" ;
-                    }
-                }
-
+        for(Map.Entry<String,Set<String>> features : validADs.get(adid).entrySet()){
+            String vs = features.getKey() + "_";
+            for(String fv : features.getValue()){
+                vs +=  fv + "_";
             }
-            if(vs.length() > 0){
-                fvs += vs.substring(0,vs.length()-1) + ".";
-            }
-
+            fvs += vs.substring(0,vs.length()-1) + ".";
         }
 
         if(fvs.length() > 0){

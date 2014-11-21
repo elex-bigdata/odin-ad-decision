@@ -36,7 +36,7 @@ public class AdvertiseManager {
             List<Advertise> ads = dao.getAdInfo();
             HashMap<Integer, Advertise> adMap = new HashMap<Integer, Advertise>();
             for(Advertise ad : ads){
-                adMap.put(ad.getAdid(), ad);
+                adMap.put(ad.getOrigAdid(), ad);
             }
 
             List<Advertise> exploreADs = dao.getExploreAdInfo();
