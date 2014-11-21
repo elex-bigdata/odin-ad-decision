@@ -79,7 +79,7 @@ public class StrategyMatcher implements ADMatcher {
                 userProfile.addFeature(featureType, featureValue);
             }
         }
-        LOGGER.debug(userProfile.getReqid() + " get user profile spend " + (System.currentTimeMillis() - begin) + "ms");
+        //LOGGER.debug(userProfile.getReqid() + " get user profile spend " + (System.currentTimeMillis() - begin) + "ms");
     }
 
     //输入的特征与模型里面的特征进行合并
@@ -200,7 +200,7 @@ public class StrategyMatcher implements ADMatcher {
             }
         });
 
-        List<String> ads = new ArrayList<String>();
+       /* List<String> ads = new ArrayList<String>();
         ads.add(adScores.get(0).getLeft().toString());
         if(adScores.size()>=2 && (Double)adScores.get(1).getRight()/(Double)adScores.get(0).getRight() > Constant.FINAL_SOCRE_DISTANCE.get("pair1")){
             ads.add(adScores.get(1).getLeft().toString());
@@ -216,7 +216,9 @@ public class StrategyMatcher implements ADMatcher {
             adScore += ads.get(i);
         }
         LOGGER.info(userProfile.getReqid() + " select " + adScores.get(index).getLeft() + " from " + adScore + " spend " + (System.currentTimeMillis() - begin) + "ms");
-        return adScores.get(index).getLeft().toString();
+        */
+        //先选择最高的一个
+        return adScores.get(0).getLeft().toString();
     }
 
     //构建每个广告所对应的特征类型和值列表，用于打印分析匹配的结果
