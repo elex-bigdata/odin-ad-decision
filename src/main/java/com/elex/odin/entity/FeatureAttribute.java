@@ -1,7 +1,5 @@
 package com.elex.odin.entity;
 
-import com.elex.odin.utils.Constant;
-
 import java.math.BigDecimal;
 
 /**
@@ -50,7 +48,11 @@ public class FeatureAttribute {
     public void setFilterRange(String filterRange) throws Exception {
         String[] ranges = filterRange.split(",");
         if(ranges.length == 1){
-            this.filterRange = new double[]{Double.parseDouble(ranges[0])};
+            if(filterRange.endsWith("%")){
+                this.filterRange = new double[]{(double)Integer.parseInt(filterRange.substring(0, filterRange.length() - 1))%100};
+            }else{
+                this.filterRange = new double[]{Double.parseDouble(ranges[0])};
+            }
         }else if(ranges.length == 2){
             this.filterRange = new double[]{Double.parseDouble(ranges[0]), Double.parseDouble(ranges[1])};
             if(this.filterRange[0] >= this.filterRange[1]){
