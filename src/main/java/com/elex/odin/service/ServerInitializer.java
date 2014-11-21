@@ -87,7 +87,7 @@ public class ServerInitializer {
         scheduler.scheduleJob(dcJob, dcTrigger);
         scheduler.scheduleJob(erJob, erTrigger);
 
-        scheduler.start();
+//        scheduler.start();
     }
 
 
