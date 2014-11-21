@@ -17,4 +17,9 @@ public class DateUtil {
         cal.add(Calendar.DATE, -1);
         return sdf.format(cal.getTime());
     }
+
+    public static String today(){
+        Calendar cal = Calendar.getInstance();
+        return sdf.format(cal.getTime());
+    }
 }
