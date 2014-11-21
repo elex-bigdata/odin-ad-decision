@@ -81,7 +81,7 @@ public class MemoryFeatureModelService implements FeatureModelServiceInterface {
 
     @Override
     public void updateModel() throws Exception {
-        updateModel(DateUtil.yesterday());
+        updateModel(DateUtil.today());
     }
 
     @Override
