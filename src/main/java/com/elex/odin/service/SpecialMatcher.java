@@ -54,18 +54,13 @@ public class SpecialMatcher implements ADMatcher {
 
     @Override
     public ADMatchMessage match(InputFeature userFeature) throws Exception {
-        long begin = System.currentTimeMillis();
-        if(gameUIDs.get(userFeature.getUid()) != null){
-            //3860142 game_all (game的用户固定投game all)
-            Advertise ad = AdvertiseManager.getADByID(3860142);
-            if(ad != null){
-                ADMatchMessage message = new ADMatchMessage(0, "3860142", ad.getCode(), "dec_gm");
-                String msg = "{\"reqid\":\""+userFeature.getReqid()+",\"\"status\":" +message.getStatus()+ ",\"adid\":\""+message.getAdid()+"\"," +
-                        "\"msg\":\"" + message.getMsg() +"\",\"took\":"+(System.currentTimeMillis() - begin)+",\"tag\":\""+message.getTag()+"\"}";
-                LOGGER.debug(msg);
-                return message;
-            }
+        Advertise ad = AdvertiseManager.getADByID(3860421);
+
+        if(ad != null){
+            ADMatchMessage message = new ADMatchMessage(0, "3860421", ad.getCode(), "dec_aa");
+            return message;
         }
+
 
         return null;
     }
