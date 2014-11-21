@@ -26,7 +26,7 @@ public class Constant {
     public static class FEATURE_TYPE{
         public static final String QUERY = "q";
         public static final String QUERY_LENGTH = "ql";
-        public static final String QUERY_WORD_COUNT = "qwc";
+        public static final String QUERY_WORD_COUNT = "wc";
         public static final String KEYWORD = "kw";
         public static final String TIME = "t";
         public static final String IP = "ip";
@@ -116,6 +116,7 @@ public class Constant {
         FA_NUMBER_FIELDS.put("fr",1);
     }
 
+    //User profile
     public static Map<String, Integer> UP_NUMBER_FIELDS = new HashMap<String, Integer>();
     static {
         UP_NUMBER_FIELDS.put("pv",1);
