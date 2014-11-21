@@ -42,6 +42,8 @@ public class StrategyMatcher implements ADMatcher {
 
         Advertise ad = AdvertiseManager.getADByID(Integer.parseInt(adID));
 
+        String fvs = getADFeatureValues(validADs, adID);
+
         ADMatchMessage message = null;
         if(ad != null){
             message = new ADMatchMessage(0, adID, ad.getCode(), Constant.DECISION_RULE.getTag());
@@ -50,11 +52,16 @@ public class StrategyMatcher implements ADMatcher {
             message = new ADMatchMessage(-1,"does not find the adid " + adID);
         }
 
-        //不打印code，太长了
-        String msg = "{\"reqid\":\""+userProfile.getReqid()+",\"\"status\":" +message.getStatus()+ ",\"adid\":\""+message.getAdid()+"\"," +
-                "\"msg\":\"" + message.getMsg() +"\",\"took\":"+(System.currentTimeMillis() - begin)+",\"tag\":\""+message.getTag()+"\"}";
+        StringBuilder sb = new StringBuilder(inputFeature.getReqid())
+                .append("\t").append(inputFeature.getPid())
+                .append("\t").append(inputFeature.getNation())
+                .append("\t").append(message.getStatus())
+                .append("\t").append(message.getAdid())
+                .append("\t").append(message.getTag())
+                .append("\t").append((System.currentTimeMillis() - begin))
+                .append("\t").append(fvs);
 
-        LOGGER.debug(msg);
+        LOGGER.debug(sb.toString());
 
         return message;
     }
@@ -160,18 +167,19 @@ public class StrategyMatcher implements ADMatcher {
     private double calculatePerADScore(String adid, UserProfile userProfile, Map<String,Set<String>> modelFeature) throws CacheException {
         BigDecimal totalScore = new BigDecimal(0);
         Map<String,FeatureAttribute> featureAttributes = Constant.DECISION_RULE.getFeatureAttributes();
+        BigDecimal cpc = AdvertiseManager.getADCpc(Integer.parseInt(adid));
         for(String featureType : userProfile.getFeatures().keySet()){
             Set<String> featureValues = modelFeature.get(featureType);
             if(modelFeature.get(featureType) == null){
                 totalScore = totalScore.add(featureAttributes.get(featureType).getDefaultValue());
             }else{
-                BigDecimal weight = featureAttributes.get(featureType).getWeight();
+                BigDecimal weightCpc = featureAttributes.get(featureType).getWeight().multiply(cpc);
                 Integer calFieldIndex = Constant.FEATURE_AD_INFO_INDEX.get(featureAttributes.get(featureType).getCalField());
                 //matchRule
                 for(String featureValue : featureValues){
                     String[] featureADInfo = featureModelService.getFeatureADInfoArray(userProfile.getNation(), featureType, featureValue, adid);
-                    //rule
-                    totalScore = totalScore.add(new BigDecimal(featureADInfo[calFieldIndex]).multiply(weight));
+                    //cal  feature1_adid_ctr * adid_cpc * weight
+                    totalScore = totalScore.add(new BigDecimal(featureADInfo[calFieldIndex]).multiply(weightCpc));
                 }
             }
         }
@@ -203,6 +211,28 @@ public class StrategyMatcher implements ADMatcher {
         int index = random.nextInt(ads.size());
         LOGGER.info(userProfile.getReqid() + " select " + adScores.get(index).getLeft() + " from " + adScores.toString() + " spend " + (System.currentTimeMillis() - begin) + "ms");
         return adScores.get(index).getLeft().toString();
+    }
+
+    //构建每个广告所对应的特征类型和值列表，用于打印分析匹配的结果
+    private String getADFeatureValues(Map<String,Map<String,Set<String>>> validADs, String adid){
+        String fvs = "";
+        for(Map.Entry<String,Map<String,Set<String>>> features : validADs.entrySet()){
+            String vs = "";
+            for(Map.Entry<String,Set<String>> featureValueAds : features.getValue().entrySet()){
+
+                for(String ad : featureValueAds.getValue()){
+                    if(ad.equals(adid)){
+                        vs += featureValueAds.getKey() + "_" ;
+                    }
+                }
+
+            }
+            if(vs.length() > 0){
+                fvs += vs.substring(0,vs.length()-1) + ".";
+            }
+
+        }
+        return fvs.substring(0,fvs.length()-1);
     }
 
 }
