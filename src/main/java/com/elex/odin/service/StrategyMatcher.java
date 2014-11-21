@@ -210,7 +210,12 @@ public class StrategyMatcher implements ADMatcher {
         }
         Random random = new Random();
         int index = random.nextInt(ads.size());
-        LOGGER.info(userProfile.getReqid() + " select " + adScores.get(index).getLeft() + " from " + adScores.toString() + " spend " + (System.currentTimeMillis() - begin) + "ms");
+
+        String adScore = "";
+        for(int i=0;i<ads.size();i++){
+            adScore += ads.get(i);
+        }
+        LOGGER.info(userProfile.getReqid() + " select " + adScores.get(index).getLeft() + " from " + adScore + " spend " + (System.currentTimeMillis() - begin) + "ms");
         return adScores.get(index).getLeft().toString();
     }
 
