@@ -2,9 +2,9 @@ package com.elex.odin.service;
 
 import com.elex.odin.data.OdinADDao;
 import com.elex.odin.entity.Advertise;
-import com.elex.odin.utils.Constant;
 import org.apache.log4j.Logger;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -19,6 +19,7 @@ public class AdvertiseManager {
     private static Map<Integer, Advertise> oldAdverties = new HashMap<Integer, Advertise>();
     private static Map<String,List<Integer>> categorys = new HashMap<String,List<Integer>>();
     private static List<Integer> expAdIds = new ArrayList<Integer>();
+    private static Map<Integer, BigDecimal> adCpc = new HashMap<Integer, BigDecimal>();
 
     public static void loadOldAdvertise() throws Exception {
         OdinADDao dao = new OdinADDao();
@@ -52,6 +53,10 @@ public class AdvertiseManager {
                 expAdIds = exploreIDs;
             }
             LOGGER.info("load " + advertise.size() + " ads ");
+
+            adCpc = dao.getADCpc();
+
+            LOGGER.info("load " + adCpc.size() + " ad cpc ");
         } catch (Exception e) {
             throw new RuntimeException("Error when update advertise", e);
         }
@@ -64,5 +69,9 @@ public class AdvertiseManager {
     public static Advertise getExploreADByUID(String uid){
         int index = Math.abs(uid.hashCode()) % expAdIds.size();
         return advertise.get(expAdIds.get(index));
+    }
+
+    public static BigDecimal getADCpc(int adid){
+        return adCpc.get(adid) == null ? new BigDecimal(0) : adCpc.get(adid);
     }
 }
