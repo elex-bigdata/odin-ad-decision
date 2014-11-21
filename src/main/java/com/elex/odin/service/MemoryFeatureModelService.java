@@ -46,8 +46,13 @@ public class MemoryFeatureModelService implements FeatureModelServiceInterface {
 
         if(sortIDs == null) return adIDs;
 
-        if(rules.length == 1 ){ //TOP N
-            int count = (int)rules[0];
+        if(rules.length == 1 ){
+            int count = (int)rules[0]; //TOP N
+
+            if(rules[0] > 0 && rules[0] < 1){ //top percent
+                count = (int)Math.ceil(sortIDs.size()*rules[0]);
+            }
+
             for(Map.Entry<Double,Set<String>> scores : sortIDs.entrySet()){
                 if(count <= 0) break;
                 adIDs.addAll(scores.getValue());
