@@ -47,6 +47,33 @@ public class OdinADDao {
     }
 
 
+    public Map<Integer, BigDecimal> getADRpm() throws Exception{
+
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        Map<Integer, BigDecimal> adCpc = new HashMap<Integer, BigDecimal>();
+        try{
+            String sql = "select ad.placement_id, (sum(ad.total_network_rpm)/sum(ad.imps_total))*1000 from ads_data ad join ad_info ai on ad.placement_id = ai.orig_id\n" +
+                    "        where ai.second_cat = 'Cc' and ad.rpt_date > '201411211300' group by ad.placement_id";
+            conn = MySQLManager.getConnection("thor");
+            stmt = conn.createStatement();
+            System.out.println(sql);
+            rs = stmt.executeQuery(sql);
+            while(rs.next()){
+                int adid = rs.getInt(1);
+                BigDecimal bd = new BigDecimal(rs.getString(2));
+                adCpc.put(adid, bd.setScale(5,BigDecimal.ROUND_HALF_UP));
+            }
+            return adCpc;
+        }catch (Exception e){
+            throw new Exception("Error when getADRpm from mysql",e);
+        } finally {
+            MySQLManager.close(rs, stmt, conn);
+        }
+
+    }
+
     public Map<Integer, BigDecimal> getADCpc()throws Exception {
         Connection conn = null;
         Statement stmt = null;
@@ -65,7 +92,7 @@ public class OdinADDao {
             }
             return adCpc;
         }catch (Exception e){
-            throw new Exception("Error when get the old code from mysql",e);
+            throw new Exception("Error when getADCpc from mysql",e);
         } finally {
             MySQLManager.close(rs, stmt, conn);
         }
