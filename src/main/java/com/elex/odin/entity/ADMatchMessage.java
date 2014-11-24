@@ -1,5 +1,7 @@
 package com.elex.odin.entity;
 
+import java.util.Date;
+
 /**
  * Author: liqiang
  * Date: 14-10-23
@@ -18,7 +20,7 @@ public class ADMatchMessage {
     public ADMatchMessage(int status, String adid, String code, String tag) {
         this.status = status;
         this.adid = adid;
-        this.code = code;
+        this.setCode(code);
         this.tag = tag;
     }
 
@@ -76,7 +78,7 @@ public class ADMatchMessage {
     }
 
     public void setCode(String code) {
-        this.code = code;
+        this.code = code.replace("[CACHEBUSTER]",String.valueOf(new Date().getTime()));
     }
 
 }
