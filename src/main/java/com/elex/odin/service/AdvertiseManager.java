@@ -56,7 +56,7 @@ public class AdvertiseManager {
             LOGGER.info("load " + advertise.size() + " ads ");
 
             adCpc = dao.getADCpc();
-            adRpm = dao.getADRpm();
+//            adRpm = dao.getADRpm();
 
             LOGGER.info("load " + adCpc.size() + " ad cpc ");
         } catch (Exception e) {
