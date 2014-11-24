@@ -5,11 +5,7 @@ import com.elex.odin.entity.Advertise;
 import com.elex.odin.entity.InputFeature;
 import org.apache.log4j.Logger;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 一些临时的特殊的试验策略,都写死
@@ -20,44 +16,33 @@ import java.util.Map;
 public class SpecialMatcher implements ADMatcher {
 
     private static final Logger LOGGER = Logger.getLogger("dec");
+    private static Random random = new Random();
 
-    private static Map<String,Integer> gameUIDs =  new HashMap<String,Integer>();
+    private static List<Integer> topRpmAds = new ArrayList<Integer>();
+    private static Integer all = 3860421;
     static{
-        String filename = "/data/odin_model/gameuid.txt";
-        FileInputStream fis = null;
-        BufferedReader reader = null;
-        try {
-            fis = new FileInputStream(filename);
-            reader = new BufferedReader(new InputStreamReader(fis));
-            String line;
-
-            while((line =  reader.readLine()) != null){
-                line = line.trim();
-                gameUIDs.put(line,1);
-            }
-            System.out.println("Get " + gameUIDs.size() + " gameuid " );
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            try{
-                if(reader != null){
-                    reader.close();
-                }
-                if(fis != null){
-                    fis.close();
-                }
-            }  catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
+        topRpmAds.add(3910227);
+        topRpmAds.add(3910234);
+        topRpmAds.add(3910249);
+        topRpmAds.add(3910267);
     }
 
     @Override
     public ADMatchMessage match(InputFeature userFeature) throws Exception {
-        Advertise ad = AdvertiseManager.getADByID(3860421);
+        Advertise ad;
+        String tag ;
+
+        if(random.nextInt(30) < 20){ //20% for top rpm CC
+            int index = random.nextInt(topRpmAds.size());
+            ad = AdvertiseManager.getADByID(topRpmAds.get(index));
+            tag = "dec_tcr";
+        }else{
+            ad = AdvertiseManager.getADByID(all);
+            tag = "dec_aa";
+        }
 
         if(ad != null){
-            ADMatchMessage message = new ADMatchMessage(0, "3860421", ad.getCode(), "dec_aa");
+            ADMatchMessage message = new ADMatchMessage(0, String.valueOf(ad.getOrigAdid()), ad.getCode(), tag);
             return message;
         }
 
