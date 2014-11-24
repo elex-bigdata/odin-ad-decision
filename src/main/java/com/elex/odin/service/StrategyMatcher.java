@@ -242,11 +242,11 @@ public class StrategyMatcher implements ADMatcher {
         validADs.get(adid);
 
         for(Map.Entry<String,Set<String>> features : validADs.get(adid).entrySet()){
-            String vs = features.getKey() + "_";
+            String vs = features.getKey() + ",";
             for(String fv : features.getValue()){
-                vs +=  fv + "_";
+                vs +=  fv + ",";
             }
-            fvs += vs.substring(0,vs.length()-1) + ",";
+            fvs += vs.substring(0,vs.length()-1) + ";";
         }
 
         if(fvs.length() > 0){
