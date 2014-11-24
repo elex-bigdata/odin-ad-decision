@@ -38,7 +38,8 @@ public class StrategyMatcher implements ADMatcher {
 
         //4. 决策
         List<Pair> adScores = calAll(validADs, userProfile);
-        String adID =  selectAD(userProfile, adScores);
+        Pair finalAD =  selectAD(userProfile, adScores);
+        String adID = finalAD.getLeft().toString();
 
         Advertise ad = AdvertiseManager.getADByID(Integer.parseInt(adID));
 
@@ -58,6 +59,7 @@ public class StrategyMatcher implements ADMatcher {
                 .append("\t").append(inputFeature.getNation())
                 .append("\t").append(message.getStatus())
                 .append("\t").append(message.getAdid())
+                .append("\t").append(finalAD.getRight().toString())
                 .append("\t").append(message.getTag())
                 .append("\t").append((System.currentTimeMillis() - begin))
                 .append("\t").append(fvs);
@@ -169,13 +171,13 @@ public class StrategyMatcher implements ADMatcher {
         BigDecimal totalScore = new BigDecimal(0);
         Map<String,FeatureAttribute> featureAttributes = Constant.DECISION_RULE.getFeatureAttributes();
         BigDecimal cpc = AdvertiseManager.getADCpc(Integer.parseInt(adid));
-        BigDecimal rpm = AdvertiseManager.getADRpm(Integer.parseInt(adid));
+//        BigDecimal rpm = AdvertiseManager.getADRpm(Integer.parseInt(adid));
         for(String featureType : userProfile.getFeatures().keySet()){
             Set<String> featureValues = modelFeature.get(featureType);
             if(modelFeature.get(featureType) == null){
                 totalScore = totalScore.add(featureAttributes.get(featureType).getDefaultValue());
             }else{
-                BigDecimal weightCpc = featureAttributes.get(featureType).getWeight().multiply(cpc).multiply(rpm);
+                BigDecimal weightCpc = featureAttributes.get(featureType).getWeight().multiply(cpc);
                 Integer calFieldIndex = Constant.FEATURE_AD_INFO_INDEX.get(featureAttributes.get(featureType).getCalField());
                 //matchRule
                 for(String featureValue : featureValues){
@@ -189,7 +191,7 @@ public class StrategyMatcher implements ADMatcher {
     }
 
     //筛选最后的广告
-    private String selectAD(UserProfile userProfile, List<Pair> adScores){
+    private Pair selectAD(UserProfile userProfile, List<Pair> adScores){
         long begin = System.currentTimeMillis();
         Collections.sort(adScores, new Comparator<Pair>() {
             @Override
@@ -228,10 +230,10 @@ public class StrategyMatcher implements ADMatcher {
         if(adScores.size() >=3){
             adScore += adScores.get(2);
         }
-        LOGGER.info("Top score : " + adScore);
+        LOGGER.info(userProfile.getReqid() + " Top score : " + adScore);
 
         //先选择最高的一个
-        return adScores.get(0).getLeft().toString();
+        return adScores.get(0);
     }
 
     //构建每个广告所对应的特征类型和值列表，用于打印分析匹配的结果
@@ -244,7 +246,7 @@ public class StrategyMatcher implements ADMatcher {
             for(String fv : features.getValue()){
                 vs +=  fv + "_";
             }
-            fvs += vs.substring(0,vs.length()-1) + ".";
+            fvs += vs.substring(0,vs.length()-1) + ",";
         }
 
         if(fvs.length() > 0){
