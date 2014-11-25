@@ -98,10 +98,6 @@ public class OdinADDao {
         }
     }
 
-    public List<Advertise> getExploreAdInfo() throws Exception {
-        return getAdInfo(Constant.EXPLORE_RULE.getWhere());
-    }
-
     public List<Advertise> getAdInfo() throws Exception {
         return getAdInfo(" 1=1 ");
     }
