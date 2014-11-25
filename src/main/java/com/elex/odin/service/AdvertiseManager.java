@@ -17,8 +17,6 @@ public class AdvertiseManager {
     private static final Logger LOGGER = Logger.getLogger(AdvertiseManager.class);
     public static Map<Integer, Advertise> advertise = new HashMap<Integer, Advertise>();
     private static Map<Integer, Advertise> oldAdverties = new HashMap<Integer, Advertise>();
-    private static Map<String,List<Integer>> categorys = new HashMap<String,List<Integer>>();
-    private static List<Integer> expAdIds = new ArrayList<Integer>();
     private static Map<Integer, BigDecimal> adCpc = new HashMap<Integer, BigDecimal>();
     private static Map<Integer, BigDecimal> adRpm = new HashMap<Integer, BigDecimal>();
 
@@ -40,18 +38,17 @@ public class AdvertiseManager {
                 adMap.put(ad.getOrigAdid(), ad);
             }
 
-            List<Advertise> exploreADs = dao.getExploreAdInfo();
+/*            List<Advertise> exploreADs = dao.getExploreAdInfo();
             List<Integer> exploreIDs = new ArrayList<Integer>();
             for(Advertise ad : exploreADs){
                 exploreIDs.add(ad.getOrigAdid());
             }
-            LOGGER.info("load " + exploreIDs.size() + " exploreIDs ");
+            LOGGER.info("load " + exploreIDs.size() + " exploreIDs ");*/
 
             List<Integer> ids = new ArrayList<Integer>();
             ids.addAll(advertise.keySet());
             synchronized(AdvertiseManager.class){
                 advertise = adMap;
-                expAdIds = exploreIDs;
             }
             LOGGER.info("load " + advertise.size() + " ads ");
 
@@ -66,11 +63,6 @@ public class AdvertiseManager {
 
     public static Advertise getADByID(Integer adid){
         return AdvertiseManager.advertise.get(adid);
-    }
-
-    public static Advertise getExploreADByUID(String uid){
-        int index = Math.abs(uid.hashCode()) % expAdIds.size();
-        return advertise.get(expAdIds.get(index));
     }
 
     public static BigDecimal getADCpc(int adid){
