@@ -1,11 +1,15 @@
 package com.elex.odin.service;
 
+import com.elex.odin.data.OdinADDao;
+import com.elex.odin.entity.Advertise;
+import com.elex.odin.entity.ExploreRule;
 import com.elex.odin.entity.FeatureAttribute;
 import com.elex.odin.utils.Constant;
 import org.apache.commons.configuration.*;
 import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,15 +30,30 @@ public class ConfigurationManager {
             xml.setListDelimiter((char) 0);
             xml.load(Constant.EXPLORE_RULE_PATH);
             String tag = xml.getString("tag").trim();
-            String where = xml.getString("where").trim();
 
             if(tag.length() == 0){
                 throw new Exception("Explore tag name should not be empty");
             }
 
-            synchronized (Constant.EXPLORE_RULE){
-                Constant.EXPLORE_RULE.setTag(tag);
-                Constant.EXPLORE_RULE.setWhere(where);
+            List<HierarchicalConfiguration> categorys = xml.configurationsAt("category");
+
+            List<ExploreRule> rules = new ArrayList<ExploreRule>();
+
+            OdinADDao dao = new OdinADDao();
+
+            for(HierarchicalConfiguration cat : categorys){
+                ExploreRule rule = new ExploreRule();
+                rule.setTag(tag);
+                rule.setName(cat.getString("name"));
+                String where = cat.getString("where");
+                rule.setWhere(where);
+                rule.setRate(cat.getInt("rate"));
+                rule.setAds(dao.getAdInfo(where));
+                rules.add(rule);
+            }
+
+            synchronized (Constant.EXPLORE_RULES){
+                Constant.EXPLORE_RULES = rules;
             }
         }catch (Exception e){
             throw new RuntimeException("Failed update explore rule", e);
