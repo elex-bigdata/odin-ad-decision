@@ -4,7 +4,9 @@ import com.elex.odin.entity.DecisionRule;
 import com.elex.odin.entity.ExploreRule;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
 
@@ -60,7 +62,7 @@ public class Constant {
         public static final String SECOND_CAT = "second_cat";
     }
 
-    public static ExploreRule EXPLORE_RULE = new ExploreRule();
+    public static List<ExploreRule> EXPLORE_RULES = new ArrayList<ExploreRule>();
     public static final Gson gson = new Gson();
 
     //配置路径
