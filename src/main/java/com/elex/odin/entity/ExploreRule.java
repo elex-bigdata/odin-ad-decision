@@ -1,5 +1,7 @@
 package com.elex.odin.entity;
 
+import java.util.List;
+
 /**
  * Author: liqiang
  * Date: 14-11-11
@@ -8,7 +10,10 @@ package com.elex.odin.entity;
 public class ExploreRule {
 
     private String tag = "exp";
+    private String name ="";
+    private int rate = 0;
     private String where = "";
+    private List<Advertise> ads;
 
     public String getTag() {
         return tag;
@@ -24,5 +29,29 @@ public class ExploreRule {
 
     public void setWhere(String where) {
         this.where = where;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getRate() {
+        return rate;
+    }
+
+    public void setRate(int rate) {
+        this.rate = rate;
+    }
+
+    public List<Advertise> getAds() {
+        return ads;
+    }
+
+    public void setAds(List<Advertise> ads) {
+        this.ads = ads;
     }
 }
