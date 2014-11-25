@@ -18,7 +18,6 @@ public class AdvertiseManager {
     public static Map<Integer, Advertise> advertise = new HashMap<Integer, Advertise>();
     private static Map<Integer, Advertise> oldAdverties = new HashMap<Integer, Advertise>();
     private static Map<Integer, BigDecimal> adCpc = new HashMap<Integer, BigDecimal>();
-    private static Map<Integer, BigDecimal> adRpm = new HashMap<Integer, BigDecimal>();
 
     public static void loadOldAdvertise() throws Exception {
         OdinADDao dao = new OdinADDao();
@@ -35,15 +34,8 @@ public class AdvertiseManager {
             List<Advertise> ads = dao.getAdInfo();
             HashMap<Integer, Advertise> adMap = new HashMap<Integer, Advertise>();
             for(Advertise ad : ads){
-                adMap.put(ad.getOrigAdid(), ad);
+                adMap.put(ad.getAdid(), ad);
             }
-
-/*            List<Advertise> exploreADs = dao.getExploreAdInfo();
-            List<Integer> exploreIDs = new ArrayList<Integer>();
-            for(Advertise ad : exploreADs){
-                exploreIDs.add(ad.getOrigAdid());
-            }
-            LOGGER.info("load " + exploreIDs.size() + " exploreIDs ");*/
 
             List<Integer> ids = new ArrayList<Integer>();
             ids.addAll(advertise.keySet());
@@ -53,7 +45,6 @@ public class AdvertiseManager {
             LOGGER.info("load " + advertise.size() + " ads ");
 
             adCpc = dao.getADCpc();
-//            adRpm = dao.getADRpm();
 
             LOGGER.info("load " + adCpc.size() + " ad cpc ");
         } catch (Exception e) {
@@ -69,7 +60,4 @@ public class AdvertiseManager {
         return adCpc.get(adid) == null ? new BigDecimal(0) : adCpc.get(adid);
     }
 
-    public static BigDecimal getADRpm(int adid){
-        return adRpm.get(adid) == null ? new BigDecimal(0) : adRpm.get(adid);
-    }
 }
