@@ -47,7 +47,7 @@ public class StrategyMatcher implements ADMatcher {
 
         ADMatchMessage message = null;
         if(ad != null){
-            message = new ADMatchMessage(0, adID, ad.getCode(), Constant.DECISION_RULE.getTag());
+            message = new ADMatchMessage(0, String.valueOf(ad.getAdid()), ad.getCode(), Constant.DECISION_RULE.getTag());
         }else{
             LOGGER.info("does not find the adid " + adID);
             message = new ADMatchMessage(-1,"does not find the adid " + adID);
