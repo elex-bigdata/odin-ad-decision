@@ -80,7 +80,7 @@ public class OdinADDao {
         ResultSet rs = null;
         Map<Integer, BigDecimal> adCpc = new HashMap<Integer, BigDecimal>();
         try{
-            String sql = "select ai.orig_id, sum(ad.network_revenue)/sum(ad.clicks) from ad_info ai join ads_data ad on ai.orig_id = ad.placement_id where ai.network = 'Apn' and second_cat='Cc' group by ai.orig_id";
+            String sql = "select ai.id, sum(ad.network_revenue)/sum(ad.clicks) from ad_info ai join ads_data ad on ai.orig_id = ad.placement_id where ai.network = 'Apn' and second_cat='Cc' group by ai.orig_id";
             conn = MySQLManager.getConnection("thor");
             stmt = conn.createStatement();
             System.out.println(sql);
