@@ -1,4 +1,23 @@
 <explore>
-    <tag>exp_mt</tag>
-    <where><![CDATA[ network = 'Mat' ]]></where>
+    <tag>exp_yma</tag>
+    <category>
+        <name>all</name>
+        <rate>5</rate>
+        <where><![CDATA[ network = 'Apn' and first_cat = 'All' and second_cat ='All' and media_type = 'Banner' ]]></where>
+    </category>
+    <category>
+        <name>mat</name>
+        <rate>15</rate>
+        <where><![CDATA[ network = 'Mat' ]]></where>
+    </category>
+    <category>
+        <name>yb_more</name>
+        <rate>30</rate>
+        <where><![CDATA[ network = 'Ybrant' and orig_id in ('9288','9289','9302','9309','9310') ]]></where>
+    </category>
+    <category>
+        <name>yb_less</name>
+        <rate>50</rate>
+        <where><![CDATA[ network = 'Ybrant' and orig_id not in ('9288','9289','9302','9309','9310')  ]]></where>
+    </category>
 </explore>
