@@ -53,6 +53,7 @@ public class ConfigurationManager {
             }
 
             synchronized (Constant.EXPLORE_RULES){
+                Constant.EXPLORE_RULES.clear();
                 Constant.EXPLORE_RULES = rules;
             }
         }catch (Exception e){

@@ -20,18 +20,33 @@ public class MemoryCache {
     public static Map<String, String[]> featureADTmp = new HashMap<String, String[]>();
 
     public static void resetTmp(){
+        if(userProfileFeatureIndexTmp != null){
+            userProfileFeatureIndexTmp.clear();
+        }
         userProfileFeatureIndexTmp = new HashMap<String, Set<String>>();
+
+        if(featureADIndexTmp !=null){
+            featureADIndexTmp.clear();
+        }
         featureADIndexTmp = new HashMap<String, TreeMap<Double,Set<String>>>();
+
+        if(featureADTmp != null){
+            featureADTmp.clear();
+        }
         featureADTmp = new HashMap<String, String[]>();
     }
 
     public static void syncCache(){
         synchronized (MemoryCache.class){
             if(userProfileFeatureIndexTmp.size() > 0 && featureADIndexTmp.size()>0 && featureADTmp.size() >0){
+                userProfileFeatureIndex.clear();
                 userProfileFeatureIndex = userProfileFeatureIndexTmp;
+                featureADIndex.clear();
                 featureADIndex = featureADIndexTmp;
+                featureAD.clear();
                 featureAD = featureADTmp;
             }
         }
+        System.gc();
     }
 }
