@@ -67,15 +67,16 @@ public class MemoryUserProfileModelUpdater implements ModelUpdater {
     private void parseLine(String line) throws CacheException {
         //uid ft fv nation pv sv impr click
         //key : version uid nation ft fv
+        //,keyword,bucape,br,0,0,0,0,1,0.0143,11.4576,0.0228
         String[] values = StringUtils.split(line.trim(), ",");
         String featureType = Constant.MODEL_FEATURE_TYPE_MAPPING.get(values[1]);
 
 //        String key = values[0] + "." + values[3] + "." + featureType + "." + values[2];
 
-        Map<String,String> mapValue = new HashMap<String, String>();
+/*        Map<String,String> mapValue = new HashMap<String, String>();
         for(int i=valueStart; i< fields.length; i++){
             mapValue.put(fields[i],values[i]);
-        }
+        }*/
 
         String indexKey = values[0] + "." + values[3] + "." + featureType;
         Set<String> featureValues = userProfileFeatureIndex.get(indexKey);
