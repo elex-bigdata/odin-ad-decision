@@ -51,7 +51,7 @@ public class MemoryUserProfileModelUpdater implements ModelUpdater {
             }
             sync();
         } catch (Exception e) {
-            System.out.print(line);
+            System.out.print("ERROR:" + line);
             throw e;
         } finally {
             if(reader != null){
