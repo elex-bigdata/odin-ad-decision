@@ -38,10 +38,12 @@ public class MemoryUserProfileModelUpdater implements ModelUpdater {
         userProfileFeatureIndex = new HashMap<String, Set<String>>();
         FileInputStream fis = null;
         BufferedReader reader = null;
+        String line = "";
+
         try {
             fis = new FileInputStream(filePath);
             reader = new BufferedReader(new InputStreamReader(fis));
-            String line;
+
 
             while((line =  reader.readLine()) != null){
                 line = line.trim().replaceAll("\\\\N","0");
@@ -49,6 +51,7 @@ public class MemoryUserProfileModelUpdater implements ModelUpdater {
             }
             sync();
         } catch (Exception e) {
+            System.out.print(line);
             throw e;
         } finally {
             if(reader != null){
