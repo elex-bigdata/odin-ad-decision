@@ -119,6 +119,7 @@ public class ConfigurationManager {
             xml.load(Constant.FEATURE_ATTR_PATH);
 
             String tag = xml.getString("tag").trim();
+            BigDecimal cpcWeight = xml.getBigDecimal("cpc_weight");
 
             List<HierarchicalConfiguration> features = xml.configurationsAt("feature");
 
@@ -147,6 +148,7 @@ public class ConfigurationManager {
 
             synchronized (Constant.DECISION_RULE){
                 Constant.DECISION_RULE.setTag(tag);
+                Constant.DECISION_RULE.setCpcWeight(cpcWeight);
                 Constant.DECISION_RULE.setFeatureAttributes(featureAttributes);
             }
         } catch (Exception e) {
