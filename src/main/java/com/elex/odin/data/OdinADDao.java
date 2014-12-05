@@ -2,6 +2,7 @@ package com.elex.odin.data;
 
 import com.elex.odin.entity.Advertise;
 import com.elex.odin.mysql.MySQLManager;
+import com.elex.odin.utils.BigFunctions;
 import com.elex.odin.utils.Constant;
 
 import java.math.BigDecimal;
@@ -79,16 +80,19 @@ public class OdinADDao {
         Statement stmt = null;
         ResultSet rs = null;
         Map<Integer, BigDecimal> adCpc = new HashMap<Integer, BigDecimal>();
+        final int SCALE = 5;
+        BigDecimal y = Constant.DECISION_RULE.getCpcWeight();
+        // z = x^y --> z = exp ( ln(x) * y )
         try{
-            String sql = "select ai.id, sum(ad.network_revenue)/sum(ad.clicks) from ad_info ai join ads_data ad on ai.orig_id = ad.placement_id where ai.network = 'Apn' and second_cat='Cc' group by ai.orig_id";
+            String sql = "select ai.id, sum(revenue)/sum(clicks) from ad_info ai join ad_report ad on ai.id = ad.adid where ai.network = 'Ybrant' group by ai.id";
             conn = MySQLManager.getConnection("thor");
             stmt = conn.createStatement();
             System.out.println(sql);
             rs = stmt.executeQuery(sql);
             while(rs.next()){
                 int adid = rs.getInt(1);
-                BigDecimal bd = new BigDecimal(rs.getString(2));
-                adCpc.put(adid, bd.setScale(5,BigDecimal.ROUND_HALF_UP));
+                BigDecimal x = new BigDecimal(rs.getString(2));
+                adCpc.put(adid, BigFunctions.exp( BigFunctions.ln(x, SCALE).multiply(y),SCALE ));
             }
             return adCpc;
         }catch (Exception e){
