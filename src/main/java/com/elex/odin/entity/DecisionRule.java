@@ -1,5 +1,6 @@
 package com.elex.odin.entity;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import java.util.Map;
 public class DecisionRule {
 
     private String tag = "exp";
+    private BigDecimal cpcWeight;
     private Map<String,FeatureAttribute> featureAttributes = new HashMap<String, FeatureAttribute>();
 
     public String getTag() {
@@ -19,6 +21,14 @@ public class DecisionRule {
 
     public void setTag(String tag) {
         this.tag = tag;
+    }
+
+    public BigDecimal getCpcWeight() {
+        return cpcWeight;
+    }
+
+    public void setCpcWeight(BigDecimal cpcWeight) {
+        this.cpcWeight = cpcWeight;
     }
 
     public Map<String, FeatureAttribute> getFeatureAttributes() {
