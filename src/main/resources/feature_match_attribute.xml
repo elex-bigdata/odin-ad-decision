@@ -1,5 +1,6 @@
 <features>
     <tag>dec_yb</tag>
+    <cpc_weight>1</cpc_weight>
     <feature type="p" desc="project id" weight="1" defaultValue="0">
         <sort field="ictr" />
         <filter range="50%" />
