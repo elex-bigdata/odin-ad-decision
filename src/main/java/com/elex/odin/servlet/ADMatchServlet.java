@@ -77,7 +77,7 @@ public class ADMatchServlet extends HttpServlet {
                     if("dec".equals(matchType) || (!"exp".equals(matchType) && randomNum < decisionPercent)){
                         message = strategeMatcher.match(inputFeature);
                     }else{
-                        if(reqType == null){
+                        if(reqType == null || reqType.length() == 0){
                             message = specialMatcher.match(inputFeature);
                         }else{
                             message = exploreMatcher.match(inputFeature);
