@@ -15,7 +15,7 @@ import java.util.*;
  */
 public class SpecialMatcher implements ADMatcher {
 
-    private static final Logger LOGGER = Logger.getLogger("dec");
+    private static final Logger LOGGER = Logger.getLogger("exp");
     private static Random random = new Random();
     private static int mainid = 50996;
     private static List<Integer> expID = new ArrayList<Integer>();
@@ -27,8 +27,8 @@ public class SpecialMatcher implements ADMatcher {
     }
 
     @Override
-    public ADMatchMessage match(InputFeature userFeature) throws Exception {
-
+    public ADMatchMessage match(InputFeature inputFeature) throws Exception {
+        long begin = System.currentTimeMillis();
         String tag = "exp_main";
 
         int r = random.nextInt(100);
@@ -41,9 +41,18 @@ public class SpecialMatcher implements ADMatcher {
 
         if(ad != null){
             ADMatchMessage message = new ADMatchMessage(0, String.valueOf(ad.getOrigAdid()), ad.getCode(), tag);
+            StringBuilder sb = new StringBuilder(inputFeature.getReqid())
+                    .append("\t").append(inputFeature.getUid())
+                    .append("\t").append(inputFeature.getPid())
+                    .append("\t").append(inputFeature.getNation())
+                    .append("\t").append(message.getStatus())
+                    .append("\t").append(message.getAdid())
+                    .append("\t").append(message.getTag())
+                    .append("\t").append((System.currentTimeMillis() - begin));
+
+            LOGGER.debug(sb.toString());
             return message;
         }
-
 
         return null;
     }

@@ -82,6 +82,7 @@ public class ADMatchServlet extends HttpServlet {
                         }else{
                             message = exploreMatcher.match(inputFeature);
                         }
+                        LOGGER.debug(message == null? "null" :  Constant.gson.toJson(message));
                     }
                 }
             }catch(Exception e){

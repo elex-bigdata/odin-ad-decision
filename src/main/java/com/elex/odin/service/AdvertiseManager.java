@@ -38,7 +38,7 @@ public class AdvertiseManager {
             }
 
             List<Integer> ids = new ArrayList<Integer>();
-            ids.addAll(advertise.keySet());
+            ids.addAll(adMap.keySet());
             synchronized(AdvertiseManager.class){
                 advertise = adMap;
             }
