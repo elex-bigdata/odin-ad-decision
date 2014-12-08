@@ -2,12 +2,12 @@
     <tag>exp_pb</tag>
     <category>
         <name>all</name>
-        <rate>75</rate>
-        <where><![CDATA[ network in ('Mat', 'Apn', 'Criteo') and first_cat = 'All' and second_cat ='All' and media_type = 'Banner' ]]></where>
+        <rate>60</rate>
+        <where><![CDATA[ network in ('Mat', 'Apn') and first_cat = 'All' and second_cat ='All' and media_type = 'Banner' ]]></where>
     </category>
     <category>
         <name>ybrant</name>
-        <rate>25</rate>
+        <rate>40</rate>
         <where><![CDATA[ network = 'Ybrant' and second_cat ='All' and media_type = 'Banner' ]]></where>
     </category>
 </explore>
