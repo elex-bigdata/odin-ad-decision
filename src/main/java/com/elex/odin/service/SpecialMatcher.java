@@ -17,29 +17,27 @@ public class SpecialMatcher implements ADMatcher {
 
     private static final Logger LOGGER = Logger.getLogger("dec");
     private static Random random = new Random();
-
-    private static List<Integer> topRpmAds = new ArrayList<Integer>();
-    private static Integer all = 3860421;
+    private static int mainid = 50996;
+    private static List<Integer> expID = new ArrayList<Integer>();
     static{
-        topRpmAds.add(3910227);
-        topRpmAds.add(3910234);
-        topRpmAds.add(3910249);
-        topRpmAds.add(3910267);
+        expID.add(50932);
+        expID.add(50992);
+        expID.add(50993);
+        expID.add(50994);
     }
 
     @Override
     public ADMatchMessage match(InputFeature userFeature) throws Exception {
-        Advertise ad;
-        String tag ;
 
-        if(random.nextInt(30) < 20){ //20% for top rpm CC
-            int index = random.nextInt(topRpmAds.size());
-            ad = AdvertiseManager.getADByID(topRpmAds.get(index));
-            tag = "dec_tcr";
-        }else{
-            ad = AdvertiseManager.getADByID(all);
-            tag = "dec_aa";
+        String tag = "exp_main";
+
+        int r = random.nextInt(100);
+        int adid = mainid;
+        if(r < 10){
+            adid = expID.get(random.nextInt(expID.size()));
+            tag = "exp_cyma";
         }
+        Advertise ad = AdvertiseManager.getADByID(adid);
 
         if(ad != null){
             ADMatchMessage message = new ADMatchMessage(0, String.valueOf(ad.getOrigAdid()), ad.getCode(), tag);
