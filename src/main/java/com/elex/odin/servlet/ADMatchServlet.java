@@ -28,6 +28,7 @@ public class ADMatchServlet extends HttpServlet {
     private static final Logger LOGGER = Logger.getLogger(ADMatchServlet.class);
 
     private StrategyMatcher strategeMatcher = new StrategyMatcher();
+    private SpecialMatcher specialMatcher = new SpecialMatcher();
     private ExploreMatcher exploreMatcher = new ExploreMatcher();
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private Random random = new Random();
@@ -60,6 +61,7 @@ public class ADMatchServlet extends HttpServlet {
                 String ip = req.getParameter("ip");
                 String nation = req.getParameter("nation").toLowerCase();
                 String browser = req.getParameter("browser");
+                String reqType = req.getParameter("req_type");
 
                 InputFeature inputFeature = new InputFeature();
                 inputFeature.setUid(uid);
@@ -74,7 +76,11 @@ public class ADMatchServlet extends HttpServlet {
                     if("dec".equals(matchType) || (!"exp".equals(matchType) && randomNum < decisionPercent)){
                         message = strategeMatcher.match(inputFeature);
                     }else{
-                        message = exploreMatcher.match(inputFeature);
+                        if(reqType == null){
+                            message = specialMatcher.match(inputFeature);
+                        }else{
+                            message = exploreMatcher.match(inputFeature);
+                        }
                     }
                 }
             }catch(Exception e){
