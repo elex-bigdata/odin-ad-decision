@@ -1,13 +1,13 @@
 <explore>
-    <tag>exp_cmy</tag>
+    <tag>exp_pb</tag>
     <category>
         <name>all</name>
-        <rate>90</rate>
-        <where><![CDATA[ network in ('Mat','Ybrant','Criteo') and first_cat = 'All' and second_cat ='All' and media_type = 'Banner' ]]></where>
+        <rate>75</rate>
+        <where><![CDATA[ network in ('Mat', 'Apn', 'Criteo') and first_cat = 'All' and second_cat ='All' and media_type = 'Banner' ]]></where>
     </category>
     <category>
-        <name>apn</name>
-        <rate>10</rate>
-        <where><![CDATA[ network = 'Apn' and first_cat = 'All' and second_cat ='All' and media_type = 'Banner' ]]></where>
+        <name>ybrant</name>
+        <rate>25</rate>
+        <where><![CDATA[ network = 'Ybrant' and second_cat ='All' and media_type = 'Banner' ]]></where>
     </category>
 </explore>
