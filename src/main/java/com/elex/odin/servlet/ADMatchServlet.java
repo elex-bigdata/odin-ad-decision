@@ -70,6 +70,7 @@ public class ADMatchServlet extends HttpServlet {
                 inputFeature.setIp(ip);
                 inputFeature.setBrowser(browser);
                 inputFeature.setTime(new Date(), nation);
+                inputFeature.setRequestType(reqType);
 
                 if(message == null){
                     int decisionPercent = defaultPercent + Constant.REQUEST_DISPATCH.get("decision");
