@@ -40,7 +40,7 @@ public class SpecialMatcher implements ADMatcher {
         Advertise ad = AdvertiseManager.getADByID(adid);
 
         if(ad != null){
-            ADMatchMessage message = new ADMatchMessage(0, String.valueOf(ad.getOrigAdid()), ad.getCode(), tag);
+            ADMatchMessage message = new ADMatchMessage(0, String.valueOf(adid), ad.getCode(), tag);
             StringBuilder sb = new StringBuilder(inputFeature.getReqid())
                     .append("\t").append(inputFeature.getUid())
                     .append("\t").append(inputFeature.getPid())
