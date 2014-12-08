@@ -23,6 +23,7 @@ public class InputFeature {
     private String ampm;
     private String workOrVacation;
     private Date time;
+    private String requestType;
 
     public String getUid() {
         return uid;
@@ -104,5 +105,13 @@ public class InputFeature {
         this.hour = dayInfo[0];
         this.ampm = dayInfo[1];
         this.workOrVacation = dayInfo[2];
+    }
+
+    public String getRequestType() {
+        return requestType;
+    }
+
+    public void setRequestType(String requestType) {
+        this.requestType = requestType;
     }
 }
