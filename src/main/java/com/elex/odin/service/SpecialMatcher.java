@@ -37,6 +37,7 @@ public class SpecialMatcher implements ADMatcher {
             adid = expID.get(random.nextInt(expID.size()));
             tag = "exp_cyma";
         }
+
         Advertise ad = AdvertiseManager.getADByID(adid);
 
         if(ad != null){
