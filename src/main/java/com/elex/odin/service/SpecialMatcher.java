@@ -20,10 +20,10 @@ public class SpecialMatcher implements ADMatcher {
     private static int mainid = 50996;
     private static List<Integer> expID = new ArrayList<Integer>();
     static{
-        expID.add(50932);
-        expID.add(50992);
-        expID.add(50993);
-        expID.add(50994);
+        expID.add(50997); //APN ALL1
+        expID.add(50998); //MAT ALL1
+        //expID.add(50993); //Ybrant All
+        expID.add(50994); //Criteo All
     }
 
     @Override
