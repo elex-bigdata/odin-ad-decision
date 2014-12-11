@@ -91,7 +91,7 @@ public class MemoryUserProfileModelUpdater implements ModelUpdater {
     }
 
     public void sync(){
-        MemoryCache.userProfileFeatureIndexTmp.putAll(userProfileFeatureIndex);
+        MemoryCache.getInstance().userProfileFeatureIndexTmp.putAll(userProfileFeatureIndex);
     }
 
 }

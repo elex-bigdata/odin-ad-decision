@@ -11,40 +11,35 @@ import java.util.TreeMap;
  * Time: 下午2:34
  */
 public class MemoryCache {
-    public static Map<String, Set<String>> userProfileFeatureIndex =  new HashMap<String, Set<String>>();
-    public static Map<String, TreeMap<Double,Set<String>>> featureADIndex = new HashMap<String, TreeMap<Double,Set<String>>>();
-    public static Map<String, String[]> featureAD = new HashMap<String, String[]>();
+    public Map<String, Set<String>> userProfileFeatureIndex =  new HashMap<String, Set<String>>();
+    public Map<String, TreeMap<Double,Set<String>>> featureADIndex = new HashMap<String, TreeMap<Double,Set<String>>>();
+    public Map<String, String[]> featureAD = new HashMap<String, String[]>();
 
-    public static Map<String, Set<String>> userProfileFeatureIndexTmp =  new HashMap<String, Set<String>>();
-    public static Map<String, TreeMap<Double,Set<String>>> featureADIndexTmp = new HashMap<String, TreeMap<Double,Set<String>>>();
-    public static Map<String, String[]> featureADTmp = new HashMap<String, String[]>();
+    public Map<String, Set<String>> userProfileFeatureIndexTmp =  new HashMap<String, Set<String>>();
+    public Map<String, TreeMap<Double,Set<String>>> featureADIndexTmp = new HashMap<String, TreeMap<Double,Set<String>>>();
+    public Map<String, String[]> featureADTmp = new HashMap<String, String[]>();
+    private static MemoryCache instance = new MemoryCache();
+    private MemoryCache(){}
 
-    public static void resetTmp(){
-        if(userProfileFeatureIndexTmp != null){
-            userProfileFeatureIndexTmp.clear();
-        }
-        userProfileFeatureIndexTmp = new HashMap<String, Set<String>>();
-
-        if(featureADIndexTmp !=null){
-            featureADIndexTmp.clear();
-        }
-        featureADIndexTmp = new HashMap<String, TreeMap<Double,Set<String>>>();
-
-        if(featureADTmp != null){
-            featureADTmp.clear();
-        }
-        featureADTmp = new HashMap<String, String[]>();
+    public static MemoryCache getInstance(){
+        return instance;
     }
 
-    public static void syncCache(){
+    public void resetTmp(){
+        userProfileFeatureIndexTmp.clear();
+        featureADIndexTmp.clear();
+        featureADTmp.clear();
+    }
+
+    public void syncCache(){
         synchronized (MemoryCache.class){
             if(userProfileFeatureIndexTmp.size() > 0 && featureADIndexTmp.size()>0 && featureADTmp.size() >0){
                 userProfileFeatureIndex.clear();
-                userProfileFeatureIndex = userProfileFeatureIndexTmp;
+                userProfileFeatureIndex.putAll(userProfileFeatureIndexTmp);
                 featureADIndex.clear();
-                featureADIndex = featureADIndexTmp;
+                featureADIndex.putAll(featureADIndexTmp);
                 featureAD.clear();
-                featureAD = featureADTmp;
+                featureAD.putAll(featureADTmp);
             }
         }
         System.gc();

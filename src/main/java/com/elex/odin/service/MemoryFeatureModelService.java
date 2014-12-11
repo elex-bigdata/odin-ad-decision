@@ -24,7 +24,7 @@ public class MemoryFeatureModelService implements FeatureModelServiceInterface {
     @Override
     public Map<String, UserFeatureInfo> getUserProfileFeature(String uid, String nation, String featureType) throws CacheException {
         String key = uid + "." + nation + "." + featureType;
-        Set<String> featureKeys = MemoryCache.userProfileFeatureIndex.get(key);
+        Set<String> featureKeys = MemoryCache.getInstance().userProfileFeatureIndex.get(key);
         Map<String,UserFeatureInfo> features = new HashMap<String, UserFeatureInfo>();
 
         if(featureKeys != null) {
@@ -42,7 +42,7 @@ public class MemoryFeatureModelService implements FeatureModelServiceInterface {
         double[] rules = Constant.DECISION_RULE.getFeatureAttributes().get(featureType).getFilterRange();
 
         Set<String> adIDs = new HashSet<String>();
-        TreeMap<Double,Set<String>> sortIDs =  MemoryCache.featureADIndex.get(key);
+        TreeMap<Double,Set<String>> sortIDs =  MemoryCache.getInstance().featureADIndex.get(key);
 
         if(sortIDs == null) return adIDs;
 
@@ -75,7 +75,7 @@ public class MemoryFeatureModelService implements FeatureModelServiceInterface {
     @Override
     public String[] getFeatureADInfoArray(String nation, String featureType, String featureValue, String adID) throws CacheException {
         String key =  nation + "." + featureType + "." + featureValue + "." + adID;
-        return MemoryCache.featureAD.get(key);
+        return MemoryCache.getInstance().featureAD.get(key);
     }
 
 
@@ -90,7 +90,7 @@ public class MemoryFeatureModelService implements FeatureModelServiceInterface {
         LOGGER.debug("begin update model");
         try{
             //1. clear temp
-            MemoryCache.resetTmp();
+            MemoryCache.getInstance().resetTmp();
 
             ExecutorService SERVICE = Executors.newFixedThreadPool(3);
 /*            //1. user_profile
@@ -144,14 +144,14 @@ public class MemoryFeatureModelService implements FeatureModelServiceInterface {
             SERVICE.shutdownNow();
 
             if(success){
-                MemoryCache.syncCache();
+                MemoryCache.getInstance().syncCache();
             }else{
                 throw new Exception("update model failed");
             }
 
             LOGGER.debug("Update feature model spend " + (System.currentTimeMillis() - begin) + "ms");
         }catch (Exception e){
-            MemoryCache.resetTmp();
+            MemoryCache.getInstance().resetTmp();
             LOGGER.error("Update feature model failed", e);
             MailManager.getInstance().sendEmail("DECISION ERROR : Update Memory Model failed", "", e);
             throw new Exception("Fail to update feature model", e);

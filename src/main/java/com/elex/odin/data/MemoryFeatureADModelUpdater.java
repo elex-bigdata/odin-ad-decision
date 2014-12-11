@@ -109,7 +109,7 @@ public class MemoryFeatureADModelUpdater implements ModelUpdater {
     }
 
     private void sync() throws CacheException {
-        MemoryCache.featureADTmp.putAll(this.featureAD);
-        MemoryCache.featureADIndexTmp.putAll(this.featureADIndex);
+        MemoryCache.getInstance().featureADTmp.putAll(this.featureAD);
+        MemoryCache.getInstance().featureADIndexTmp.putAll(this.featureADIndex);
     }
 }
