@@ -74,7 +74,7 @@ public class StrategyMatcher implements ADMatcher {
 
         //只从模型里面获取query系列的特征，其他特征只用输入的特征
         String[] featureTypes = {Constant.FEATURE_TYPE.QUERY,Constant.FEATURE_TYPE.QUERY_LENGTH,
-                Constant.FEATURE_TYPE.QUERY_WORD_COUNT, Constant.FEATURE_TYPE.KEYWORD};
+                Constant.FEATURE_TYPE.QUERY_WORD_COUNT, Constant.FEATURE_TYPE.KEYWORD, Constant.FEATURE_TYPE.GDP_KEYWORD};
         for(String featureType : featureTypes){
             Map<String,UserFeatureInfo> featureValue = featureModelService.getUserProfileFeature(userProfile.getUid(), userProfile.getNation(), featureType);
             if(featureValue.size() > 0){
