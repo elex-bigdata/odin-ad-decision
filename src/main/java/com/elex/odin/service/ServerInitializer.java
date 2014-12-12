@@ -42,7 +42,7 @@ public class ServerInitializer {
             }*/
 
             LOGGER.info("[Server Init] - init cache");
-            new MemoryFeatureModelService().updateModel();
+//            new MemoryFeatureModelService().updateModel();
 
             LOGGER.info("[Server Init] - start job ");
             startJob();
