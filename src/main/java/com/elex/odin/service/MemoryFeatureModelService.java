@@ -38,7 +38,12 @@ public class MemoryFeatureModelService implements FeatureModelServiceInterface {
 
     @Override
     public Set<String> getValidADByFeature(String nation, String featureType, String featureValue) throws CacheException {
-        String key = nation + "." + featureType + "." + featureValue;
+        //GDP KeyWord和KeyWord两个特征类型公用一个特征值，因此公用一个取广告的key
+        String featureTypeOfValue = featureType;
+        if(Constant.FEATURE_TYPE.GDP_KEYWORD.equals(featureType)){
+            featureTypeOfValue =Constant.FEATURE_TYPE.KEYWORD;
+        }
+        String key = nation + "." + featureTypeOfValue + "." + featureValue;
         double[] rules = Constant.DECISION_RULE.getFeatureAttributes().get(featureType).getFilterRange();
 
         Set<String> adIDs = new HashSet<String>();
