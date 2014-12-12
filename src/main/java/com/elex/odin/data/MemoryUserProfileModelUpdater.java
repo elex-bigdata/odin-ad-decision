@@ -44,7 +44,6 @@ public class MemoryUserProfileModelUpdater implements ModelUpdater {
             fis = new FileInputStream(filePath);
             reader = new BufferedReader(new InputStreamReader(fis));
 
-
             while((line =  reader.readLine()) != null){
                 line = line.trim().replaceAll("\\\\N","0");
                 parseLine(line);
