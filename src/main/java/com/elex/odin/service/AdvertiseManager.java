@@ -46,8 +46,8 @@ public class AdvertiseManager {
             LOGGER.info("load " + advertise.size() + " ads ");
 
 //            adCpc = dao.getADCpc();
-            adRpm.put( 50932,new BigDecimal("0.08"));
-            adRpm.put( 50992,new BigDecimal("0.06"));
+            adRpm.put( 50932,new BigDecimal("0.09"));
+            adRpm.put( 50992,new BigDecimal("0.05"));
             adRpm.put( 50993,new BigDecimal("0.07"));
 
             LOGGER.info("load " + adCpc.size() + " ad cpc ");
