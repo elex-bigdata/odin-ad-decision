@@ -203,7 +203,7 @@ public class StrategyMatcher implements ADMatcher {
             }
         });
 
-       /* List<String> ads = new ArrayList<String>();
+        List<String> ads = new ArrayList<String>();
         ads.add(adScores.get(0).getLeft().toString());
         if(adScores.size()>=2 && (Double)adScores.get(1).getRight()/(Double)adScores.get(0).getRight() > Constant.FINAL_SOCRE_DISTANCE.get("pair1")){
             ads.add(adScores.get(1).getLeft().toString());
@@ -218,8 +218,7 @@ public class StrategyMatcher implements ADMatcher {
         for(int i=0;i<ads.size();i++){
             adScore += adScores.get(i);
         }
-        LOGGER.info(userProfile.getReqid() + " select " + adScores.get(index).getLeft() + " from " + adScore + " spend " + (System.currentTimeMillis() - begin) + "ms");
-        */
+/*        LOGGER.info(userProfile.getReqid() + " select " + adScores.get(index).getLeft() + " from " + adScore + " spend " + (System.currentTimeMillis() - begin) + "ms");
         String adScore = "";
         if(adScores.size() >=1){
             adScore += adScores.get(0);
@@ -229,11 +228,11 @@ public class StrategyMatcher implements ADMatcher {
         }
         if(adScores.size() >=3){
             adScore += adScores.get(2);
-        }
+        }*/
         LOGGER.info(userProfile.getReqid() + " Top score : " + adScore);
 
-        //先选择最高的一个
-        return adScores.get(0);
+        //随机一个
+        return adScores.get(index);
     }
 
     //构建每个广告所对应的特征类型和值列表，用于打印分析匹配的结果
