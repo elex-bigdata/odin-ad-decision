@@ -8,5 +8,5 @@ if [ -f $model_file ]; then
   cd /data/odin_model && tar -xjf $model_file
 fi
 
-curl "http://127.0.0.1:8080/thor/tool?action=model"
+curl "http://127.0.0.1:8080/thor/tool?action=model&day=${day}"
 
