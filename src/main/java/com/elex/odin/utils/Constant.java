@@ -35,6 +35,7 @@ public class Constant {
         public static final String BROWSER = "bw";
         public static final String UID = "u";
         public static final String PID = "p";
+        public static final String GDP_KEYWORD = "gkw";
     }
 
     //数据模型里面的特征类型和redis库里面的特征类型的映射
@@ -43,6 +44,8 @@ public class Constant {
         MODEL_FEATURE_TYPE_MAPPING.put("query",FEATURE_TYPE.QUERY);
         MODEL_FEATURE_TYPE_MAPPING.put("query_length",FEATURE_TYPE.QUERY_LENGTH);
         MODEL_FEATURE_TYPE_MAPPING.put("query_word_count",FEATURE_TYPE.QUERY_WORD_COUNT);
+        MODEL_FEATURE_TYPE_MAPPING.put("sspkeyword",FEATURE_TYPE.KEYWORD);
+        MODEL_FEATURE_TYPE_MAPPING.put("gdpkeyword",FEATURE_TYPE.GDP_KEYWORD);
         MODEL_FEATURE_TYPE_MAPPING.put("keyword",FEATURE_TYPE.KEYWORD);
         MODEL_FEATURE_TYPE_MAPPING.put("time",FEATURE_TYPE.TIME);
         MODEL_FEATURE_TYPE_MAPPING.put("area",FEATURE_TYPE.IP);
