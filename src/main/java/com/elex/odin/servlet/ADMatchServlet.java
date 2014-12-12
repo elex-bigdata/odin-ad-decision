@@ -80,7 +80,7 @@ public class ADMatchServlet extends HttpServlet {
                         if(reqType == null || reqType.length() == 0){
                             message = specialMatcher.match(inputFeature);
                         }else{
-                            message = exploreMatcher.match(inputFeature);
+                            message = strategeMatcher.match(inputFeature);
                         }
                     }
                 }
