@@ -79,7 +79,12 @@ public class MemoryFeatureModelService implements FeatureModelServiceInterface {
 
     @Override
     public String[] getFeatureADInfoArray(String nation, String featureType, String featureValue, String adID) throws CacheException {
-        String key =  nation + "." + featureType + "." + featureValue + "." + adID;
+        //GDP KeyWord和KeyWord两个特征类型公用一个特征值，因此公用一个取广告的key
+        String featureTypeOfValue = featureType;
+        if(Constant.FEATURE_TYPE.GDP_KEYWORD.equals(featureType)){
+            featureTypeOfValue =Constant.FEATURE_TYPE.KEYWORD;
+        }
+        String key =  nation + "." + featureTypeOfValue + "." + featureValue + "." + adID;
         return MemoryCache.getInstance().featureAD.get(key);
     }
 

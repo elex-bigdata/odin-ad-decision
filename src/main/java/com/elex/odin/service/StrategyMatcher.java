@@ -170,14 +170,14 @@ public class StrategyMatcher implements ADMatcher {
     private double calculatePerADScore(String adid, UserProfile userProfile, Map<String,Set<String>> modelFeature) throws CacheException {
         BigDecimal totalScore = new BigDecimal(0);
         Map<String,FeatureAttribute> featureAttributes = Constant.DECISION_RULE.getFeatureAttributes();
-        BigDecimal cpc = AdvertiseManager.getADCpc(Integer.parseInt(adid));
+//        BigDecimal cpc = AdvertiseManager.getADCpc(Integer.parseInt(adid));
 //        BigDecimal rpm = AdvertiseManager.getADRpm(Integer.parseInt(adid));
         for(String featureType : userProfile.getFeatures().keySet()){
             Set<String> featureValues = modelFeature.get(featureType);
             if(modelFeature.get(featureType) == null){
                 totalScore = totalScore.add(featureAttributes.get(featureType).getDefaultValue());
             }else{
-                BigDecimal weightCpc = featureAttributes.get(featureType).getWeight().multiply(cpc);
+                BigDecimal weightCpc = featureAttributes.get(featureType).getWeight();//.multiply(cpc);
                 Integer calFieldIndex = Constant.FEATURE_AD_INFO_INDEX.get(featureAttributes.get(featureType).getCalField());
                 //matchRule
                 for(String featureValue : featureValues){
