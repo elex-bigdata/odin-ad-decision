@@ -79,8 +79,8 @@ public class ADMatchServlet extends HttpServlet {
                     }else{
                         if(reqType == null || reqType.length() == 0){
                             message = specialMatcher.match(inputFeature);
-                        }else{ //pass back 流量用策略
-                            message = strategeMatcher.match(inputFeature);
+                        }else{
+                            message = exploreMatcher.match(inputFeature);
                         }
                     }
                 }
