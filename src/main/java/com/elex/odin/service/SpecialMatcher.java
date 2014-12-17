@@ -30,12 +30,16 @@ public class SpecialMatcher implements ADMatcher {
     public ADMatchMessage match(InputFeature inputFeature) throws Exception {
         long begin = System.currentTimeMillis();
         String tag = "exp_main";
-
-        int r = random.nextInt(100);
         int adid = mainid;
-        if(r < 10){
-            adid = expID.get(random.nextInt(expID.size()));
-            tag = "exp_cyma";
+        if("NA".equals(inputFeature.getUid())){
+            tag = "na";
+            adid = 51000; //Criteo none uid , UID为空的情况
+        }else{
+            int r = random.nextInt(100);
+            if(r < 10){
+                adid = expID.get(random.nextInt(expID.size()));
+                tag = "exp_cyma";
+            }
         }
 
         Advertise ad = AdvertiseManager.getADByID(adid);

@@ -72,6 +72,10 @@ public class ADMatchServlet extends HttpServlet {
                 inputFeature.setTime(new Date(), nation);
                 inputFeature.setRequestType(reqType);
 
+                if("NA".equals(uid)){
+                    message = specialMatcher.match(inputFeature);
+                }
+
                 if(message == null){
                     int decisionPercent = defaultPercent + Constant.REQUEST_DISPATCH.get("decision");
                     if("dec".equals(matchType) || (!"exp".equals(matchType) && randomNum < decisionPercent)){
