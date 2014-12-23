@@ -20,10 +20,11 @@ public class SpecialMatcher implements ADMatcher {
     private static int mainid = 50996;
     private static List<Integer> expID = new ArrayList<Integer>();
     static{
-        expID.add(50997); //APN ALL1
+//        expID.add(50997); //APN ALL1
         expID.add(50998); //MAT ALL1
         //expID.add(50993); //Ybrant All
         expID.add(50994); //Criteo All
+        expID.add(51002); //Marimedia
     }
 
     @Override
@@ -36,7 +37,7 @@ public class SpecialMatcher implements ADMatcher {
             adid = 51000; //Criteo none uid , UID为空的情况
         }else{
             int r = random.nextInt(100);
-            if(r < 10){
+            if(r < 12){
                 adid = expID.get(random.nextInt(expID.size()));
                 tag = "exp_cyma";
             }
