@@ -50,6 +50,10 @@ public class AdvertiseManager {
             adRpm.put( 50992,new BigDecimal("0.05"));
             adRpm.put( 50993,new BigDecimal("0.07"));
 
+            adCpc.put( 50932,new BigDecimal("0.055")); //APN
+            adCpc.put( 50992,new BigDecimal("0.001")); //mat
+            adCpc.put( 50993,new BigDecimal("0.128")); //Ybrant
+
             LOGGER.info("load " + adCpc.size() + " ad cpc ");
         } catch (Exception e) {
             throw new RuntimeException("Error when update advertise", e);
@@ -61,7 +65,7 @@ public class AdvertiseManager {
     }
 
     public static BigDecimal getADCpc(int adid){
-        return adCpc.get(adid) == null ? new BigDecimal("0.07") : adCpc.get(adid);
+        return adCpc.get(adid) == null ? adRpm.get(50993) : adCpc.get(adid);
     }
 
 
