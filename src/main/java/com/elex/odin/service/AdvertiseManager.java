@@ -65,7 +65,7 @@ public class AdvertiseManager {
     }
 
     public static BigDecimal getADCpc(int adid){
-        return adCpc.get(adid) == null ? adRpm.get(50993) : adCpc.get(adid);
+        return adCpc.get(adid) == null ? adCpc.get(50993) : adCpc.get(adid);
     }
 
 
