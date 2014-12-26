@@ -38,7 +38,7 @@ public class SpecialMatcher implements ADMatcher {
             adid = 51000; //Criteo none uid , UID为空的情况
         }else{
             int r = random.nextInt(100);
-            if(r < 12){
+            if(r < 10){
                 adid = expID.get(random.nextInt(expID.size()));
                 tag = "exp_cyma";
             }

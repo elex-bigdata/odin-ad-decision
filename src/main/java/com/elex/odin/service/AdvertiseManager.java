@@ -46,9 +46,9 @@ public class AdvertiseManager {
             LOGGER.info("load " + advertise.size() + " ads ");
 
 //            adCpc = dao.getADCpc();
-            adRpm.put( 50932,new BigDecimal("0.09"));
-            adRpm.put( 50992,new BigDecimal("0.05"));
-            adRpm.put( 50993,new BigDecimal("0.07"));
+            adRpm.put( 50932,new BigDecimal("0.09"));//APN
+            adRpm.put( 50992,new BigDecimal("0.16"));//mat
+            adRpm.put( 50993,new BigDecimal("0.07"));//Ybrant
 
             adCpc.put( 50932,new BigDecimal("0.055")); //APN
             adCpc.put( 50992,new BigDecimal("0.012")); //mat
