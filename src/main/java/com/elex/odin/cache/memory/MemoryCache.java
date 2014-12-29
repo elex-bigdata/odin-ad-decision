@@ -40,6 +40,7 @@ public class MemoryCache {
                 featureADIndex.putAll(featureADIndexTmp);
                 featureAD.clear();
                 featureAD.putAll(featureADTmp);
+                resetTmp();
             }
         }
         System.gc();
