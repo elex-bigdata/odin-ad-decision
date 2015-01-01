@@ -53,7 +53,7 @@ public class AdvertiseManager {
 
             adCpc.put( 50932,new BigDecimal("0.025")); //APN
             adCpc.put( 50992,new BigDecimal("0.004")); //mat
-            adCpc.put( 50993,new BigDecimal("0.019")); //Ybrant
+            adCpc.put( 50993,new BigDecimal("0.008")); //Ybrant
             adCpc.put( 51002,new BigDecimal("0.012")); //Ironsrc
 
             LOGGER.info("load " + adCpc.size() + " ad cpc ");
