@@ -49,13 +49,18 @@ public class AdvertiseManager {
             adRpm.put( 50932,new BigDecimal("0.09"));//APN
             adRpm.put( 50992,new BigDecimal("0.16"));//mat
             adRpm.put( 50993,new BigDecimal("0.07"));//Ybrant
-            adRpm.put( 51002,new BigDecimal("0.18"));//Ironsrc
+            adRpm.put( 51002,new BigDecimal("0.18"));//mm
 
-            adCpc.put( 50932,new BigDecimal("0.025")); //APN
+/*            adCpc.put( 50932,new BigDecimal("0.025")); //APN
 //            adCpc.put( 50992,new BigDecimal("0.004")); //mat
             adCpc.put( 50992,new BigDecimal("0.006")); //mat
             adCpc.put( 50993,new BigDecimal("0.008")); //Ybrant
-            adCpc.put( 51002,new BigDecimal("0.012")); //Ironsrc
+            adCpc.put( 51002,new BigDecimal("0.012")); //mm*/
+
+            adCpc.put( 50932,new BigDecimal("0.011")); //APN
+            adCpc.put( 50992,new BigDecimal("0.004")); //mat
+            adCpc.put( 50993,new BigDecimal("0.008")); //Ybrant
+            adCpc.put( 51002,new BigDecimal("0.003")); //mm
 
             LOGGER.info("load " + adCpc.size() + " ad cpc ");
         } catch (Exception e) {
