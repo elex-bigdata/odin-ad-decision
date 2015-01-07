@@ -17,7 +17,8 @@ public class SpecialMatcher implements ADMatcher {
 
     private static final Logger LOGGER = Logger.getLogger("exp");
     private static Random random = new Random();
-    private static int mainid = 50996;
+//    private static int mainid = 50996;
+    private static int mainid = 51004;
     private static List<Integer> expID = new ArrayList<Integer>();
     static{
 //        expID.add(50997); //APN ALL1
