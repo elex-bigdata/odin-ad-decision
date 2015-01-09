@@ -27,7 +27,8 @@ public class SpecialMatcher implements ADMatcher {
         expID.add(50994); //Criteo All
 
 //        expID.add(51002); //Marimedia
-        expID.add(51003); //Ironsource
+//        expID.add(51003); //Ironsource
+        expID.add(51005); //cpmstar
     }
 
     @Override
