@@ -45,7 +45,7 @@ public class AdvertiseManager {
             }
             LOGGER.info("load " + advertise.size() + " ads ");
 
-//            adCpc = dao.getADCpc();
+            adCpc = dao.getADCpc();
             adRpm.put( 50932,new BigDecimal("0.09"));//APN
             adRpm.put( 50992,new BigDecimal("0.16"));//mat
             adRpm.put( 50993,new BigDecimal("0.07"));//Ybrant
@@ -57,10 +57,10 @@ public class AdvertiseManager {
             adCpc.put( 50993,new BigDecimal("0.008")); //Ybrant
             adCpc.put( 51002,new BigDecimal("0.012")); //mm*/
 
-            adCpc.put( 50932,new BigDecimal("0.011")); //APN
+/*            adCpc.put( 50932,new BigDecimal("0.011")); //APN
             adCpc.put( 50992,new BigDecimal("0.004")); //mat
             adCpc.put( 50993,new BigDecimal("0.008")); //Ybrant
-            adCpc.put( 51002,new BigDecimal("0.003")); //mm
+            adCpc.put( 51002,new BigDecimal("0.003")); //mm*/
 
             LOGGER.info("load " + adCpc.size() + " ad cpc ");
         } catch (Exception e) {
@@ -73,7 +73,7 @@ public class AdvertiseManager {
     }
 
     public static BigDecimal getADCpc(int adid){
-        return adCpc.get(adid) == null ? adCpc.get(50993) : adCpc.get(adid);
+        return adCpc.get(adid) == null ? adCpc.get(50000) : adCpc.get(adid);
     }
 
 
