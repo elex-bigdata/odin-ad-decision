@@ -7,6 +7,7 @@ import com.elex.odin.service.SpecialMatcher;
 import com.elex.odin.service.StrategyMatcher;
 import com.elex.odin.utils.Constant;
 import com.elex.odin.utils.WebUtil;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -78,7 +79,7 @@ public class ADMatchServlet extends HttpServlet {
 
                 if(message == null){
                     int decisionPercent = defaultPercent + Constant.REQUEST_DISPATCH.get("decision");
-                    if("dec".equals(matchType) || ((!"exp".equals(matchType) && randomNum < decisionPercent) && reqType == null)){
+                    if("dec".equals(matchType) || ((!"exp".equals(matchType) && randomNum < decisionPercent) && StringUtils.isBlank(reqType))){
                         message = strategeMatcher.match(inputFeature);
                     }else{
                         if(reqType == null || reqType.length() == 0){
