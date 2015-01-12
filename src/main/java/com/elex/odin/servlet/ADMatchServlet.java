@@ -78,7 +78,7 @@ public class ADMatchServlet extends HttpServlet {
 
                 if(message == null){
                     int decisionPercent = defaultPercent + Constant.REQUEST_DISPATCH.get("decision");
-                    if("dec".equals(matchType) || (!"exp".equals(matchType) && randomNum < decisionPercent)){
+                    if("dec".equals(matchType) || ((!"exp".equals(matchType) && randomNum < decisionPercent) && reqType == null)){
                         message = strategeMatcher.match(inputFeature);
                     }else{
                         if(reqType == null || reqType.length() == 0){
