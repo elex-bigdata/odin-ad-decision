@@ -87,7 +87,7 @@ public class OdinADDao {
         try{
 
             String sql = "select adid , sum(revenue)/sum(click) from ssp_day_summary where day> '" + DateUtil.getDay(-6) + "' " +
-                    "and day < "+ DateUtil.yesterday() +" group by adid ";
+                    "and day <= '"+ DateUtil.yesterday() +"' group by adid ";
             conn = MySQLManager.getConnection("thor");
             stmt = conn.createStatement();
             System.out.println(sql);
