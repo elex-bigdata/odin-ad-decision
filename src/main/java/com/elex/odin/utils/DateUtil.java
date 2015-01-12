@@ -18,6 +18,12 @@ public class DateUtil {
         return sdf.format(cal.getTime());
     }
 
+    public static String getDay(int offset){
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, offset);
+        return sdf.format(cal.getTime());
+    }
+
     public static String today(){
         Calendar cal = Calendar.getInstance();
         return sdf.format(cal.getTime());
