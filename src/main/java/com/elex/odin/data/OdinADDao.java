@@ -4,6 +4,7 @@ import com.elex.odin.entity.Advertise;
 import com.elex.odin.mysql.MySQLManager;
 import com.elex.odin.utils.BigFunctions;
 import com.elex.odin.utils.Constant;
+import com.elex.odin.utils.DateUtil;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -84,7 +85,9 @@ public class OdinADDao {
         BigDecimal y = Constant.DECISION_RULE.getCpcWeight();
         // z = x^y --> z = exp ( ln(x) * y )
         try{
-            String sql = "select ai.id, sum(revenue)/sum(clicks) from ad_info ai join ad_report ad on ai.id = ad.adid where ai.network = 'Ybrant' group by ai.id";
+
+            String sql = "select adid , sum(revenue)/sum(click) from ssp_day_summary where day> '" + DateUtil.getDay(-6) + "' " +
+                    "and day < "+ DateUtil.yesterday() +" group by adid ";
             conn = MySQLManager.getConnection("thor");
             stmt = conn.createStatement();
             System.out.println(sql);
