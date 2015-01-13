@@ -40,4 +40,8 @@ public class CacheUtil {
     }
 
 
+    public static String getUserProfileIndexCacheKey(String cacheVersion, String uid, String nation, String featureType){
+        return cacheVersion + "."+ Constant.CACHE.USER_PROFILE_INDEX_PREFIX + "." + uid + "." + nation + "." + featureType;
+    }
+
 }
