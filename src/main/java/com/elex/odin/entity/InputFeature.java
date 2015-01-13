@@ -55,7 +55,15 @@ public class InputFeature {
 
     //only keep the 3 level , eg: 192.168.1
     public void setIp(String ip) {
-        this.ip = ip.substring(0,ip.lastIndexOf("."));
+        if(StringUtils.isNotBlank(ip)){
+            String[] seg = ip.split("\\.");
+            this.ip = seg[0];
+            if(seg.length >=2){
+                this.ip += "." + seg[1];
+            }
+        }else{
+            this.ip = "0";
+        }
     }
 
     public String getNation() {
