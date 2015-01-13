@@ -1,13 +1,21 @@
-<explore>
-    <tag>exp_pb</tag>
-    <category>
-        <name>all</name>
-        <rate>60</rate>
-        <where><![CDATA[ network in ('Mat', 'Apn') and first_cat = 'All' and second_cat ='All' and media_type = 'Banner' ]]></where>
-    </category>
-    <category>
-        <name>ybrant</name>
-        <rate>40</rate>
-        <where><![CDATA[ network = 'Ybrant' and second_cat ='All' and media_type = 'Banner' ]]></where>
-    </category>
-</explore>
+<rule>
+    <nation name="br">
+        <category>
+            <name>exp_cmc</name>
+            <rate>10</rate>
+            <ad>50998,50994,51005</ad>
+        </category>
+        <category>
+            <name>exp_main</name>
+            <rate>90</rate>
+            <ad>51004</ad>
+        </category>
+    </nation>
+    <nation name="in">
+        <category>
+            <name>exp_in</name>
+            <rate>100</rate>
+            <ad>50998,50994,51005</ad>
+        </category>
+    </nation>
+</rule>
