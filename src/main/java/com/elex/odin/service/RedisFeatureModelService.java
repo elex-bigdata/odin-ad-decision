@@ -52,7 +52,9 @@ public class RedisFeatureModelService implements FeatureModelServiceInterface{
     }
 
     public Map<String,String> getFeatureADInfo(String nation, String featureType, String featureValue, String adID) throws CacheException {
-        String key = CacheUtil.keyWithVersion(Constant.CACHE.FEATURE_AD_PREFIX +"." + nation + "." + featureType + "." + featureValue + "." + adID);
+/*        String key = CacheUtil.keyWithVersion(Constant.CACHE.FEATURE_AD_PREFIX +"." + nation + "." + featureType + "." + featureValue + "." + adID);
+        return redisOperator.hgetAll(key);*/
+        String key = CacheUtil.keyWithVersion(Constant.CACHE.FEATURE_AD_PREFIX +"." + nation + "." + featureType + "." + featureValue);
         return redisOperator.hgetAll(key);
     }
 

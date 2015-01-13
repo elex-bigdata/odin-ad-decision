@@ -2,6 +2,7 @@ package com.elex.odin.data;
 
 import com.elex.odin.cache.CacheException;
 import com.elex.odin.cache.redis.RedisOperator;
+import com.elex.odin.utils.CacheUtil;
 import com.elex.odin.utils.Constant;
 import org.apache.commons.lang.StringUtils;
 
@@ -70,13 +71,14 @@ public class UserProfileModelUpdater implements ModelUpdater {
         String[] values = StringUtils.split(line.trim(), ",");
         String featureType = Constant.MODEL_FEATURE_TYPE_MAPPING.get(values[1]);
 
-        String key = version + "."+ Constant.CACHE.USER_PROFILE_PREFIX + "." + values[0] + "." + values[3] + "." + featureType + "." + values[2];
+/*        String key = version + "."+ Constant.CACHE.USER_PROFILE_PREFIX + "." + values[0] + "." + values[3] + "." + featureType + "." + values[2];
         Map<String,String> mapValue = new HashMap<String, String>();
         for(int i=valueStart; i< fields.length; i++){
             mapValue.put(fields[i],values[i]);
-        }
+        }*/
 
-        String indexKey = version + "."+ Constant.CACHE.USER_PROFILE_INDEX_PREFIX + "." + values[0] + "." + values[3] + "." + featureType;
+        String indexKey = CacheUtil.getUserProfileIndexCacheKey(version, values[0], values[3], featureType);
+
         Set<String> featureValues = upIndex.get(indexKey);
         if(featureValues == null){
             featureValues =  new HashSet<String>();
@@ -84,12 +86,13 @@ public class UserProfileModelUpdater implements ModelUpdater {
         }
         featureValues.add(values[2]);
 
-        models.put(key, mapValue);
+        //todo: 内存根据配置过滤掉一些无用的特征值
+/*        models.put(key, mapValue);
         if(models.size() == 1000){
             System.out.println("batch profile model");
             redisOperator.hmsetBatch(models);
             models = new HashMap<String, Map<String, String>>();
-        }
+        }*/
 
         if(upIndex.size() == 1000){
             System.out.println("batch profile model index");
@@ -99,9 +102,9 @@ public class UserProfileModelUpdater implements ModelUpdater {
     }
 
     private void sync() throws CacheException {
-        if(models.size() > 0){
+/*        if(models.size() > 0){
             redisOperator.hmsetBatch(models);
-        }
+        }*/
         if(upIndex.size() > 0){
             redisOperator.saddBatch(upIndex);
         }

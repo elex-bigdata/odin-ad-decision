@@ -82,13 +82,13 @@ public class ServerInitializer {
         CronTrigger erTrigger = TriggerBuilder.newTrigger().withIdentity(
                 "er", "group1").withSchedule(CronScheduleBuilder.cronSchedule("0 0,30 * * * ?")).build();
 
-        scheduler.scheduleJob(faJob, faTrigger);
+//        scheduler.scheduleJob(faJob, faTrigger);
 //        scheduler.scheduleJob(cvJob, cvTrigger);
-//        scheduler.scheduleJob(aiJob, aiTrigger);
-        scheduler.scheduleJob(dcJob, dcTrigger);
-        scheduler.scheduleJob(erJob, erTrigger);
+        scheduler.scheduleJob(aiJob, aiTrigger);
+//        scheduler.scheduleJob(dcJob, dcTrigger);
+//        scheduler.scheduleJob(erJob, erTrigger);
 
-//        scheduler.start();
+        scheduler.start();
     }
 
 
