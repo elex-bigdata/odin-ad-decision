@@ -42,7 +42,7 @@ public class ConfigurationManager {
                     rule.setTag(cat.getString("tag"));
                     String[] ads = cat.getString("ad").split(",");
                     for(String ad : ads){
-                        rule.getAdIDs().add(Integer.parseInt(ad));
+                        rule.getAdIDs().add(Integer.parseInt(ad.trim()));
                     }
                     rule.setRate(cat.getInt("rate"));
                     rules.add(rule);
