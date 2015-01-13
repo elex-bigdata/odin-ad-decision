@@ -86,7 +86,7 @@ public class OdinADDao {
         // z = x^y --> z = exp ( ln(x) * y )
         try{
 
-            String sql = "select adid , sum(revenue)/sum(click) from ssp_day_summary where day> '" + DateUtil.getDay(-6) + "' " +
+            String sql = "select adid , sum(revenue)/sum(click) from ssp_day_summary where day>= '" + DateUtil.getDay(-7) + "' " +
                     "and day <= '"+ DateUtil.yesterday() +"' group by adid ";
             conn = MySQLManager.getConnection("thor");
             stmt = conn.createStatement();
