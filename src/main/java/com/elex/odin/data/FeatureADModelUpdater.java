@@ -22,7 +22,7 @@ public class FeatureADModelUpdater implements ModelUpdater {
 
     private Map<String, Map<String,String>> models = null;
     private Map<String,Map<String,Double>> admember = null;
-    private int valueStart = 3;
+    private int valueStart = 4;
     private RedisOperator redisOperator = RedisOperator.getInstance();
     private String version;
     private String filePath;
@@ -71,7 +71,7 @@ public class FeatureADModelUpdater implements ModelUpdater {
             String[] values = StringUtils.split(line.trim(), ",");
 
             String featureType = Constant.MODEL_FEATURE_TYPE_MAPPING.get(values[0]);
-            String key = version + "."+ Constant.CACHE.FEATURE_AD_PREFIX + "." + values[2] + "." + featureType + "." + values[1];
+            String key = version + "."+ Constant.CACHE.FEATURE_AD_PREFIX + "." + values[2] + "." + featureType + "." + values[1] + "." + values[3];
 
             Map<String,String> mapValue = new HashMap<String, String>();
             for(int i=valueStart; i< fields.length; i++){
@@ -81,13 +81,13 @@ public class FeatureADModelUpdater implements ModelUpdater {
             String sortScore = mapValue.get(Constant.DECISION_RULE.getFeatureAttributes().get(featureType).getSortField());
 
             if(!"0".equals(sortScore)){
-/*                String sortKey = version + "."+ Constant.CACHE.SORT_AD_PREFIX +"." + values[2] + "." + featureType + "." + values[1];
+                String sortKey = version + "."+ Constant.CACHE.SORT_AD_PREFIX +"." + values[2] + "." + featureType + "." + values[1];
                 Map<String,Double> ads = admember.get(sortKey);
                 if(ads == null){
                     ads = new HashMap<String, Double>();
                     admember.put(sortKey, ads);
                 }
-                ads.put(values[3], Double.parseDouble(sortScore));*/
+                ads.put(values[3], Double.parseDouble(sortScore));
 
                 models.put(key, mapValue);
             }
@@ -98,11 +98,11 @@ public class FeatureADModelUpdater implements ModelUpdater {
                 redisOperator.hmsetBatch(models);
                 models =  new HashMap<String, Map<String, String>>();
             }
-/*            if(admember.size() == 1000){
+            if(admember.size() == 1000){
                 System.out.println("batch feature admember");
                 redisOperator.zaddBatch(admember);
                 admember = new HashMap<String,Map<String,Double>>();
-            }*/
+            }
 
         }catch (Exception e){
             throw new Exception("Error process feature ad for line " + line, e);
@@ -113,9 +113,8 @@ public class FeatureADModelUpdater implements ModelUpdater {
         if(models.size() > 0){
             redisOperator.hmsetBatch(models);
         }
-/*
         if(admember.size() > 0){
             redisOperator.zaddBatch(admember);
-        }*/
+        }
     }
 }
