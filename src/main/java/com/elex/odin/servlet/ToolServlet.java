@@ -43,6 +43,8 @@ public class ToolServlet extends HttpServlet {
             }else if(Constant.JOB_TYPE.DYNAMIC_CONF.equals(action)){
                 ConfigurationManager.updateRequestDispatchConfig();
                 ConfigurationManager.updateScoreDistanceConfig();
+            }else if(Constant.JOB_TYPE.EXP_RULE.equals(action)){
+                ConfigurationManager.updateExploreRule();
             }
             msg = "success";
         } catch (Exception e) {
