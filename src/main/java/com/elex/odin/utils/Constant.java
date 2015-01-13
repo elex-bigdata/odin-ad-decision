@@ -67,7 +67,7 @@ public class Constant {
         public static final String SECOND_CAT = "second_cat";
     }
 
-    public static List<ExploreRule> EXPLORE_RULES = new ArrayList<ExploreRule>();
+    public static Map<String, List<ExploreRule>> EXPLORE_RULES = new HashMap<String, List<ExploreRule>>();
     public static final Gson gson = new Gson();
 
     //配置路径
