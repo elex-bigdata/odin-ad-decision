@@ -27,8 +27,9 @@ public class ExploreMatcher implements ADMatcher {
         int rate = random.nextInt(100);
 
         int totalRate = 0;
+
         ExploreRule rule = null;
-        for(ExploreRule r : Constant.EXPLORE_RULES){
+        for(ExploreRule r : Constant.EXPLORE_RULES.get(inputFeature.getNation())){
             totalRate += r.getRate();
             if(rate < totalRate){
                 rule = r;
@@ -36,8 +37,9 @@ public class ExploreMatcher implements ADMatcher {
             }
         }
 
-        int index = Math.abs(inputFeature.getUid().hashCode()) % rule.getAds().size();
-        Advertise ad = rule.getAds().get(index);
+        int index = Math.abs(inputFeature.getUid().hashCode()) % rule.getAdIDs().size();
+        int adid = rule.getAdIDs().get(index);
+        Advertise ad = AdvertiseManager.getADByID(adid);
 
         ADMatchMessage message = null;
         if(ad != null){
