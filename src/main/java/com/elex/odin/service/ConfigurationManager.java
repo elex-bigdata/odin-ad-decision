@@ -1,7 +1,5 @@
 package com.elex.odin.service;
 
-import com.elex.odin.data.OdinADDao;
-import com.elex.odin.entity.Advertise;
 import com.elex.odin.entity.ExploreRule;
 import com.elex.odin.entity.FeatureAttribute;
 import com.elex.odin.utils.Constant;
@@ -29,32 +27,32 @@ public class ConfigurationManager {
             XMLConfiguration xml = new XMLConfiguration();
             xml.setListDelimiter((char) 0);
             xml.load(Constant.EXPLORE_RULE_PATH);
-            String tag = xml.getString("tag").trim();
 
-            if(tag.length() == 0){
-                throw new Exception("Explore tag name should not be empty");
-            }
+            List<HierarchicalConfiguration> nations = xml.configurationsAt("nation");
 
-            List<HierarchicalConfiguration> categorys = xml.configurationsAt("category");
+            Map<String, List<ExploreRule>> nationRules = new HashMap<String, List<ExploreRule>>();
 
-            List<ExploreRule> rules = new ArrayList<ExploreRule>();
+            for(HierarchicalConfiguration nation : nations){
+                List<HierarchicalConfiguration> categories = nation.configurationsAt("category");
+                List<ExploreRule> rules = new ArrayList<ExploreRule>();
+                String na = nation.getString("[@name]");
+                nationRules.put(na, rules);
+                for(HierarchicalConfiguration cat : categories){
+                    ExploreRule rule = new ExploreRule();
+                    rule.setTag(cat.getString("tag"));
+                    String[] ads = cat.getString("ad").split(",");
+                    for(String ad : ads){
+                        rule.getAdIDs().add(Integer.parseInt(ad));
+                    }
+                    rule.setRate(cat.getInt("rate"));
+                    rules.add(rule);
+                }
 
-            OdinADDao dao = new OdinADDao();
-
-            for(HierarchicalConfiguration cat : categorys){
-                ExploreRule rule = new ExploreRule();
-                rule.setTag(tag);
-                rule.setName(cat.getString("name"));
-                String where = cat.getString("where");
-                rule.setWhere(where);
-                rule.setRate(cat.getInt("rate"));
-                rule.setAds(dao.getAdInfo(where));
-                rules.add(rule);
             }
 
             synchronized (Constant.EXPLORE_RULES){
                 Constant.EXPLORE_RULES.clear();
-                Constant.EXPLORE_RULES = rules;
+                Constant.EXPLORE_RULES = nationRules;
             }
         }catch (Exception e){
             throw new RuntimeException("Failed update explore rule", e);
