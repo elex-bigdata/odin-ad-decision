@@ -34,15 +34,15 @@ public class ServerInitializer {
             AdvertiseManager.loadOldAdvertise();
             AdvertiseManager.loadAdvertise();
 
-/*            LOGGER.info("[Server Init] - init redis version");
+            LOGGER.info("[Server Init] - init redis version");
             CacheUtil.updateVersion();
             if(CacheUtil.getVersion() == 0){
                 LOGGER.info("[Server Init] - init store feature model to redis");
                 new RedisFeatureModelService().updateModel();
-            }*/
+            }
 
-            LOGGER.info("[Server Init] - init cache");
-            new MemoryFeatureModelService().updateModel();
+//            LOGGER.info("[Server Init] - init cache");
+//            new MemoryFeatureModelService().updateModel();
 
             LOGGER.info("[Server Init] - start job ");
             startJob();

@@ -19,7 +19,8 @@ import java.util.*;
 public class StrategyMatcher implements ADMatcher {
 
     private static final Logger LOGGER = Logger.getLogger("dec");
-    private FeatureModelServiceInterface featureModelService = new MemoryFeatureModelService();
+//    private FeatureModelServiceInterface featureModelService = new MemoryFeatureModelService();
+    private FeatureModelServiceInterface featureModelService = new RedisFeatureModelService();
 
     @Override
     public ADMatchMessage match(InputFeature inputFeature) throws Exception {
@@ -82,7 +83,7 @@ public class StrategyMatcher implements ADMatcher {
                 userProfile.addFeature(featureType, featureValue);
             }
         }
-//        LOGGER.debug(userProfile.getReqid() + " get user profile spend " + (System.currentTimeMillis() - begin) + "ms");
+        LOGGER.debug(userProfile.getReqid() + " get user profile spend " + (System.currentTimeMillis() - begin) + "ms");
     }
 
     //输入的特征与模型里面的特征进行合并
@@ -96,7 +97,6 @@ public class StrategyMatcher implements ADMatcher {
                 inputFeature.getHour(), inputFeature.getWorkOrVacation()}));
 
     }
-
 
     /**
      * 获取满足筛选条件的特征广告列表
@@ -158,7 +158,7 @@ public class StrategyMatcher implements ADMatcher {
             adScores.add(new ImmutablePair(adFeatureKV.getKey(), score));
         }
 
-//        LOGGER.debug(userProfile.getReqid() + " calculate score spend " + (System.currentTimeMillis() - begin) + "ms");
+        LOGGER.debug(userProfile.getReqid() + " calculate score spend " + (System.currentTimeMillis() - begin) + "ms");
         return adScores;
     }
 
@@ -179,12 +179,13 @@ public class StrategyMatcher implements ADMatcher {
                 totalScore = totalScore.add(featureAttributes.get(featureType).getDefaultValue());
             }else{
                 BigDecimal weightCpc = featureAttributes.get(featureType).getWeight().multiply(cpc);
-                Integer calFieldIndex = Constant.FEATURE_AD_INFO_INDEX.get(featureAttributes.get(featureType).getCalField());
+                String calField = featureAttributes.get(featureType).getCalField();
                 //matchRule
                 for(String featureValue : featureValues){
-                    String[] featureADInfo = featureModelService.getFeatureADInfoArray(userProfile.getNation(), featureType, featureValue, adid);
+                    Map<String,String> featureADInfo = featureModelService.getFeatureADInfo(userProfile.getNation(), featureType, featureValue, adid);
+
                     //cal  feature1_adid_ctr * adid_cpc * weight
-                    totalScore = totalScore.add(new BigDecimal(featureADInfo[calFieldIndex]).multiply(weightCpc));
+                    totalScore = totalScore.add(new BigDecimal(featureADInfo.get(calField)).multiply(weightCpc));
                 }
             }
         }

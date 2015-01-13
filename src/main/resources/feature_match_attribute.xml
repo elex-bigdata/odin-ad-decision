@@ -3,67 +3,67 @@
     <cpc_weight>1</cpc_weight>
     <feature type="p" desc="project id" weight="1" defaultValue="0">
         <sort field="ictr" />
-        <filter range="90%" />
+        <filter range="5" />
         <cal_field>ictr</cal_field>
         <score> <![CDATA[ pv > 10 and sv >20 ]]> </score>
     </feature>
     <feature type="u" desc="userid" weight="2" defaultValue="0">
         <sort field="ictr" />
-        <filter range="90%" />
+        <filter range="5" />
         <cal_field>ictr</cal_field>
         <score><![CDATA[ pv > 10 and sv >20 ]]></score>
     </feature>
     <feature type="t" desc="time" weight="1" defaultValue="0">
         <sort field="ictr" />
-        <filter range="90%" />
+        <filter range="5" />
         <cal_field>ictr</cal_field>
         <score><![CDATA[ pv > 10 and sv >20 ]]></score>
     </feature>
     <feature type="bw" desc="browser" weight="1" defaultValue="0">
         <sort field="ictr" />
-        <filter range="90%" />
+        <filter range="5" />
         <cal_field>ictr</cal_field>
         <score> <![CDATA[ pv > 10 and sv >20 ]]> </score>
     </feature>
     <feature type="ip" desc="" weight="1" defaultValue="0">
         <sort field="ictr" />
-        <filter range="90%" />
+        <filter range="5" />
         <cal_field>ictr</cal_field>
         <score><![CDATA[ pv > 10 and sv >20 ]]></score>
     </feature>
     <feature type="q" desc="query" weight="1" defaultValue="0">
         <sort field="ictr" />
-        <filter range="90%" />
+        <filter range="5" />
         <cal_field>ictr</cal_field>
         <score> <![CDATA[ pv > 10 and sv >20 ]]> </score>
     </feature>
     <feature type="ql" desc="query length" weight="1" defaultValue="0">
         <sort field="ictr" />
-        <filter range="90%" />
+        <filter range="5" />
         <cal_field>ictr</cal_field>
         <score><![CDATA[ pv > 10 and sv >20 ]]></score>
     </feature>
     <feature type="wc" desc="query word count" weight="1" defaultValue="0">
         <sort field="ictr" />
-        <filter range="90%" />
+        <filter range="5" />
         <cal_field>ictr</cal_field>
         <score><![CDATA[ pv > 10 and sv >20 ]]></score>
     </feature>
     <feature type="kw" desc="keyword" weight="1" defaultValue="0">
         <sort field="ictr" />
-        <filter range="90%" />
+        <filter range="5" />
         <cal_field>ictr</cal_field>
         <score><![CDATA[ pv > 10 and sv >20 ]]></score>
     </feature>
     <feature type="gkw" desc="gdp key word" weight="1" defaultValue="0">
         <sort field="ictr" />
-        <filter range="90%" />
+        <filter range="5" />
         <cal_field>ictr</cal_field>
         <score><![CDATA[ pv > 10 and sv >20 ]]></score>
     </feature>
     <feature type="odp" desc="ODP" weight="1" defaultValue="0">
         <sort field="ictr" />
-        <filter range="90%" />
+        <filter range="5" />
         <cal_field>ictr</cal_field>
         <score><![CDATA[ pv > 10 and sv >20 ]]></score>
     </feature>
