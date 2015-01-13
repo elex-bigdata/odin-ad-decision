@@ -1,5 +1,6 @@
 package com.elex.odin.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,7 +14,8 @@ public class ExploreRule {
     private String name ="";
     private int rate = 0;
     private String where = "";
-    private List<Advertise> ads;
+    private List<Integer> adIDs = new ArrayList<Integer>();
+//    private List<Advertise> ads;
 
     public String getTag() {
         return tag;
@@ -47,11 +49,19 @@ public class ExploreRule {
         this.rate = rate;
     }
 
-    public List<Advertise> getAds() {
+/*    public List<Advertise> getAds() {
         return ads;
     }
 
     public void setAds(List<Advertise> ads) {
         this.ads = ads;
+    }*/
+
+    public List<Integer> getAdIDs() {
+        return adIDs;
+    }
+
+    public void setAdIDs(List<Integer> adIDs) {
+        this.adIDs = adIDs;
     }
 }
