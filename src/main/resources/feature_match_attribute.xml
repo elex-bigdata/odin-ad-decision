@@ -67,5 +67,17 @@
         <cal_field>ictr</cal_field>
         <score><![CDATA[ pv > 10 and sv >20 ]]></score>
     </feature>
+    <feature type="rf" desc="REF from" weight="1" defaultValue="0">
+        <sort field="ictr" />
+        <filter range="90%" />
+        <cal_field>ictr</cal_field>
+        <score><![CDATA[ pv > 10 and sv >20 ]]></score>
+    </feature>
+    <feature type="opt" desc="type" weight="1" defaultValue="0">
+        <sort field="ictr" />
+        <filter range="90%" />
+        <cal_field>ictr</cal_field>
+        <score><![CDATA[ pv > 10 and sv >20 ]]></score>
+    </feature>
 </features>
 

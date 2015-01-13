@@ -37,6 +37,8 @@ public class Constant {
         public static final String PID = "p";
         public static final String GDP_KEYWORD = "gkw";
         public static final String ODP = "odp";
+        public static final String REF = "rf";
+        public static final String OPT = "opt";
     }
 
     //数据模型里面的特征类型和redis库里面的特征类型的映射
@@ -54,6 +56,8 @@ public class Constant {
         MODEL_FEATURE_TYPE_MAPPING.put("user",FEATURE_TYPE.UID);
         MODEL_FEATURE_TYPE_MAPPING.put("project",FEATURE_TYPE.PID);
         MODEL_FEATURE_TYPE_MAPPING.put("odp",FEATURE_TYPE.ODP);
+        MODEL_FEATURE_TYPE_MAPPING.put("ref",FEATURE_TYPE.REF);
+        MODEL_FEATURE_TYPE_MAPPING.put("opt",FEATURE_TYPE.OPT);
     }
 
     public static class TAG{
