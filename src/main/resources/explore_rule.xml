@@ -1,12 +1,12 @@
 <rule>
     <nation name="br">
         <category>
-            <name>exp_cmc</name>
+            <tag>exp_cyma</tag>
             <rate>10</rate>
             <ad>50998,50994,51005</ad>
         </category>
         <category>
-            <name>exp_main</name>
+            <tag>exp_main</tag>
             <rate>90</rate>
             <ad>51004</ad>
         </category>
