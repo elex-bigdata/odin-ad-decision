@@ -7,14 +7,14 @@ rm -rf web/WEB-INF/classes/*
 
 mvn clean package -DskipTests
 
-thorpid=`ps aux | grep  '/home/hadoop/catalina/apache-tomcat-7.0.52.thor' |grep -v grep | awk '{print $2}'`
+thorpid=`ps aux | grep  '/home/elex/webserver/apache-tomcat-7.0.56-test' |grep -v grep | awk '{print $2}'`
 
 echo "kill thor thorpid"
 kill -9 $thorpid
 
 #cp war to tomcat
-rm -rf /home/hadoop/catalina/apache-tomcat-7.0.52.thor/work/*
-rm -rf /home/hadoop/catalina/apache-tomcat-7.0.52.thor/webapps/thor
-cp target/thor.war /home/hadoop/catalina/apache-tomcat-7.0.52.thor/webapps/
+rm -rf /home/elex/webserver/apache-tomcat-7.0.56-test/work/*
+rm -rf /home/elex/webserver/apache-tomcat-7.0.56-test/webapps/thor
+cp target/thor.war /home/elex/webserver/apache-tomcat-7.0.56-test/webapps/
 
-/home/hadoop/webserver/apache-tomcat-7.0.56-thor/bin/startup.sh
+/home/elex/webserver/apache-tomcat-7.0.56-test/bin/startup.sh
