@@ -1,4 +1,5 @@
 #!/bin/bash
+git checkout redis
 git pull
 
 #clean the cache
