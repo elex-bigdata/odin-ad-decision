@@ -8,10 +8,7 @@ import org.apache.commons.lang.StringUtils;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Author: liqiang
@@ -21,7 +18,7 @@ import java.util.Map;
 public class FeatureADModelUpdater implements ModelUpdater {
 
     private Map<String, Map<String,String>> models = null;
-    private Map<String,Map<String,Double>> admember = null;
+    private Map<String, Set<String>> admember = null;
     private int valueStart = 4;
     private RedisOperator redisOperator = RedisOperator.getInstance();
     private String version;
@@ -37,7 +34,7 @@ public class FeatureADModelUpdater implements ModelUpdater {
     @Override
     public void update() throws Exception {
         models = new HashMap<String, Map<String, String>>();
-        admember = new HashMap<String,Map<String,Double>>();
+        admember = new HashMap<String,Set<String>>();
         FileInputStream fis = null;
         BufferedReader reader = null;
         try {
@@ -82,12 +79,12 @@ public class FeatureADModelUpdater implements ModelUpdater {
 
             if(!"0".equals(sortScore)){
                 String sortKey = version + "."+ Constant.CACHE.SORT_AD_PREFIX +"." + values[2] + "." + featureType + "." + values[1];
-                Map<String,Double> ads = admember.get(sortKey);
+                Set<String> ads = admember.get(sortKey);
                 if(ads == null){
-                    ads = new HashMap<String, Double>();
+                    ads = new HashSet<String>();
                     admember.put(sortKey, ads);
                 }
-                ads.put(values[3], Double.parseDouble(sortScore));
+                ads.add(values[3]);
 
                 models.put(key, mapValue);
             }
@@ -100,8 +97,11 @@ public class FeatureADModelUpdater implements ModelUpdater {
             }
             if(admember.size() == 1000){
                 System.out.println("batch feature admember");
-                redisOperator.zaddBatch(admember);
-                admember = new HashMap<String,Map<String,Double>>();
+/*                redisOperator.zaddBatch(admember);
+                admember = new HashMap<String,Map<String,Double>>();*/
+
+                redisOperator.saddBatch(admember);
+                admember = new HashMap<String, Set<String>>();
             }
 
         }catch (Exception e){
@@ -114,7 +114,8 @@ public class FeatureADModelUpdater implements ModelUpdater {
             redisOperator.hmsetBatch(models);
         }
         if(admember.size() > 0){
-            redisOperator.zaddBatch(admember);
+//            redisOperator.zaddBatch(admember);
+            redisOperator.saddBatch(admember);
         }
     }
 }

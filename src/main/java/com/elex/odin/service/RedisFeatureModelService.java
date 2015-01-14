@@ -42,13 +42,18 @@ public class RedisFeatureModelService implements FeatureModelServiceInterface{
     }
 
     public Set<String> getValidADByFeature(String nation, String featureType, String featureValue) throws CacheException {
-        String key = CacheUtil.keyWithVersion(Constant.CACHE.SORT_AD_PREFIX + "." + nation + "." + featureType + "." + featureValue);
-        double[] rules = Constant.DECISION_RULE.getFeatureAttributes().get(featureType).getFilterRange();
+        String featureTypeOfValue = featureType;
+        if(Constant.FEATURE_TYPE.GDP_KEYWORD.equals(featureType)){
+            featureTypeOfValue =Constant.FEATURE_TYPE.KEYWORD;
+        }
+        String key = CacheUtil.keyWithVersion(Constant.CACHE.SORT_AD_PREFIX + "." + nation + "." + featureTypeOfValue + "." + featureValue);
+        return redisOperator.sget(key);
+/*        double[] rules = Constant.DECISION_RULE.getFeatureAttributes().get(featureType).getFilterRange();
         if(rules.length == 1 ){
             return redisOperator.zrevrange(key, 0, (int) rules[0]);
         }else{
             return redisOperator.zrevrangeByScore(key, rules[1], rules[0]);
-        }
+        }*/
     }
 
     public Map<String,String> getFeatureADInfo(String nation, String featureType, String featureValue, String adID) throws CacheException {
