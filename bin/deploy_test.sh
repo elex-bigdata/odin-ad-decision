@@ -5,7 +5,7 @@ git pull
 #clean the cache
 rm -rf web/WEB-INF/classes/*
 
-mvn clean package -DskipTests
+mvn clean package -Pdev -DskipTests
 
 thorpid=`ps aux | grep  '/home/elex/webserver/apache-tomcat-7.0.56-test' |grep -v grep | awk '{print $2}'`
 
