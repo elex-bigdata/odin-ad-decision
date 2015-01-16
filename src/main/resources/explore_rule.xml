@@ -14,8 +14,13 @@
     <nation name="in">
         <category>
             <tag>exp_in</tag>
-            <rate>100</rate>
-            <ad>51007,51008,51009</ad>
+            <rate>50</rate>
+            <ad>51007,51008</ad>
+        </category>
+        <category>
+            <tag>exp_in</tag>
+            <rate>50</rate>
+            <ad>51009</ad>
         </category>
     </nation>
 </rule>
